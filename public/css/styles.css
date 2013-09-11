@@ -1,0 +1,57 @@
+p {
+    margin-bottom: 12px;
+}
+
+textarea {
+    resize: none;
+}
+
+label {
+    font-weight: bold;
+}
+
+div.radio-group {
+    text-align: center;
+    margin-bottom: 7px;
+}
+
+div.radio-group input {
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+div.radio-group div {
+    display: inline-block;
+}
+
+.clip-bottom {
+    margin-bottom: 0px;
+}
+
+.clip-top {
+    margin-top: 0px;
+}
+
+hr.thin {
+    margin: 0px 0px 7px;
+}
+
+#remem-checkbox {
+    margin: 5px 10px;
+}
+
+#login-button {
+    margin-top: 3px;
+}
+
+span.text-success, span.text-error > div.control-panel-group {
+    margin-right: 10px;
+}
+
+a.smaller-text {
+    font-size: 12px;
+}
+
+.smaller-font {
+    font-size: smaller;
+}

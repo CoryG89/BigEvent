@@ -1,0 +1,7 @@
+{
+  "user": "databaseUser",
+  "pass": "databasePass",
+  "host": "ds11001.mongolab.com",
+  "port": 53321,
+  "name": "databaseName"
+}

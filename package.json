@@ -1,0 +1,23 @@
+{
+  "name": "BigEvent",
+  "author": {
+    "name": "Cory Gross",
+    "contact": "CoryG89@gmail.com"
+  },
+  "description": "Auburn SGA Big Event Program",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.2.x",
+    "ejs": "0.8.x",
+    "ejs-locals": "1.0.x",
+    "nodemailer": "0.4.x",
+    "moment": "2.0.x",
+    "mongodb": "1.3.x",
+    "markedejs": "0.0.x",
+    "node-uuid": "1.4.x"
+  }
+}
