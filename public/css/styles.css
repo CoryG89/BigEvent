@@ -36,22 +36,14 @@ hr.thin {
     margin: 0px 0px 7px;
 }
 
-#remem-checkbox {
-    margin: 5px 10px;
-}
-
-#login-button {
-    margin-top: 3px;
-}
-
-span.text-success, span.text-error > div.control-panel-group {
-    margin-right: 10px;
-}
-
 a.smaller-text {
     font-size: 12px;
 }
 
 .smaller-font {
     font-size: smaller;
+}
+
+a#edit-button, a#cancel-button {
+    margin-top: 10px;
 }

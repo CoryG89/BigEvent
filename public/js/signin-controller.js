@@ -64,8 +64,8 @@
                     console.log('onload: %o', evt);
                     var cookies = getCookies();
                     if (cookies.prev_path) {
-                        var decodedPath = decodeURIComponent(cookies.prev_path);
-                        window.location.replace(decodedPath);
+                        var decoded = decodeURIComponent(cookies.prev_path);
+                        window.location.replace(decoded);
                     }
                 };
                 req.send(data);

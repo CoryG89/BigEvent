@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 var markedejs = require('markedejs');
 var auth = require('./auth');
 
-var debug = require('../../debug');
+var debug = require('../debug');
 var log = debug.getLogger({ prefix: '[emailer]-  ' });
 
 var transport = nodemailer.createTransport('SMTP', {

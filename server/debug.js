@@ -13,8 +13,7 @@ module.exports = {
                 if (typeof args[last] === 'function')
                     callback = args.splice(last)[0];
                 if (prefix)
-                    if (typeof args[0] === 'string') args[0] = prefix + args[0];
-                    else args = [prefix + '%o'].concat(args);
+                    args[0] = prefix + args[0];
                 console.log.apply(console, args);
                 if (callback) callback();
             }

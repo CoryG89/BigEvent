@@ -14,6 +14,7 @@ var router = {
         app.get('/volunteer', routes.volunteer.get);
         app.post('/volunteer', routes.volunteer.post);
         app.get('/volunteer/success', routes.volunteer.success);
+        app.get('/volunteer/control-panel', routes.volunteer.controlPanel.get);
 
         app.get('/request', routes.request.get);
         app.post('/request', routes.request.post);

@@ -1,9 +1,9 @@
 'use strict';
 
+var debug = require('../../debug');
 var dbman = require('../../dbman');
 var emailer = require('../../emailer');
 
-var debug = require('../../../debug');
 var log = debug.getLogger({ prefix: '[route.request]-  ' });
 
 module.exports = {

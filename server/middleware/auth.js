@@ -1,10 +1,10 @@
 'use strict';
 
-var debug = require('../../debug');
+var debug = require('../debug');
 var log = debug.getLogger({ prefix: '[middleware.auth]-  ' });
 
 module.exports = function () {
-    var protectedPaths = ['/page', '/volunteer', '/volunteer-cp'];
+    var protectedPaths = ['/volunteer', '/volunteer/control-panel'];
     var redirectPath = '/signin';
 
     var isProtected = function (path) {

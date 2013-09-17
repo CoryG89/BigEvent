@@ -7,8 +7,8 @@ Here are your volunteer details that we've received:
  - **Name:** <%= user.wlData.name %>
  - **Email:** <%= user.wlData.emails.account %>
  - **Gender:** <%= user.eventData.gender %>
- - **Address:** <%= user.eventData.formatted %>
- - **City:** <%= user.eventData.address %>
+ - **Address:** <%= user.eventData.address %>
+ - **City:** <%= user.eventData.city %>
  - **State:** <%= user.eventData.state %>
  - **Zip:** <%= user.eventData.zip %>
  - **Phone:** <%= user.eventData.phone %>

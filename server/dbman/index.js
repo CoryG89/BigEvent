@@ -2,15 +2,13 @@
 
 /** Import required Node.JS modules */
 var util = require('util');
-var uuid = require('node-uuid');
-var moment = require('moment');
 var mongodb = require('mongodb');
 
 /** Import local database authentication details */
 var auth = require('./auth');
 
 /** Import debugging module and get a logger */
-var debug = require('../../debug');
+var debug = require('../debug');
 var log = debug.getLogger({ prefix: '[dbman]-  ' });
 
 /** Get needed MongoDB objects */

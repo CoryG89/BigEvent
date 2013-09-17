@@ -27,17 +27,17 @@
         <input class="input-block-level" type="text" id="name" name="name" value="<%= user.wlData.name %>" disabled />
         <label for="email">Email</label>
         <input class="input-block-level" type="email" id="email" name="email" value="<%= user.wlData.emails.account %>" disabled />
-        <label>Gender</label>
+        <label for="gender-m">Gender</label>
         <div class="radio-group">
-          <div><input type="radio" name="gender" value="male" required />Male</div>
-          <div><input type="radio" name="gender" value="female" required />Female</div>
+          <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
+          <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
         </div>
         <label for="address">Address</label>
         <input class="input-block-level" type="text" id="address" name="address" required />
         <label for="city">City</label>
         <input class="input-block-level" type="text" id="city" name="city" required />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-form" id="state" name="state"> 
+        <select class="input-block-level" form="volunteer-form" id="state" name="state" required> 
           <option value="AL">Alabama</option> 
           <option value="AK">Alaska</option> 
           <option value="AZ">Arizona</option> 
@@ -45,8 +45,7 @@
           <option value="CA">California</option> 
           <option value="CO">Colorado</option> 
           <option value="CT">Connecticut</option> 
-          <option value="DE">Delaware</option> 
-          <option value="DC">District Of Columbia</option> 
+          <option value="DE">Delaware</option>
           <option value="FL">Florida</option> 
           <option value="GA">Georgia</option> 
           <option value="HI">Hawaii</option> 
@@ -96,11 +95,11 @@
         <input class="input-block-level" type="tel" id="phone" name="phone" pattern="\d{10}" required />
         <label>Shirt Size</label>
         <div class="radio-group">
-          <div><input type="radio" name="shirtsize" value="s" required />S</div>
-          <div><input type="radio" name="shirtsize" value="m" required />M</div>
-          <div><input type="radio" name="shirtsize" value="l" required />L</div>
-          <div><input type="radio" name="shirtsize" value="xl" required />XL</div>
-          <div><input type="radio" name="shirtsize" value="xxl" required />XXL</div>
+          <div><input type="radio" name="shirtsize" value="S" required />S</div>
+          <div><input type="radio" name="shirtsize" value="M" required />M</div>
+          <div><input type="radio" name="shirtsize" value="L" required />L</div>
+          <div><input type="radio" name="shirtsize" value="XL" required />XL</div>
+          <div><input type="radio" name="shirtsize" value="XXL" required />XXL</div>
         </div>
         <hr />
         <input class="btn" type="reset" value="Clear" />

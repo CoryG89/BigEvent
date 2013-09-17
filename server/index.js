@@ -2,12 +2,12 @@
 
 var http = require('http');
 
-var debug = require('../debug');
-
+var debug = require('./debug');
 var router = require('./router');
 var dbman = require('./dbman');
 var emailer = require('./emailer');
 var middleware = require('./middleware');
+
 
 var httpServer;
 var log = debug.getLogger({ prefix: '[server]-  ' });
