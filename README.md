@@ -94,7 +94,7 @@ dependencies are specified in the `package.json` file.
   - Templating engine for Express using [markdown][markdown-cheatsheet] and EJS.
     Markdown is markup that is compiled to HTML.
 
- * [**export-dir**][export-dir]
+ * [**`export-dir`**][export-dir]
   - Module which allows you to export entire directories as modules in Node.JS.
 
 
