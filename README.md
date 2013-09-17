@@ -83,7 +83,7 @@ dependencies are specified in the `package.json` file.
     common being an SMTP server. Nodemailer supports these
     [well known services][nodemailer-wpks].
 
- * [**`mongodb`**][monogdb]
+ * [**`mongodb`**][mongodb]
   - The MongoDB native driver for Node.JS. Allows a Node application to connect
     to and use a MongoDB database.
 
@@ -120,5 +120,6 @@ Documentation (TODO)
 [mongolab]: http://mongolab.com
 [nodemailer]: https://github.com/andris9/Nodemailer
 [nodemailer-wpks]: https://github.com/andris9/Nodemailer#well-known-services-for-smtp
+[moment]: https://github.com/moment/moment
 [markedejs]: https://github.com/CoryG89/markedejs
 [export-dir]: https://github.com/CoryG89/export-dir
