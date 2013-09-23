@@ -5,6 +5,7 @@ var dbman = require('../../dbman');
 var emailer = require('../../emailer');
 
 var log = debug.getLogger({ prefix: '[route.request]-  ' });
+var requests = dbman.getCollection('requests');
 
 module.exports = {
 
@@ -17,23 +18,20 @@ module.exports = {
 
     post: function (req, res) {
         var record = req.body;
-
-        dbman.submitRequest(record, function (error) {
-            if (error) {
-                log('Error posting job request -- %s', error);
+        var opt = { w: 1 };
+        requests.insert(record, opt, function (err) {
+            if (err) {
+                log('POST: Error inserting record:\n\n%s\n\n', err);
                 res.send(400);
             } else {
-
-                var emailOptions = {
+                emailer.send({
                     to: record.email,
                     subject: 'Job Request Confirmation',
                     template: 'request',
                     locals: { user: record }
-                };
-
-                emailer.send(emailOptions, function (error) {
-                    if (!error) res.send('ok', 200);
-                    else res.send(400);
+                }, function (err) {
+                    if (err) res.send(400);
+                    else res.send('ok', 200);
                 });
             }
         });

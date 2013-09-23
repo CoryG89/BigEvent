@@ -8,14 +8,15 @@ var dbman = require('./dbman');
 var emailer = require('./emailer');
 var middleware = require('./middleware');
 
-
 var httpServer;
 var log = debug.getLogger({ prefix: '[server]-  ' });
 
 module.exports = {
     middleware: middleware,
     createServer: function (app) {
-        router.init(app);
+        dbman.init(function () {
+            router.init(app);
+        });
         httpServer = http.createServer(app);
         if (httpServer) {
             log('Sucessfully created HTTP server');

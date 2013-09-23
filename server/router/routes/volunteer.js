@@ -9,52 +9,59 @@ var geocoder = require('../../geocoder');
 var debug = require('../../debug');
 
 var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
+var users = dbman.getCollection('users');
 
 module.exports = {
 
     get: function (req, res) {
-        if (req.session.user.eventData)
+        if (req.session.user.eventData) {
             res.redirect('/volunteer/control-panel');
-        else
+        }
+        else {
             res.render('volunteer', {
                 title: 'Volunteer',
                 user: req.session.user,
                 _layoutFile: 'default'
             });
+        }
     },
 
     post: function (req, res) {
-        var id = req.session.user._id;
-        var body = req.body;
+        var data = req.body;
 
         var addressString = util.format('%s %s, %s %s',
-            body.address, body.city, body.state, body.zip);
+            data.address, data.city, data.state, data.zip);
 
-        geocoder.send(addressString, function (data) {
-            var obj = JSON.parse(data);
-            var topResult = obj.results[0];
+        geocoder.send(addressString, function (geodata) {
+            var parsed = JSON.parse(geodata);
+            var result = parsed.results[0];
 
-            body.location = topResult.geometry.location;
-            body.formattedAddress = topResult.formatted_address;
+            data.location = result.geometry.location;
+            data.formattedAddress = result.formatted_address;
 
-            dbman.update(id, { eventData: body }, function (error, record) {
-                if (error) {
-                    log('post: Error -- %s', error);
+            var query = { _id: req.session.user._id };
+            var cmd = { $set: { eventData: data } };
+            var opt = { w: 1, new: true };
+
+            users.findAndModify(query, null, cmd, opt, function (err, record) {
+                if (err) {
+                    log('POST: Error updating record:\n\n%s\n\n', err);
+                    res.send(400);
+                } else if (!record) {
+                    log('POST: Record not found');
                     res.send(400);
                 } else {
                     req.session.user = record;
-                    
-                    var emailOptions = {
+
+                    emailer.send({
                         to: record.wlData.emails.account,
-                        subject: 'Volunteer Registration Confirmation',
+                        subject: 'Volunteer Account Registration',
                         template: 'volunteer',
                         locals: { user: record }
-                    };
-
-                    emailer.send(emailOptions, function () {
-
+                    }, function (err) {
+                        if (err) res.send(400);
+                        else res.send('ok', 200);
                     });
-                    res.send('ok', 200);
                 }
             });
         });
@@ -87,8 +94,46 @@ module.exports = {
             });
         },
 
-        post: function () {
+        post: function (req, res) {
+            var data = req.body;
 
+            var addressString = util.format('%s %s, %s %s',
+                data.address, data.city, data.state, data.zip);
+
+            geocoder.send(addressString, function (geodata) {
+                var parsed = JSON.parse(geodata);
+                var result = parsed.results[0];
+
+                data.location = result.geometry.location;
+                data.formattedAddress = result.formatted_address;
+
+                var query = { _id: req.session.user._id };
+                var cmd = { $set: { eventData: data } };
+                var opt = { w: 1, new: true };
+
+                users.findAndModify(query, null, cmd, opt, function (err, record) {
+                    if (err) {
+                        log('POST: Error updating record:\n\n%s\n\n', err);
+                        res.send(400);
+                    } else if (!record) {
+                        log('POST: Record not found');
+                        res.send(400);
+                    } else {
+                        log('POST: Updating user session');
+                        req.session.user = record;
+
+                        emailer.send({
+                            to: record.wlData.emails.account,
+                            subject: 'Volunteer Account Update',
+                            template: 'volunteer-changed',
+                            locals: { user: record }
+                        }, function (err) {
+                            if (err) res.send(400);
+                            else res.send('ok', 200);
+                        });
+                    }
+                });
+            });
         }
     }
 };

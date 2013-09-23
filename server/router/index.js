@@ -1,10 +1,9 @@
 'use strict';
 
-var routes = require('./routes');
-
 var router = {
-
     init: function (app) {
+        var routes = require('./routes');
+        
         app.get('/', routes.home);
         app.get('/home', routes.home);
 
@@ -15,6 +14,7 @@ var router = {
         app.post('/volunteer', routes.volunteer.post);
         app.get('/volunteer/success', routes.volunteer.success);
         app.get('/volunteer/control-panel', routes.volunteer.controlPanel.get);
+        app.post('/volunteer/control-panel', routes.volunteer.controlPanel.post);
 
         app.get('/request', routes.request.get);
         app.post('/request', routes.request.post);
@@ -22,7 +22,6 @@ var router = {
 
         app.get('*', routes.notfound);
     }
-
 };
 
 module.exports = router;

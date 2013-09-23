@@ -52,7 +52,7 @@
         <label for="city">City</label>
         <input class="input-block-level control-panel-input" type="text" id="city" name="city" value="<%= user.eventData.city %>" required disabled />
         <label for="state">State</label>
-        <select class="input-block-level control-panel-input" form="volunteer-form" id="state"  name="state" required disabled> 
+        <select class="input-block-level control-panel-input" form="control-panel-form" id="state"  name="state" required disabled> 
           <% if(user.eventData.state === 'AL') { %><option value="AL" selected>Alabama</option><% } else { %><option value="AL">Alabama</option><% } %>
           <% if(user.eventData.state === 'AK') { %><option value="AK" selected>Alaska</option><% } else { %><option value="AK">Alaska</option><% } %>
           <% if(user.eventData.state === 'AZ') { %><option value="AZ" selected>Arizona</option><% } else { %><option value="AZ">Arizona</option><% } %>
