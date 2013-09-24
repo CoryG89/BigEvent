@@ -52,57 +52,8 @@
         <label for="city">City</label>
         <input class="input-block-level control-panel-input" type="text" id="city" name="city" value="<%= user.eventData.city %>" required disabled />
         <label for="state">State</label>
-        <select class="input-block-level control-panel-input" form="control-panel-form" id="state"  name="state" required disabled> 
-          <% if(user.eventData.state === 'AL') { %><option value="AL" selected>Alabama</option><% } else { %><option value="AL">Alabama</option><% } %>
-          <% if(user.eventData.state === 'AK') { %><option value="AK" selected>Alaska</option><% } else { %><option value="AK">Alaska</option><% } %>
-          <% if(user.eventData.state === 'AZ') { %><option value="AZ" selected>Arizona</option><% } else { %><option value="AZ">Arizona</option><% } %>
-          <% if(user.eventData.state === 'AR') { %><option value="AR" selected>Arkansas</option><% } else { %><option value="AR">Arkansas</option><% } %>
-          <% if(user.eventData.state === 'CA') { %><option value="CA" selected>California</option><% } else { %><option value="CA">California</option><% } %>
-          <% if(user.eventData.state === 'CO') { %><option value="CO" selected>Colorado</option><% } else { %><option value="CO">Colorado</option><% } %>
-          <% if(user.eventData.state === 'CT') { %><option value="CT" selected>Connecticut</option><% } else { %><option value="CT">Connecticut</option><% } %>
-          <% if(user.eventData.state === 'DE') { %><option value="DE" selected>Delaware</option><% } else { %><option value="DE">Delaware</option><% } %>
-          <% if(user.eventData.state === 'FL') { %><option value="FL" selected>Florida</option><% } else { %><option value="FL">Florida</option><% } %>
-          <% if(user.eventData.state === 'GA') { %><option value="GA" selected>Georgia</option><% } else { %><option value="GA">Georgia</option><% } %>
-          <% if(user.eventData.state === 'HI') { %><option value="HI" selected>Hawaii</option><% } else { %><option value="HI">Hawaii</option><% } %>
-          <% if(user.eventData.state === 'ID') { %><option value="ID" selected>Idaho</option><% } else { %><option value="ID">Idaho</option><% } %>
-          <% if(user.eventData.state === 'IL') { %><option value="IL" selected>Illinois</option><% } else { %><option value="IL">Illinois</option><% } %>
-          <% if(user.eventData.state === 'IN') { %><option value="IN" selected>Indiana</option><% } else { %><option value="IN">Indiana</option><% } %>
-          <% if(user.eventData.state === 'IA') { %><option value="IA" selected>Iowa</option><% } else { %><option value="IA">Iowa</option><% } %>
-          <% if(user.eventData.state === 'KS') { %><option value="KS" selected>Kansas</option><% } else { %><option value="KS">Kansas</option><% } %>
-          <% if(user.eventData.state === 'KY') { %><option value="KY" selected>Kentucky</option><% } else { %><option value="KY">Kentucky</option><% } %>
-          <% if(user.eventData.state === 'LA') { %><option value="LA" selected>Louisiana</option><% } else { %><option value="LA">Louisiana</option><% } %>
-          <% if(user.eventData.state === 'ME') { %><option value="ME" selected>Maine</option><% } else { %><option value="ME">Maine</option><% } %>
-          <% if(user.eventData.state === 'MD') { %><option value="MD" selected>Maryland</option><% } else { %><option value="MD">Maryland</option><% } %>
-          <% if(user.eventData.state === 'MA') { %><option value="MA" selected>Massachusetts</option><% } else { %><option value="MA">Massachusetts</option><% } %>
-          <% if(user.eventData.state === 'MI') { %><option value="MI" selected>Michigan</option><% } else { %><option value="MI">Michigan</option><% } %>
-          <% if(user.eventData.state === 'MN') { %><option value="MN" selected>Minnesota</option><% } else { %><option value="MN">Minnesota</option><% } %>
-          <% if(user.eventData.state === 'MS') { %><option value="MS" selected>Mississippi</option><% } else { %><option value="MS">Mississippi</option><% } %>
-          <% if(user.eventData.state === 'MO') { %><option value="MO" selected>Missouri</option><% } else { %><option value="MO">Missouri</option><% } %>
-          <% if(user.eventData.state === 'MT') { %><option value="MT" selected>Montana</option><% } else { %><option value="MT">Montana</option><% } %>
-          <% if(user.eventData.state === 'NE') { %><option value="NE" selected>Nebraska</option><% } else { %><option value="NE">Nebraska</option><% } %>
-          <% if(user.eventData.state === 'NV') { %><option value="NV" selected>Nevada</option><% } else { %><option value="NV">Nevada</option><% } %>
-          <% if(user.eventData.state === 'NH') { %><option value="NH" selected>New Hampshire</option><% } else { %><option value="NH">New Hampshire</option><% } %>
-          <% if(user.eventData.state === 'NJ') { %><option value="NJ" selected>New Jersey</option><% } else { %><option value="NJ">New Jersey</option><% } %>
-          <% if(user.eventData.state === 'NM') { %><option value="NM" selected>New Mexico</option><% } else { %><option value="NM">New Mexico</option><% } %>
-          <% if(user.eventData.state === 'NY') { %><option value="NY" selected>New York</option><% } else { %><option value="NY">New York</option><% } %>
-          <% if(user.eventData.state === 'NC') { %><option value="NC" selected>North Carolina</option><% } else { %><option value="NC">North Carolina</option><% } %>
-          <% if(user.eventData.state === 'ND') { %><option value="ND" selected>North Dakota</option><% } else { %><option value="ND">North Dakota</option><% } %>
-          <% if(user.eventData.state === 'OH') { %><option value="OH" selected>Ohio</option><% } else { %><option value="OH">Ohio</option><% } %>
-          <% if(user.eventData.state === 'OK') { %><option value="OK" selected>Oklahoma</option><% } else { %><option value="OK">Oklahoma</option><% } %>
-          <% if(user.eventData.state === 'OR') { %><option value="OR" selected>Oregon</option><% } else { %><option value="OR">Oregon</option><% } %>
-          <% if(user.eventData.state === 'PA') { %><option value="PA" selected>Pennsylvania</option><% } else { %><option value="PA">Pennsylvania</option><% } %>
-          <% if(user.eventData.state === 'RI') { %><option value="RI" selected>Rhode Island</option><% } else { %><option value="RI">Rhode Island</option><% } %>
-          <% if(user.eventData.state === 'SC') { %><option value="SC" selected>South Carolina</option><% } else { %><option value="SC">South Carolina</option><% } %>
-          <% if(user.eventData.state === 'SD') { %><option value="SD" selected>South Dakota</option><% } else { %><option value="SD">South Dakota</option><% } %>
-          <% if(user.eventData.state === 'TN') { %><option value="TN" selected>Tennessee</option><% } else { %><option value="TN">Tennessee</option><% } %>
-          <% if(user.eventData.state === 'TX') { %><option value="TX" selected>Texas</option><% } else { %><option value="TX">Texas</option><% } %>
-          <% if(user.eventData.state === 'UT') { %><option value="UT" selected>Utah</option><% } else { %><option value="UT">Utah</option><% } %>
-          <% if(user.eventData.state === 'VT') { %><option value="VT" selected>Vermont</option><% } else { %><option value="VT">Vermont</option><% } %>
-          <% if(user.eventData.state === 'VA') { %><option value="VA" selected>Virginia</option><% } else { %><option value="VA">Virginia</option><% } %>
-          <% if(user.eventData.state === 'WA') { %><option value="WA" selected>Washington</option><% } else { %><option value="WA">Washington</option><% } %>
-          <% if(user.eventData.state === 'WV') { %><option value="WV" selected>West Virginia</option><% } else { %><option value="WV">West Virginia</option><% } %>
-          <% if(user.eventData.state === 'WI') { %><option value="WI" selected>Wisconsin</option><% } else { %><option value="WI">Wisconsin</option><% } %>
-          <% if(user.eventData.state === 'WY') { %><option value="WY" selected>Wyoming</option><% } else { %><option value="WY">Wyoming</option><% } %>
+        <select class="input-block-level" form="control-panel-form" id="state"  name="state" required disabled> 
+          <option value="AL" selected>Alabama</option>
         </select>
         <label for="zip">Zip</label>
         <input class="input-block-level control-panel-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= user.eventData.zip %>" required disabled />
