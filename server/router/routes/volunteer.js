@@ -134,6 +134,24 @@ module.exports = {
                     }
                 });
             });
+        },
+        
+        success: function (req, res) {
+            res.render('heroMessage', {
+                title: 'Successfully Updated',
+                header: 'Thanks!',
+                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
+                _layoutFile: 'default'
+            });
+        },
+
+        failure: function (req, res) {
+            res.render('heroMessage', {
+                title: 'Registration Failed',
+                header: 'Sorry!',
+                message: 'There was a problem updating your data. Please try again later.',
+                _layoutFile: 'default'
+            });
         }
     }
 };

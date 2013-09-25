@@ -13,8 +13,11 @@ var router = {
         app.get('/volunteer', routes.volunteer.get);
         app.post('/volunteer', routes.volunteer.post);
         app.get('/volunteer/success', routes.volunteer.success);
+        app.get('/volunteer/failure', routes.volunteer.failure);
         app.get('/volunteer/control-panel', routes.volunteer.controlPanel.get);
         app.post('/volunteer/control-panel', routes.volunteer.controlPanel.post);
+        app.get('/volunteer/control-panel/success', routes.volunteer.controlPanel.success);
+        app.get('/volunteer/control-panel/failure', routes.volunteer.controlPanel.failure);
 
         app.get('/request', routes.request.get);
         app.post('/request', routes.request.post);

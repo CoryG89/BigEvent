@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    var $form = $('form#control-panel-form');
+
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $controlPanelInputs = $('.control-panel-input');
@@ -16,5 +18,21 @@
         $editButton.removeClass('hidden');
         $controlPanelInputs.prop('disabled', true);
     });
+
+    $form.ajaxForm({
+        beforeSubmit: function () {
+
+        },
+
+        success: function (data, status) {
+            if (status === 'success' && data === 'ok') {
+                window.location.replace('/volunteer/control-panel/success');
+            }
+        },
+
+        error: function () {
+            window.location.replace('/volunteer/control-panel/failure');
+        }
+    })
 
 })();
