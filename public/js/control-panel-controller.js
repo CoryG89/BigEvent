@@ -2,7 +2,6 @@
     'use strict';
 
     var $form = $('form#control-panel-form');
-
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $controlPanelInputs = $('.control-panel-input');
