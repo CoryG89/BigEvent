@@ -85,9 +85,9 @@ the `origin` remote.
 The `origin` remote is the remote repository from which the local repository was
 cloned. In our case, `origin` should be your fork on GitHub. You should add each
 of your team mates forks as remotes as well so that you can pull changes from
-their forks when you wish. You can do this with the following command
+their forks when you wish. You can add a remote for my remote fork by running
 
-    git remote add remote_name https://github.com/teammate_username/BigEvent
+    git remote add cory https://github.com/CoryG89/BigEvent
 
 You should also add the main organization repository as the upstream repository
 
@@ -123,14 +123,25 @@ single goal. If I have been working on something other than the documentation
 say the `dbman` module in the `server` directory. I don't want to lump those
 modifications in with the commit for changing the documentation.
 
+You can view the modifications made to your working tree with the following
+command
+
+    git status
+
 If I haven't made any other modifications to my working tree, then I can add
 the entire thing to the staging area with the command
 
     git add .
 
-At this point any modifications that were made will have been added to the
-staging area. You can then use the command to commit the modifications in the
-staging area to your local repository
+If I was working on something else, say the `dbman` module, and I wanted to
+create a commit for the documentation I could add the specific files individually
+or a more give it a more specific pattern
+
+   git add docs/*.md
+
+Once our modification have been added to the staging area, you can then use the
+following command to commit the modifications in the staging area to your local
+repository
 
     git commit
 
@@ -142,11 +153,14 @@ remote forked repository on GitHub:
 If the code is ready to be pushed up to the main repository, you can go there
 and click Pull Request in order to submit them for merging into the main repo.
 If other commmits are added to the main repository from other team member forks
-then you can pull them down with the command, each team member of the
-organization receives notifications and can review pull requests. Pull requests
-are also linked with the issue tracking system.
+then you can pull them down with the command
 
     git pull upstream master
+
+You could also pull from a remote that pointed to a team members forked
+remote repo such as mine
+
+   git pull cory master
 
 [git]: http://git-scm.com
 [git-docs]: http://git-scm.com/docs
@@ -164,7 +178,7 @@ are also linked with the issue tracking system.
 [git-concepts-tut]: http://gitolite.com/gcs/index.html
 
 [github]: http://github.com
-[github-fork]: https://help.github.com/articles/fork-a-repo
+[github-forks]: https://help.github.com/articles/fork-a-repo
 [github-pull-requests]:https://help.github.com/articles/using-pull-requests
 [github-git-setup]: https://help.github.com/articles/set-up-git
 
