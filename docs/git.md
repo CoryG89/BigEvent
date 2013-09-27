@@ -2,15 +2,15 @@ Getting Started With Git
 ========================
 
 [Git][git] was created by Linus Torvalds, the creator of Linux, and is a
-distributed version control systems. I couldn't write nearly as well of a guide
-myself as the documentation I know to be freely available elsewhere, so mostly
-I will point to other sources for Git.
+distributed version control system. When it comes to Git there are already
+many guides that are much better than anything I am going to be able to write,
+so I am going to try to point you to some quick resources to get you
+up to speed.
 
-In order to get a basic conceptual understanding of how Git works I recommend
-you read over most of the following [visual tutorial][git-concepts-tut]. The
-official [git documentation][git-docs] is also available. There is also an
-official [Git Tutorial][git-tutorial] to get started with as well.
-
+Getting started, I highly recommend reading through most of this conceptually 
+[visual tutorial][git-concepts-tut] first. The official 
+[git documentation][git-docs] is also available. There is also an official 
+[Git Tutorial][git-tutorial] to get started with as well.
 
 Overview of Major Commands
 --------------------------
@@ -137,7 +137,7 @@ If I was working on something else, say the `dbman` module, and I wanted to
 create a commit for the documentation I could add the specific files individually
 or a more give it a more specific pattern
 
-   git add docs/*.md
+    git add docs/*.md
 
 Once our modification have been added to the staging area, you can then use the
 following command to commit the modifications in the staging area to your local
