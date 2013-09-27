@@ -68,11 +68,11 @@ dependencies are specified in the `package.json` file.
   - Express is a popular, [open-source][express-repo], web-framework for node.  
     It wraps the HTTP server module. Provides features like dynamic routing, 
     session support, view rendering/templating, etc. Express also has support
-    for what is called [middleware][middleware-guide]. A server's middleware is
-    a stack of functions through which requests are passed before a response is
-    generated from the server. A particular middleware function in the server's
-    middleware stack may decide either to handle the request or pass it on to
-    the next middleware function.
+    for what is called middleware. A server's middleware is a stack of functions
+    through which requests are passed before a response is generated from the
+    server. A particular middleware function in the server's middleware stack
+    may decide either to handle the request or pass it on to the next middleware 
+    function.
 
  * [**`ejs-locals`**][ejs-locals]
   - [EJS][ejs] (Embedded JavaScript) template engine for Express with support

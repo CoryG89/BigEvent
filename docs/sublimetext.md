@@ -56,14 +56,13 @@ You can set the tab size to be 2 for JSON by saving the following:
 
 This will change `tab_size` to 2 only for the JSON syntax.
 
-
 Package Control
 ---------------
 Sublime Text has a package manager which allows you to install add-ons for the
 editor. Package Control is not included with Sublime Text by default, but I
 highly recommend it as there are many useful add-ons which can make development
 within Sublime Text much more enjoyable and productive. Some examples of
-packages that I am using are:
+packages that I am using are.
 
    - **JSHint Gutter** - Runs JSHint on JavaScript files whenever a file is
        saved. JSHint warns you about common JavaScript pitfalls that would
@@ -76,5 +75,15 @@ packages that I am using are:
    - **Smart Markdown** - Markdown syntax highlighting, preview, rendering, etc.
 
    - **jQuery** - Adds autocompletion, snippets, etc for jQuery.
+   
+   -
+
+#### Installation
+
+You can install Package Control easily by opening the console by selecting from
+the top menu `View --> Show Console` and copying and entering the following
+text
+
+    import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
 
 [sublime-text-3]: http://sublimetext.com/3
