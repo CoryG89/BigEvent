@@ -7,7 +7,7 @@ expressiveness. You can program in many different styles in JavaScript.
 You can do both object-oriented and functional programming with JavaScript.
 
 To get started I would begin by reading over Mozilla's excellent
-[JavaScript Overview][mozilla-javascript-overview]. The overview makes the
+[JavaScript Overview][mdn-javascript-overview]. The MDN overview makes the
 distinction between core JavaScript (defined by the ECMAScript specification)
 and client-side extensions which allow JavaScript to interact with the browser
 and the host page's Document Object Model (DOM). The overview also makes
@@ -16,10 +16,10 @@ Java, but relatively inexperienced with JavaScript. If you really want to get
 a good solid foundation, the actual [ECMAScript Spec][ecmascript-5] is long, but
 is actually rather readable if you're feeling up to it.
 
-
 Core Overview
 -------------
-The ECMAScript 5 Spec gives an excellent overview of the Core language
+The [ECMAScript 5 Spec][ecmascript-5] gives an excellent overview of the core
+language:
 
 > ECMAScript is object-based: basic language and host facilities are provided by
 > objects, and an ECMAScript program is a cluster of communicating objects. An
@@ -40,31 +40,36 @@ The ECMAScript 5 Spec gives an excellent overview of the Core language
 > object, the RegExp object, the JSON object, and the Error objects Error,
 > EvalError, RangeError, ReferenceError, SyntaxError, TypeError and URIError.
 
-
 Classification
 --------------
-JavaScript is an interpreted language. This means that there is no compile step
-like in Java. One benefit to this is the ability to run arbitrary JavaScript
-commands within the context of the current page through Chrome's console. When 
-it comes to development I would recommend using Chrome as the developer tools
-are probably the most widely used and highly developed. You can open up the
-console by hitting `CTRL + SHIFT + J`.
+JavaScript is an interpreted, dynamically typed, programming language. This 
+means that there is no compile step like in Java or C/C++. One benefit to this
+is the ability to run arbitrary JavaScript commands within the context of the
+current page through Chrome's console. When it comes to development I would
+recommend using Chrome as the developer tools are probably the most widely used
+and highly developed. You can open up the console by hitting `CTRL + SHIFT + J`.
 
 Unlike Java, which is statically typed, JavaScript is dynamically typed. This
 means that you do not have to specify types when declaring variables; they will
 be determined by the interpreter on the fly.
 
-    var myString = 'hello';
-    var myNumber
+    var myVariable = 'hello';
+    typeof myVariable;    // returns "string"
+    myVariable = 10;
+    typeof myVariable;    // returns "number"
+
+Client-Side JavaScript
+----------------------
+Node.JS uses an implementation of the CommonJS module spec
 
 Advanced Features and Techniques (TODO)
 --------------------------------
- - Prototypal Inheritance
- - Closures
- - Hoisting
- - Currying and Partial Application
+ - [Prototypal Inheritance (MDN)][mdn-prototypal-inheritance]
+ - [Closures][mdn-closures]
+ - [JavaScript Scoping and Hoisting][javascript-scoping-hoisting]
+ - [Currying and Partial Application][resig-partial-application]
 
-References (TODO)
+References
 -----------
  - [Eloquent JavaScript][eloquent-javascript]
  - [Mozilla JavaScript Guide][mozilla-javascript-guide]
@@ -72,6 +77,12 @@ References (TODO)
 [eloquent-javascript]: http://eloquentjavascript.net/
 [mozilla-javascript-guide]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
 [web-pro-news]: http://www.webpronews.com/javascript-leads-the-pack-as-most-popular-programming-language-2012-09
-[mozilla-javascript-overview]: http://www.webpronews.com/javascript-leads-the-pack-as-most-popular-programming-language-2012-09
-
+[mdn-javascript-overview]: http://www.webpronews.com/javascript-leads-the-pack-as-most-popular-programming-language-2012-09
+[mdn-prototypal-inheritance]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain
+[mdn-closures]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain
 [ecmascript-5]: http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+
+[resig-tutorial]: http://ejohn.org/apps/learn/
+[resig-partial-application]: http://ejohn.org/blog/partial-functions-in-javascript/
+
+[javascript-scoping-hoisting]: http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html

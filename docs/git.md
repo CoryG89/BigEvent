@@ -150,17 +150,17 @@ remote forked repository on GitHub:
 
     git push origin master
 
-If the code is ready to be pushed up to the main repository, you can go there
-and click Pull Request in order to submit them for merging into the main repo.
-If other commmits are added to the main repository from other team member forks
-then you can pull them down with the command
+If the code is ready to be pushed up to the main repository, you can go to your
+fork and click Pull Request in order to submit them for merging into the main 
+repo. If other commmits are added to the main repository from other team member
+forks then you can pull them down with the command
 
     git pull upstream master
 
 You could also pull from a remote that pointed to a team members forked
 remote repo such as mine
 
-   git pull cory master
+    git pull cory master
 
 [git]: http://git-scm.com
 [git-docs]: http://git-scm.com/docs

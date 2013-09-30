@@ -12,4 +12,13 @@ export public data/functions as a module which can be imported in other
 scripts/modules via a call to Node's `require` function.
 
 [node]: http://nodejs.org
+[node-repo]: http://github.com/joyent/node
+[node-download]: http://nodejs.org/download
+[node-api]: http://nodejs.org/api
 [npm]: http://npmjs.org
+[npm-package-json]: https://npmjs.org/doc/json.html
+[nodejitsu]: http://nodejitsu.com/
+[nodejitsu-docs]: http://docs.nodejitsu.com/
+
+[node-wiki-projects]: https://github.com/joyent/node/wiki/Projects%2C-Applications%2C-and-Companies-Using-Node
+[node-wiki-modules]: https://github.com/joyent/node/wiki/Modules

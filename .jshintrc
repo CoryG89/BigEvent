@@ -78,5 +78,18 @@
     "white"         : false,    // true: Check against strict whitespace and indentation rules
 
     // Custom Globals
-    "globals"       : {}        // additional predefined global variables
+    "globals"       : {
+
+        // Windows Live Connect API
+        "WL": true,
+
+        // Mocha
+        "describe": true,
+        "it": true,
+        "should": true,
+        "before": true,
+        "beforeEach": true,
+        "after": true,
+        "afterEach": true
+    }
 }
