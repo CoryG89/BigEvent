@@ -1,17 +1,15 @@
 'use strict';
 
-/** Import required Node.JS modules */
 var util = require('util');
+
+/** Import MongoDB Native Driver */
 var mongodb = require('mongodb');
-
-/** Get needed MongoDB objects */
 var MongoClient = mongodb.MongoClient;
-var ObjectID = mongodb.ObjectID;
 
-/** Import local database authentication details */
+/** Import database authentication details */
 var auth = require('./auth');
 
-/** Format a MongoDB connection URI with given auth details */
+/** Format a MongoDB connection URI with aquired auth details */
 var uri = util.format('mongodb://%s:%s@%s:%d/%s',
     auth.user, auth.pass, auth.host, auth.port, auth.name);
 
@@ -31,15 +29,17 @@ var createCollections = function (db, names, callback) {
                 log('Sucessfully got collection \'%s\'', name);
                 cl[name] = collection;
             }
-            if (++current === names.length) callback(cl);
+            if (++current === names.length) callback();
         });
     });
 };
 
 module.exports = {
+
+    /** Connect and initialize the database */
     init: function (callback) {
-        /** Connect and initialize the database */
         var opt = { auto_reconnect: true };
+
         MongoClient.connect(uri, opt, function (err, database) {
             if (err) {
                 log('Error connecting to datasbase -- %s', err);
@@ -47,9 +47,8 @@ module.exports = {
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
                 db = database;
-                createCollections(db, ['users', 'requests'], function () {
-                    callback();
-                });
+                var names = ['users', 'volunteers', 'requests'];
+                createCollections(db, names, callback);
             }
         });
     },

@@ -68,11 +68,11 @@ dependencies are specified in the `package.json` file.
   - Express is a popular, [open-source][express-repo], web-framework for node.  
     It wraps the HTTP server module. Provides features like dynamic routing, 
     session support, view rendering/templating, etc. Express also has support
-    for what is called [middleware][middleware-guide]. A server's middleware is
-    a stack of functions through which requests are passed before a response is
-    generated from the server. A particular middleware function in the server's
-    middleware stack may decide either to handle the request or pass it on to
-    the next middleware function.
+    for what is called middleware. A server's middleware is a stack of functions
+    through which requests are passed before a response is generated from the
+    server. A particular middleware function in the server's middleware stack
+    may decide either to handle the request or pass it on to the next middleware 
+    function.
 
  * [**`ejs-locals`**][ejs-locals]
   - [EJS][ejs] (Embedded JavaScript) template engine for Express with support
@@ -97,15 +97,17 @@ dependencies are specified in the `package.json` file.
  * [**`export-dir`**][export-dir]
   - Module which allows you to export entire directories as modules in Node.JS.
 
-
-Documentation (TODO)
+Documentation
 -------------
- - [Getting Started With Node](docs/node.md)
- - [Getting Started With Express](docs/express.md)
- - [Getting Started With Git](docs/git.md)
- - [Getting Started With MongoDB](docs/mongodb.md)
- - [App Architecture](docs/architecture.md)
-
+ - [Basic App Architecture][doc-architecture]
+ - [JavaScript Guide and Resources][doc-javascript]
+ - [Getting Started With Node][doc-node]
+ - [Getting Started With Express][doc-express]
+ - [Getting Started With Git][doc-git]
+ - [Getting Started With MongoDB][doc-mongodb]
+ - [Sublime Text Guide](docs/sublimetext.md)
+ - [JSON Guide and Resources](docs/json.md)
+ - [Testing Guide](docs/testing.md)
 
 [git]: http://git-scm.com
 [node]: http://nodejs.org
@@ -123,3 +125,13 @@ Documentation (TODO)
 [moment]: https://github.com/moment/moment
 [markedejs]: https://github.com/CoryG89/markedejs
 [export-dir]: https://github.com/CoryG89/export-dir
+
+[doc-architecture]: docs/architecture.md
+[doc-javascript]: docs/javascript.md
+[doc-node]: docs/node.md
+[doc-express]: docs/express.md
+[doc-git]: docs/git.md
+[doc-mongodb]: docs/mongodb.md
+[doc-sublimetext]: docs/sublimetext.md
+[doc-json]: docs/json.md
+[doc-testing]: docs/testing.md

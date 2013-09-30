@@ -18,8 +18,9 @@ module.exports = {
 
     post: function (req, res) {
         var record = req.body;
-        var opt = { w: 1 };
-        requests.insert(record, opt, function (err) {
+        var options = { w: 1 };
+        
+        requests.insert(record, options, function (err) {
             if (err) {
                 log('POST: Error inserting record:\n\n%s\n\n', err);
                 res.send(400);
@@ -38,7 +39,7 @@ module.exports = {
     },
 
     success: function (req, res) {
-        res.render('heroMessage', {
+        res.render('hero-unit', {
             title: 'Job Request Submitted',
             header: 'Job Request Submitted',
             message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
@@ -47,7 +48,7 @@ module.exports = {
     },
 
     failure: function (req, res) {
-        res.render('heroMessage', {
+        res.render('hero-unit', {
             title: 'Submission Failed',
             header: 'Sorry!',
             message: 'There was a problem submitting your job request. Please try again later.',

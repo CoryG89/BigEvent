@@ -75,4 +75,9 @@ responsible for.
      Express web framework is built on top of a library called Connect which
      has the notion of a middleware stack. When requests come into the server
      middleware can be thought of as a stack of functions which the requests
-     must pass through.
+     must pass through. Each middleware function can decide whether to handle
+     the request or pass it on to the next function in the stack. The ordering
+     in which middleware functions are added to the express app is important
+     because if a given middleware function handles a request, the request
+     never reaches middleware functions below the function which handles it.
+
