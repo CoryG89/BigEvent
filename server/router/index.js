@@ -23,7 +23,17 @@ module.exports = {
         app.post('/request', routes.request.post);
         app.get('/request/success', routes.request.success);
         app.get('/request/failure', routes.request.failure);
+	
+	    app.get('/tool', routes.tool.get);
+        app.post('/tool', routes.tool.post);
+        app.get('/tool/success', routes.tool.success);
+        app.get('/tool/failure', routes.tool.failure);
 
+        app.get('/tool/review', routes.tool.review.get);
+        app.post('/tool/review', routes.tool.review.post);
+        app.get('/tool/success', routes.tool.review.success);
+        app.get('/tool/failure', routes.tool.review.failure);
+        
         app.get('*', routes.notfound);
     }
 };

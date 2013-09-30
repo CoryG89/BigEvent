@@ -47,7 +47,7 @@ module.exports = {
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
                 db = database;
-                var names = ['users', 'volunteers', 'requests'];
+                var names = ['users', 'volunteers', 'requests', 'tools'];
                 createCollections(db, names, callback);
             }
         });
