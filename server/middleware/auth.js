@@ -4,7 +4,7 @@ var debug = require('../debug');
 var log = debug.getLogger({ prefix: '[middleware.auth]-  ' });
 
 module.exports = function () {
-    var protectedPaths = ['/volunteer', '/volunteer/control-panel'];
+    var protectedPaths = ['/volunteer', '/volunteer/account'];
     var redirectPath = '/signin';
 
     var isProtected = function (path) {
@@ -21,7 +21,7 @@ module.exports = function () {
             log('User session detected --> calling next()');
             next();
         } else {
-            res.cookie('prev_path', req.path, {
+            res.cookie('request_path', req.path, {
                 maxAge: 900000,
                 signed: false
             });

@@ -1,9 +1,10 @@
 ## Big Event
 
-Hi, <%= user.firstname %>! We successfully received your submitted job request. We received the following details:
+Hi, <%= user.first_name %>! We successfully received your submitted job request. We received the following details:
 
- - **Name:** <%= user.firstname %> <%= user.lastname %>
  - **Email:** <%= user.email %>
+ - **First Name:** <%= user.first_name %>
+ - **Last Name:** <%= user.last_name %>
  - **Address:** <%= user.address %>
  - **City:** <%= user.city %>
  - **State:** <%= user.state %>

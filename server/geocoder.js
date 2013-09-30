@@ -16,8 +16,10 @@ module.exports = {
                 data += chunk;
             });
             res.on('end', function () {
-                callback(data);
+                callback(JSON.parse(data));
             });
+        }).on('error', function (err) {
+            callback(null, err);
         });
     }
 };

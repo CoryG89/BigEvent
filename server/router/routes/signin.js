@@ -15,9 +15,8 @@ module.exports = {
     },
 
     post: function (req, res) {
-        var wlData = req.body;
-        var query = { _id: wlData.id };
-        var opt = { w: 1 };
+        var data = req.body;
+        var query = { _id: data.id };
         users.findOne(query, function (err, record) {
             if (err) {
                 log('POST: Error querying database:\n\n%s\n\n', err);
@@ -26,11 +25,15 @@ module.exports = {
                 log('POST: Record does not exist, adding new user record');
                 
                 record = {
-                    _id: wlData.id,
-                    wlData: wlData
+                    _id: data.id,
+                    name: data.name,
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    email: data.emails.account
                 };
 
-                users.insert(record, opt, function (err) {
+                var options = { w: 1 };
+                users.insert(record, options, function (err) {
                     if (err) {
                         log('POST: Error adding new record:\n\n%s\n\n', err);
                         res.send(400);
@@ -41,6 +44,7 @@ module.exports = {
                         res.send('ok', 200);
                     }
                 });
+
             } else {
                 log('POST: User record found, updating session');
                 req.session.user = record;

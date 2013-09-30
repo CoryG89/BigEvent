@@ -15,6 +15,8 @@ var transport = nodemailer.createTransport('SMTP', {
 var fromLabel = 'Big Event <bigeventdemo@gmail.com>';
 var templatesPath = 'server/views/email/';
 
+
+
 module.exports = {
 
     send: function (opt, callback) {
@@ -26,7 +28,7 @@ module.exports = {
             }
             else {
                 transport.sendMail({
-                    from: fromLabel,
+                    from: opt.from || fromLabel,
                     to: opt.to,
                     subject: opt.subject,
                     html: html

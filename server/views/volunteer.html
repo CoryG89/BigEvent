@@ -23,10 +23,22 @@
       <h3>Volunteer Registration</h3>
       <hr />
       <form id="volunteer-form" method="post">
-        <label for="name">Name</label>
-        <input class="input-block-level" type="text" id="name" name="name" value="<%= user.wlData.name %>" disabled />
         <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.wlData.emails.account %>" disabled />
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
+        <% if (user.first_name != null) { %>
+          <label for="first_name">First Name</label>
+          <input class="input-block-level" type="text" id="first-name" name="first_name" value="<%= user.first_name %>" required disabled />
+        <% } else { %>
+          <label for="first_name">First Name</label>
+          <input class="input-block-level" type="text" id="first-name" name="first_name" value="" required />
+        <% } %>
+        <% if (user.last_name !== null) { %>
+          <label for="last_name">Last Name</label>
+          <input class="input-block-level" type="text" id="last-name" name="last_name" value="<%= user.last_name %>" required disabled />
+        <% } else { %>
+          <label for="last_name">Last Name</label>
+          <input class="input-block-level" type="text" id="last-name" name="last_name" value="" required />
+        <% } %>
         <label for="gender-m">Gender</label>
         <div class="radio-group">
           <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>

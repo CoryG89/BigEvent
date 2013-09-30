@@ -14,8 +14,8 @@ var users = dbman.getCollection('users');
 module.exports = {
 
     get: function (req, res) {
-        if (req.session.user.eventData) {
-            res.redirect('/volunteer/control-panel');
+        if (req.session.user.address) {
+            res.redirect('/volunteer/account');
         }
         else {
             res.render('volunteer', {
@@ -29,18 +29,19 @@ module.exports = {
     post: function (req, res) {
         var data = req.body;
 
-        var addressString = util.format('%s %s, %s %s',
+        data.name = [data.first_name, data.last_name].join(' ');
+
+        var address = util.format('%s %s, %s %s',
             data.address, data.city, data.state, data.zip);
 
-        geocoder.send(addressString, function (geodata) {
-            var parsed = JSON.parse(geodata);
-            var result = parsed.results[0];
+        geocoder.send(address, function (response) {
+            var result = response.results[0];
 
             data.location = result.geometry.location;
-            data.formattedAddress = result.formatted_address;
+            data.formatted_address = result.formatted_address;
 
             var query = { _id: req.session.user._id };
-            var cmd = { $set: { eventData: data } };
+            var cmd = { $set: data };
             var opt = { w: 1, new: true };
 
             users.findAndModify(query, null, cmd, opt, function (err, record) {
@@ -54,7 +55,7 @@ module.exports = {
                     req.session.user = record;
 
                     emailer.send({
-                        to: record.wlData.emails.account,
+                        to: record.email,
                         subject: 'Volunteer Account Registration',
                         template: 'volunteer',
                         locals: { user: record }
@@ -68,7 +69,7 @@ module.exports = {
     },
 
     success: function (req, res) {
-        res.render('heroMessage', {
+        res.render('hero-unit', {
             title: 'Successful Registration',
             header: 'Thanks!',
             message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.',
@@ -77,7 +78,7 @@ module.exports = {
     },
 
     failure: function (req, res) {
-        res.render('heroMessage', {
+        res.render('hero-unit', {
             title: 'Registration Failed',
             header: 'Sorry!',
             message: 'There was a problem with the registration. Please try again later.',
@@ -85,9 +86,9 @@ module.exports = {
         });
     },
 
-    controlPanel: {
+    account: {
         get: function (req, res) {
-            res.render('control-panel', {
+            res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
                 user: req.session.user,
                 _layoutFile: 'default'
@@ -97,18 +98,17 @@ module.exports = {
         post: function (req, res) {
             var data = req.body;
 
-            var addressString = util.format('%s %s, %s %s',
+            var address = util.format('%s %s, %s %s',
                 data.address, data.city, data.state, data.zip);
 
-            geocoder.send(addressString, function (geodata) {
-                var parsed = JSON.parse(geodata);
-                var result = parsed.results[0];
+            geocoder.send(address, function (response) {
+                var result = response.results[0];
 
                 data.location = result.geometry.location;
-                data.formattedAddress = result.formatted_address;
-
+                data.formatted_address = result.formatted_address;
+                
                 var query = { _id: req.session.user._id };
-                var cmd = { $set: { eventData: data } };
+                var cmd = { $set: data };
                 var opt = { w: 1, new: true };
 
                 users.findAndModify(query, null, cmd, opt, function (err, record) {
@@ -123,7 +123,7 @@ module.exports = {
                         req.session.user = record;
 
                         emailer.send({
-                            to: record.wlData.emails.account,
+                            to: record.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-changed',
                             locals: { user: record }
@@ -137,7 +137,7 @@ module.exports = {
         },
         
         success: function (req, res) {
-            res.render('heroMessage', {
+            res.render('hero-unit', {
                 title: 'Successfully Updated',
                 header: 'Thanks!',
                 message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
@@ -146,7 +146,7 @@ module.exports = {
         },
 
         failure: function (req, res) {
-            res.render('heroMessage', {
+            res.render('hero-unit', {
                 title: 'Registration Failed',
                 header: 'Sorry!',
                 message: 'There was a problem updating your data. Please try again later.',

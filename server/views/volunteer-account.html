@@ -1,0 +1,108 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/volunteer-account-controller.js') -%>
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <div>
+      <h4>Reasons To Join</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>More Reasons</h4>
+      <hr class="thin"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>Even More</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <div>   
+        <h4 class="pull-left">Volunteer Account</h4>
+        <a id="edit-button" class="pull-right btn">Edit <span class="icon-edit"></span></a>
+        <a id="cancel-button" class="pull-right btn hidden">Cancel <span class="icon-remove"></span></a>
+      </div><br /><br /><hr />
+      <form id="account-form" method="post">
+        <label for="email">Email</label>
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" disabled />
+        <label for="first_name">First Name</label>
+        <input class="input-block-level" type="text" id="first-name" name="first_name" value="<%= user.first_name %>" disabled />
+        <label for="last_name">Last Name</label>
+        <input class="input-block-level" type="text" id="last-name" name="last_name" value="<%= user.last_name %>" disabled />
+        <label for="gender-m">Gender</label>
+        <div class="radio-group">
+          <div>
+            <% if (user.gender === 'Male') { %>
+              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required disabled />Male
+            <% } else { %>
+              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" required disabled />Male
+            <% } %>
+          </div>
+          <div>
+            <% if (user.gender === 'Female') { %>
+              <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" checked required disabled />Female
+            <% } else { %>
+              <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" required disabled />Female
+            <% } %>
+          </div>
+        </div>
+        <label for="address">Address</label>
+        <input class="input-block-level account-input" type="text" id="address" name="address" value="<%= user.address %>" required disabled />
+        <label for="city">City</label>
+        <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= user.city %>" required disabled />
+        <label for="state">State</label>
+        <select class="input-block-level" form="account-form" id="state"  name="state" required disabled> 
+          <option value="AL" selected>Alabama</option>
+        </select>
+        <label for="zip">Zip</label>
+        <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= user.zip %>" required disabled />
+        <label for="phone">Phone</label>
+        <input class="input-block-level account-input" type="tel" id="phone" name="phone" pattern="\d{10}" value="<%= user.phone %>" required disabled />
+        <label>Shirt Size</label>
+        <div class="radio-group">
+          <div>
+            <% if (user.shirtsize === 'S') { %>
+              <input class="account-input" type="radio" name="shirtsize" value="S" checked required disabled />S
+            <% } else { %>
+              <input class="account-input" type="radio" name="shirtsize" value="S" required disabled />S
+            <% } %>
+          </div>
+          <div>
+            <% if (user.shirtsize === 'M') { %>
+              <input class="account-input" type="radio" name="shirtsize" value="M" checked required disabled />M
+            <% } else { %>
+              <input class="account-input" type="radio" name="shirtsize" value="M" required disabled />M
+            <% } %>
+          </div>
+          <div>
+            <% if (user.shirtsize === 'L') { %>
+              <input class="account-input" type="radio" name="shirtsize" value="L" checked required disabled />L
+            <% } else { %>
+              <input class="account-input" type="radio" name="shirtsize" value="L" required disabled />L
+            <% } %>
+          </div>
+          <div>
+            <% if (user.shirtsize === 'XL') { %>
+              <input class="account-input" type="radio" name="shirtsize" value="XL" checked required disabled />XL
+            <% } else { %>
+              <input class="account-input" type="radio" name="shirtsize" value="XL" required disabled />XL
+            <% } %>
+          </div>
+          <div>
+            <% if (user.shirtsize === 'XXL') { %>
+              <input class="account-input" type="radio" name="shirtsize" value="XXL" checked required disabled />XXL
+            <% } else { %>
+              <input class="account-input" type="radio" name="shirtsize" value="XXL" required disabled />XXL
+            <% } %>
+          </div>
+        </div>
+        <hr />
+        <input class="account-input btn" type="reset" value="Clear" disabled />
+        <input class="account-input btn btn-primary pull-right" type="submit" value="Submit" disabled />
+      </form>
+    </div>
+  </div>
+</div>
