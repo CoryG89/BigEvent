@@ -1,0 +1,43 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/tool-reveiw-controller.js') -%>
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <div>
+      <h4>Reasons To Join</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>More Reasons</h4>
+      <hr class="thin"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>Even More</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <h3>Add Tool</h3>
+      <hr />
+      <form id="toolReview-form" method="post">
+        <label for="name">Name</label>
+        <input class="input-block-level" type="text" id="name" name="name" disabled/>
+        <label for="totalAvailable">Total Available</label>
+        <input class="input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="1" required />
+        <label for="numberInUse">Number In Use</label>
+        <input class="input-block-level" type="number" id="numberInUse" name="numberInUse" min="1" required />
+        <input class="input-block-level" type="checkbox" id="maxRequest" name="maxRequest"/> 
+        <label for="maxRequest">Set Maximum Request Amount</label>
+        <label for="maxRequestValue" id="maxRequestLable">Maximum Request Amount</label>
+        <input class="input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" min="1"/>
+        <hr />
+        <input class="btn" type="reset" value="Clear" />
+        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>
+
