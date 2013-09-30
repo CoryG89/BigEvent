@@ -29,7 +29,7 @@ var createCollections = function (db, names, callback) {
                 log('Sucessfully got collection \'%s\'', name);
                 cl[name] = collection;
             }
-            if (++current === names.length) callback(cl);
+            if (++current === names.length) callback();
         });
     });
 };
@@ -47,9 +47,8 @@ module.exports = {
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
                 db = database;
-                createCollections(db, ['users', 'requests'], function () {
-                    callback();
-                });
+                var names = ['users', 'volunteers', 'requests'];
+                createCollections(db, names, callback);
             }
         });
     },

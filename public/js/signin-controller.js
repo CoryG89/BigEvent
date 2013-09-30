@@ -37,11 +37,12 @@
 
         client_id: '0000000048103F2A',
         redirect_uri: 'http://bigevent.com',
-        scope: ['wl.signin', 'wl.basic', 'wl.emails'],
+        scope: ['wl.signin', 'wl.emails'],
         response_type: 'token',
         status: true
 
-    }).then(function () {
+    }).then(function (response) {
+        console.log('WL.init: %o', response);
 
         WL.ui({
             name: 'signin',

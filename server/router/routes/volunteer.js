@@ -9,12 +9,25 @@ var geocoder = require('../../geocoder');
 var debug = require('../../debug');
 
 var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
+
 var users = dbman.getCollection('users');
+var volunteers = dbman.getCollection('volunteers');
+
+function updateSession (session, object) {
+    if (typeof object === 'object') {
+        for (var prop in object) {
+            if (object.hasOwnProperty(prop))
+                session[prop] = object[prop];
+        }
+    }
+}
 
 module.exports = {
 
     get: function (req, res) {
-        if (req.session.user.address) {
+        if (req.session.volunteer) {
+            log('GET: Volunteer session detected');
+            log('GET: Redirecting to /volunteer/account');
             res.redirect('/volunteer/account');
         }
         else {
@@ -29,41 +42,59 @@ module.exports = {
     post: function (req, res) {
         var data = req.body;
 
-        data.name = [data.first_name, data.last_name].join(' ');
+        data._id = req.session.user._id;
+        data.email = req.session.user.email;
 
         var address = util.format('%s %s, %s %s',
             data.address, data.city, data.state, data.zip);
 
         geocoder.send(address, function (response) {
             var result = response.results[0];
-
             data.location = result.geometry.location;
-            data.formatted_address = result.formatted_address;
+            data.formattedAddress = result.formatted_address;
 
-            var query = { _id: req.session.user._id };
-            var cmd = { $set: data };
-            var opt = { w: 1, new: true };
-
-            users.findAndModify(query, null, cmd, opt, function (err, record) {
-                if (err) {
-                    log('POST: Error updating record:\n\n%s\n\n', err);
-                    res.send(400);
-                } else if (!record) {
-                    log('POST: Record not found');
+            volunteers.insert(data, { w: 1 }, function (err, result) {
+                if (err || !result) {
+                    log('POST: Error inserting record:\n\n%s\n\n', err);
                     res.send(400);
                 } else {
-                    req.session.user = record;
-                    log('POST: Record successfully updated');
-                    log('POST: Updating user session');
+                    log('POST: Volunteer record inserted, updating session');
+
+                    req.session.user.role = 'volunteer';
+                    req.session.volunteer = { };
+                    updateSession(req.session.volunteer, data);
+
+                    var tasksCompleted = 0;
+                    var numTasks = 2;
+                    var responseSent = false;
+
+                    var query = { _id: req.session.volunteer._id };
+                    var cmd = { $set: { role: 'volunteer' } };
+                    var opt = { w: 1 };
+
+                    users.update(query, cmd, opt, function (err, result) {
+                        if (err || !result) {
+                            log('POST: Error updating record: \n\n%s\n\n', err);
+                            if (!responseSent) res.send(400);
+                        } else {
+                            log('POST: User record successfully updated');
+                            if (++tasksCompleted === numTasks) {
+                                res.send('ok', 200);
+                            }
+                        }
+                    });
 
                     emailer.send({
-                        to: record.email,
+                        to: data.email,
                         subject: 'Volunteer Account Registration',
                         template: 'volunteer',
-                        locals: { user: record }
+                        locals: { user: data }
                     }, function (err) {
-                        if (err) res.send(400);
-                        else res.send('ok', 200);
+                        if (err) {
+                            if (!responseSent) res.send(400);
+                        } else if (++tasksCompleted === numTasks) {
+                            res.send('ok', 200);
+                        }
                     });
                 }
             });
@@ -92,7 +123,7 @@ module.exports = {
         get: function (req, res) {
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                user: req.session.user,
+                user: req.session.volunteer,
                 _layoutFile: 'default'
             });
         },
@@ -107,29 +138,26 @@ module.exports = {
                 var result = response.results[0];
 
                 data.location = result.geometry.location;
-                data.formatted_address = result.formatted_address;
+                data.formattedAddress = result.formatted_address;
                 
-                var query = { _id: req.session.user._id };
+                var query = { _id: req.session.volunteer._id };
                 var cmd = { $set: data };
-                var opt = { w: 1, new: true };
+                var opt = { w: 1 };
 
-                users.findAndModify(query, null, cmd, opt, function (err, record) {
-                    if (err) {
-                        log('POST: Error updating record:\n\n%s\n\n', err);
-                        res.send(400);
-                    } else if (!record) {
-                        log('POST: Record not found');
+                volunteers.update(query, cmd, opt, function (err, result) {
+                    if (err || !result) {
+                        log('POST: Update error, volunteer:\n\n%s\n\n', err);
                         res.send(400);
                     } else {
                         log('POST: Record successfully updated');
                         log('POST: Updating user session');
-                        req.session.user = record;
+                        updateSession(req.session.volunteer, data);
 
                         emailer.send({
-                            to: record.email,
+                            to: req.session.volunteer.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-changed',
-                            locals: { user: record }
+                            locals: { user: req.session.volunteer }
                         }, function (err) {
                             if (err) res.send(400);
                             else res.send('ok', 200);

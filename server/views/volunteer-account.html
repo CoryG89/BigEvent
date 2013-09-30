@@ -28,15 +28,15 @@
       <form id="account-form" method="post">
         <label for="email">Email</label>
         <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" readonly />
-        <label for="first_name">First Name</label>
-        <input class="input-block-level" type="text" id="first_name" name="first_name" value="<%= user.first_name %>" readonly />
-        <label for="last_name">Last Name</label>
-        <input class="input-block-level" type="text" id="last_name" name="last_name" value="<%= user.last_name %>" readonly />
+        <label for="first-name">First Name</label>
+        <input class="input-block-level account-input" type="text" id="first-name" name="firstName" value="<%= user.firstName %>" disabled />
+        <label for="last-name">Last Name</label>
+        <input class="input-block-level account-input" type="text" id="last-name" name="lastName" value="<%= user.lastName %>" disabled />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
           <div>
             <% if (user.gender === 'Male') { %>
-              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required readonly />Male
+              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required disabled />Male
             <% } else { %>
               <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" required disabled />Male
             <% } %>
@@ -64,38 +64,38 @@
         <label>Shirt Size</label>
         <div class="radio-group">
           <div>
-            <% if (user.shirtsize === 'S') { %>
-              <input class="account-input" type="radio" name="shirtsize" value="S" checked required disabled />S
+            <% if (user.shirtSize === 'S') { %>
+              <input class="account-input" type="radio" name="shirtSize" value="S" checked required disabled />S
             <% } else { %>
-              <input class="account-input" type="radio" name="shirtsize" value="S" required disabled />S
+              <input class="account-input" type="radio" name="shirtSize" value="S" required disabled />S
             <% } %>
           </div>
           <div>
-            <% if (user.shirtsize === 'M') { %>
-              <input class="account-input" type="radio" name="shirtsize" value="M" checked required disabled />M
+            <% if (user.shirtSize === 'M') { %>
+              <input class="account-input" type="radio" name="shirtSize" value="M" checked required disabled />M
             <% } else { %>
-              <input class="account-input" type="radio" name="shirtsize" value="M" required disabled />M
+              <input class="account-input" type="radio" name="shirtSize" value="M" required disabled />M
             <% } %>
           </div>
           <div>
-            <% if (user.shirtsize === 'L') { %>
-              <input class="account-input" type="radio" name="shirtsize" value="L" checked required disabled />L
+            <% if (user.shirtSize === 'L') { %>
+              <input class="account-input" type="radio" name="shirtSize" value="L" checked required disabled />L
             <% } else { %>
-              <input class="account-input" type="radio" name="shirtsize" value="L" required disabled />L
+              <input class="account-input" type="radio" name="shirtSize" value="L" required disabled />L
             <% } %>
           </div>
           <div>
-            <% if (user.shirtsize === 'XL') { %>
-              <input class="account-input" type="radio" name="shirtsize" value="XL" checked required disabled />XL
+            <% if (user.shirtSize === 'XL') { %>
+              <input class="account-input" type="radio" name="shirtSize" value="XL" checked required disabled />XL
             <% } else { %>
-              <input class="account-input" type="radio" name="shirtsize" value="XL" required disabled />XL
+              <input class="account-input" type="radio" name="shirtSize" value="XL" required disabled />XL
             <% } %>
           </div>
           <div>
-            <% if (user.shirtsize === 'XXL') { %>
-              <input class="account-input" type="radio" name="shirtsize" value="XXL" checked required disabled />XXL
+            <% if (user.shirtSize === 'XXL') { %>
+              <input class="account-input" type="radio" name="shirtSize" value="XXL" checked required disabled />XXL
             <% } else { %>
-              <input class="account-input" type="radio" name="shirtsize" value="XXL" required disabled />XXL
+              <input class="account-input" type="radio" name="shirtSize" value="XXL" required disabled />XXL
             <% } %>
           </div>
         </div>

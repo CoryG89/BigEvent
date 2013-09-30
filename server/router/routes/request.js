@@ -19,6 +19,7 @@ module.exports = {
     post: function (req, res) {
         var record = req.body;
         var options = { w: 1 };
+        
         requests.insert(record, options, function (err) {
             if (err) {
                 log('POST: Error inserting record:\n\n%s\n\n', err);
