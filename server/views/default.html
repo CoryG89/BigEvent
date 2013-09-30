@@ -47,11 +47,21 @@
           <a class="brand" href="<%= site.url %>"><%= site.title %></a>
           <div class="nav-collapse">
             <ul class="nav pull-right">
-              <li class="<% if (req.path === '/' || req.path === '/home') { %> active <% } %>"><a href="<%= site.url %>home">Home</a></li>
-              <li class="<% if (req.path === '/volunteer' || req.path === 'volunteer-cp') { %>active<% } %>"><a href="<%= site.url %>volunteer">Volunteer</a></li>
-              <li class="<% if (req.path === '/request') { %>active<% } %>"><a href="<%= site.url %>request">Request Job</a></li>
-              <li class="<% if (req.path === '/about') { %>active<% } %>"><a href="<%= site.url %>about">About</a></li>
-              <li class="<% if (req.path === '/contact') { %>active<% } %>"><a href="<%= site.url %>contact">Contact</a></li>
+              <li class="<% if (reqdata.path === '/' || reqdata.path === '/home') { %> active <% } %>">
+                <a href="<%= site.url %>home">Home</a>
+              </li>
+              <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
+                <a href="<%= site.url %>volunteer">Volunteer</a>
+              </li>
+              <li class="<% if (reqdata.path === '/request') { %>active<% } %>">
+                <a href="<%= site.url %>request">Request Job</a>
+              </li>
+              <li class="<% if (reqdata.path === '/about') { %>active<% } %>">
+                <a href="<%= site.url %>about">About</a>
+              </li>
+              <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
+                <a href="<%= site.url %>contact">Contact</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -60,7 +70,7 @@
     <div class="container">
       <%- body %>
       <hr>
-      <footer><p>&copy; <%= site.title %> -- <%= author.name %> 2013</p></footer>
+      <footer><div class="row"><div class="span11 offset1">&copy; <%= reqdata.date.year() %> - <%= site.author %></p></div></div></footer>
     </div>
 
     <!-- Some JavaScript, placed at the end of the document so the pages load faster -->

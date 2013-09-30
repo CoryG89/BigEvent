@@ -42,10 +42,10 @@ if (app.get('env') === 'developement') {
 app.locals({
     site: {
         title: 'Big Event',
-        description: packageData.description,
+        author: 'Auburn University SGA, Big Event',
+        description: 'Web application for the Auburn University SGA student volunteer program Big Event',
         url: 'http://bigevent.com/'
-    },
-    author: packageData.author
+    }
 });
 
 log('Express app, %s, has been properly configured', packageData.name);

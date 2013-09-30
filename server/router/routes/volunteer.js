@@ -53,6 +53,8 @@ module.exports = {
                     res.send(400);
                 } else {
                     req.session.user = record;
+                    log('POST: Record successfully updated');
+                    log('POST: Updating user session');
 
                     emailer.send({
                         to: record.email,
@@ -119,6 +121,7 @@ module.exports = {
                         log('POST: Record not found');
                         res.send(400);
                     } else {
+                        log('POST: Record successfully updated');
                         log('POST: Updating user session');
                         req.session.user = record;
 

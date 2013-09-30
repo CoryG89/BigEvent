@@ -24,20 +24,20 @@
       <hr />
       <form id="volunteer-form" method="post">
         <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
         <% if (user.first_name != null) { %>
           <label for="first_name">First Name</label>
-          <input class="input-block-level" type="text" id="first-name" name="first_name" value="<%= user.first_name %>" required disabled />
+          <input class="input-block-level" type="text" id="first_name" name="first_name" value="<%= user.first_name %>" required readonly />
         <% } else { %>
           <label for="first_name">First Name</label>
-          <input class="input-block-level" type="text" id="first-name" name="first_name" value="" required />
+          <input class="input-block-level" type="text" id="first_name" name="first_name" value="" required />
         <% } %>
-        <% if (user.last_name !== null) { %>
+        <% if (user.last_name != null) { %>
           <label for="last_name">Last Name</label>
-          <input class="input-block-level" type="text" id="last-name" name="last_name" value="<%= user.last_name %>" required disabled />
+          <input class="input-block-level" type="text" id="last_name" name="last_name" value="<%= user.last_name %>" required readonly />
         <% } else { %>
           <label for="last_name">Last Name</label>
-          <input class="input-block-level" type="text" id="last-name" name="last_name" value="" required />
+          <input class="input-block-level" type="text" id="last_name" name="last_name" value="" required />
         <% } %>
         <label for="gender-m">Gender</label>
         <div class="radio-group">
@@ -49,8 +49,8 @@
         <label for="city">City</label>
         <input class="input-block-level" type="text" id="city" name="city" required />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-form" id="state" name="state" required disabled> 
-          <option value="AL" selected>Alabama</option> 
+        <select class="input-block-level" form="volunteer-form" id="state" name="state" required readonly> 
+          <option value="AL" selected>Alabama</option>
         </select>
         <label for="zip">Zip</label>
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />

@@ -27,16 +27,16 @@
       </div><br /><br /><hr />
       <form id="account-form" method="post">
         <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" disabled />
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" readonly />
         <label for="first_name">First Name</label>
-        <input class="input-block-level" type="text" id="first-name" name="first_name" value="<%= user.first_name %>" disabled />
+        <input class="input-block-level" type="text" id="first_name" name="first_name" value="<%= user.first_name %>" readonly />
         <label for="last_name">Last Name</label>
-        <input class="input-block-level" type="text" id="last-name" name="last_name" value="<%= user.last_name %>" disabled />
+        <input class="input-block-level" type="text" id="last_name" name="last_name" value="<%= user.last_name %>" readonly />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
           <div>
             <% if (user.gender === 'Male') { %>
-              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required disabled />Male
+              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required readonly />Male
             <% } else { %>
               <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" required disabled />Male
             <% } %>

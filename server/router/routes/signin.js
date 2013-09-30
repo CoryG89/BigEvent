@@ -24,6 +24,8 @@ module.exports = {
             } else if (!record) {
                 log('POST: Record does not exist, adding new user record');
                 
+                console.log(data);
+
                 record = {
                     _id: data.id,
                     name: data.name,
