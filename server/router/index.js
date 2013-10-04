@@ -33,6 +33,8 @@ module.exports = {
         app.post('/tool/review', routes.tool.review.post);
         app.get('/tool/review/success', routes.tool.review.success);
         app.get('/tool/review/failure', routes.tool.review.failure);
+
+        app.get('/staffHomePage', routes.staffHomePage.get);
         
         app.get('*', routes.notfound);
     }

@@ -1,0 +1,104 @@
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="row">
+  <div class="span3 hidden-phone">
+    <img src="img/logo.jpg" />
+  </div>
+  <div class="offset1 span8">
+    <div class="hero-unit">
+      <h2>Welcome to Auburn's Big Event Staff Home Page</h2>
+        <p>This is the staff headquarters to conttol all things Big Event.</p>
+    </div>
+  </div>
+</div>
+  <!-- Data Tables -->
+<h2>Volunteer Table</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Shirt Size</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i=0; i<volunteerList.length; i++) { %>
+                <tr>
+                    <td>
+                        <a href="<%= site.url %>volunteer/account?id=<%= volunteerList[i]._id %>">
+                            <%= volunteerList[i].firstName + " " + volunteerList[i].lastName  %>
+                        </a>
+                    </td>
+                    <td><%= volunteerList[i].email             %></td>
+                    <td><%= volunteerList[i].phone             %></td>
+                    <td><%= volunteerList[i].gender            %></td>
+                    <td><%= volunteerList[i].shirtSize         %></td>
+                    <td><%= volunteerList[i].formattedAddress  %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+<h2>Job Site Table</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Alternate Phone Number</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i=0; i<jobSiteList.length; i++) { %>
+                <tr>
+                    <td>
+                        <a href="<%= site.url %>request/evaluation?id=<%= jobSiteList[i]._id %>">
+                            <%= jobSiteList[i].firstName + " " + jobSiteList[i].lastName  %>
+                        </a>
+                    </td>
+                    <td><%= jobSiteList[i].email             %></td>
+                    <td><%= jobSiteList[i].phone             %></td>
+                    <td><%= jobSiteList[i].altPhone            %></td>
+                    <td><%= jobSiteList[i].formattedAddress  %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+<h2>Tool Table</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Availible</th>
+                <th>Number in Use</th>
+                <th>Number Reamining</th>
+                <th>Max Number To be Requested</th>
+                <th>Number Requested</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(i=0; i<toolList.length; i++) { %>
+                <tr>
+                    <td>
+                        <a href="<%= site.url %>tool/review?id=<%= toolList[i]._id %>">
+                            <%= toolList[i].name %>
+                        </a>
+                    </td>
+                    <td><%= toolList[i].totalAvailable  %></td>
+                    <td><%= toolList[i].numberInUse     %></td>
+                    <td><%= toolList[i].numberRemaining %></td>
+                    <td><%= toolList[i].maxRequestValue %></td>
+                    <td><%= toolList[i].numberRequested %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
