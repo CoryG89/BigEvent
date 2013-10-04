@@ -8,12 +8,15 @@
     {
         $maxReqValue.addClass('hidden');
         $maxReqLable.addClass('hidden');
+        $maxReqValue.prop('required', false);
+        $maxReqValue.prop('disabled', true);
     }
 
     var $form = $('form#toolReview-form');
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $accountInputs = $('.tool-review-input');
+    var $numberRequested = $('input#numberRequested');
 
     $('form#toolReview-form').ajaxForm({
         beforeSubmit: function () {
@@ -24,17 +27,20 @@
                 alert('Number In Use cannot be greater than Total Available.');
                 return false;
             }
-
-            //set all disabled fields to not disabled so that the request will contain their values
-            $('input#name').prop('disabled', false);
-            $('input#numberRemaining').prop('disabled', false);
-
+            if($maxReqCheckbox.prop('checked'))
+            {
+                if(parseInt($numberRequested.val()) > parseInt($maxReqValue.val()))
+                {
+                    alert('You cannot request more than the Max Request Limit');
+                    return false;
+                }
+            }
             return true;
         },
 
         success: function (data, status) {
             if (status === 'success' && data === 'OK') {
-                window.location.replace('/tool/review/success');
+                window.location.replace('/staffHomePage');
             }
         },
 

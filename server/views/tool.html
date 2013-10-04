@@ -26,13 +26,15 @@
         <label for="name">Name</label>
         <input class="input-block-level" type="text" id="name" name="name" required/>
         <label for="totalAvailable">Total Available</label>
-        <input class="input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="1" required />
+        <input class="input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="0" required />
         <label for="numberInUse">Number In Use</label>
-        <input class="input-block-level" type="number" id="numberInUse" name="numberInUse" min="1" required />
+        <input class="input-block-level" type="number" id="numberInUse" name="numberInUse" min="0" required />
+        <label for="numberRequested">Number Requested</label>
+        <input class="input-block-level" type="number" id="numberRequested" name="numberRequested" min="0"/>
         <input class="input-block-level" type="checkbox" id="maxRequest" name="maxRequest"/> 
         <label for="maxRequest">Set Maximum Request Amount</label>
         <label for="maxRequestValue" id="maxRequestLable">Maximum Request Amount</label>
-        <input class="input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" min="1"/>
+        <input class="input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" min="0"/>
         <hr />
         <input class="btn" type="reset" value="Clear" />
         <input class="btn btn-primary pull-right" type="submit" value="Submit" />

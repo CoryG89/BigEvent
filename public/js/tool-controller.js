@@ -6,6 +6,7 @@
     var $maxReqLable = $('#maxRequestLable');
     $maxReqValue.addClass('hidden');
     $maxReqLable.addClass('hidden');
+    var $numberRequested = $('input#numberRequested');
 
     $('form#tool-form').ajaxForm({
         beforeSubmit: function () {
@@ -15,6 +16,14 @@
             {
                 alert('Number In Use cannot be greater than Total Available.');
                 return false;
+            }
+            if($maxReqCheckbox.prop('checked'))
+            {
+                if(parseInt($numberRequested.val()) > parseInt($maxReqValue.val()))
+                {
+                    alert('You cannot request more than the Max Request Limit');
+                    return false;
+                }
             }
             return true;
         },

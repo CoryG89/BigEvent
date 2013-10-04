@@ -2,7 +2,6 @@
 
 var debug = require('../../debug');
 var dbman = require('../../dbman');
-var emailer = require('../../emailer');
 
 var log = debug.getLogger({ prefix: '[route.tool]-  ' });
 var tools = dbman.getCollection('tools');
@@ -40,8 +39,10 @@ module.exports = {
             else if(!oldRecord)
             {
                 log('POST: Tool not found -> adding new entry to database');
+                
                 //calculate the number reamining in storage
                 newRecord.numberRemaining = newRecord.totalAvailable - newRecord.numberInUse;
+
                 //insert new entry
                 tools.insert(newRecord, { w: 1 }, function (err, records) {
                     if (err || !records) {
