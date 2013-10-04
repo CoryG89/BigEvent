@@ -5,6 +5,7 @@ var util = require('util');
 /** Import MongoDB Native Driver */
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
+var ObjectId = mongodb.ObjectID;
 
 /** Import database authentication details */
 var auth = require('./auth');
@@ -57,5 +58,8 @@ module.exports = {
     },
     getDatabase: function () {
         return db;
+    },
+    getObjectId: function() {
+        return ObjectId;
     }
 };

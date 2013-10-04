@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var $maxReqCheckbox = $('input#maxRequest');
+    var $maxReqCheckbox = $('#maxRequest');
     var $maxReqValue = $('input#maxRequestValue');
     var $maxReqLable = $('#maxRequestLable');
     $maxReqValue.addClass('hidden');
@@ -11,7 +11,7 @@
         beforeSubmit: function () {
 
             //check to see if the inputed numbers are correct
-            if($('#totalAvailable').val() < $('#numberInUse').val())
+            if(parseInt($('#totalAvailable').val()) < parseInt($('#numberInUse').val()))
             {
                 alert('Number In Use cannot be greater than Total Available.');
                 return false;
@@ -21,7 +21,7 @@
 
         success: function (data, status) {
             if (status === 'success') {
-                window.location.replace('/tool/review?recordName=' + data.recordName);
+                window.location.replace('/tool/review/?id=' + data.id);
             }
         },
 
@@ -43,12 +43,13 @@
         {
             $maxReqLable.removeClass('hidden');
             $maxReqValue.removeClass('hidden');
-            $maxReqValue.focus();
+            $maxReqValue.prop('required', true);
         }
         else
         {
             $maxReqLable.addClass('hidden');
             $maxReqValue.addClass('hidden');
+            $maxReqValue.prop('required', false);
         }
     });
     

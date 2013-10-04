@@ -1,5 +1,5 @@
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
-<% script(site.url + 'js/tool-reveiw-controller.js') -%>
+<% script(site.url + 'js/tool-review-controller.js') -%>
 <div class="row">
   <div class="offset1 span5 hidden-phone">
     <div>
@@ -20,22 +20,31 @@
   </div>
   <div class="span5">
     <div class="well">
-      <h3>Add Tool</h3>
-      <hr />
+      <div>   
+        <h4 class="pull-left">Edit Tool</h4>
+        <a id="edit-button" class="pull-right btn">Edit <span class="icon-edit"></span></a>
+        <a id="cancel-button" class="pull-right btn hidden">Cancel <span class="icon-remove"></span></a>
+      </div><br /><br /><hr />
       <form id="toolReview-form" method="post">
         <label for="name">Name</label>
-        <input class="input-block-level" type="text" id="name" name="name" disabled/>
+        <input class="input-block-level" type="text" id="name" name="name" value="<%= record.name %>" disabled/>
         <label for="totalAvailable">Total Available</label>
-        <input class="input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="1" required />
+        <input class="tool-review-input input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="0" value="<%= record.totalAvailable %>" required disabled/>
         <label for="numberInUse">Number In Use</label>
-        <input class="input-block-level" type="number" id="numberInUse" name="numberInUse" min="1" required />
-        <input class="input-block-level" type="checkbox" id="maxRequest" name="maxRequest"/> 
+        <input class="tool-review-input input-block-level" type="number" id="numberInUse" name="numberInUse" min="0" value="<%= record.numberInUse %>" required disabled/>
+        <label for="numberReamaining">Number Remaining</label>
+        <input class="input-block-level" type="number" id="numberRemaining" name="numberRemaining" value="<%= record.numberRemaining %>" min="1" disabled/>
+        <% if(record.maxRequest === 'on') { %>
+          <input class="tool-review-input " type="checkbox" id="maxRequest" name="maxRequest" checked disabled/> 
+        <% } else { %>
+          <input class="tool-review-input" type="checkbox" id="maxRequest" name="maxRequest" disabled/> 
+        <% } %>
         <label for="maxRequest">Set Maximum Request Amount</label>
         <label for="maxRequestValue" id="maxRequestLable">Maximum Request Amount</label>
-        <input class="input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" min="1"/>
+        <input class="tool-review-input input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" value="<%= record.maxRequestValue %>" min="1" disabled/>
         <hr />
-        <input class="btn" type="reset" value="Clear" />
-        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+        <input class="tool-review-input btn" type="reset" value="Clear" disabled/>
+        <input class="tool-review-input btn btn-primary pull-right" type="submit" value="Submit" disabled/>
       </form>
     </div>
   </div>

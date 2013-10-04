@@ -31,8 +31,8 @@ module.exports = {
 
         app.get('/tool/review', routes.tool.review.get);
         app.post('/tool/review', routes.tool.review.post);
-        app.get('/tool/success', routes.tool.review.success);
-        app.get('/tool/failure', routes.tool.review.failure);
+        app.get('/tool/review/success', routes.tool.review.success);
+        app.get('/tool/review/failure', routes.tool.review.failure);
         
         app.get('*', routes.notfound);
     }
