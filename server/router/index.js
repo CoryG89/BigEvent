@@ -18,6 +18,9 @@ module.exports = {
         app.post('/volunteer/account', routes.volunteer.account.post);
         app.get('/volunteer/account/success', routes.volunteer.account.success);
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
+        
+        app.get('/volunteer/id/:id', routes.volunteer.account.id);
+        app.post('/volunteer/id/:id', routes.volunteer.account.postId);
 
         app.get('/request', routes.request.get);
         app.post('/request', routes.request.post);

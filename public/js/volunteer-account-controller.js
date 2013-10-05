@@ -27,8 +27,8 @@
             if (status === 'success' && data === 'ok') {
                 window.location.replace('/volunteer/account/success');
             }
-            else if(status === 'success' && data === 'query') {
-
+            else if(status === 'success' && data === 'id') {
+                window.location.replace('/staffHomePage');
             }
         },
 

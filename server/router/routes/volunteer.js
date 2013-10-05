@@ -122,26 +122,11 @@ module.exports = {
 
     account: {
         get: function (req, res) {
-            if(req.query.id)
-            {
-                log('VOLUNTEER.ACCOUNT.GET: Getting volunteer with _id: %s', req.query.id);
-                volunteers.findOne({_id: req.query.id}, function(err, record){
-                    res.render('volunteer-account', {
-                        title: 'Volunteer Control Panel',
-                        user: record,
-                        _layoutFile: 'default'
-                    });
-                });
-            }
-            else
-            {
-                log('VOLUNTEER.ACCOUNT.GET: No volunteer requested. Using session data.');
-                res.render('volunteer-account', {
-                    title: 'Volunteer Control Panel',
-                    user: req.session.volunteer,
-                    _layoutFile: 'default'
-                });
-            }
+            res.render('volunteer-account', {
+                title: 'Volunteer Control Panel',
+                user: req.session.volunteer,
+                _layoutFile: 'default'
+            });
         },
 
         post: function (req, res) {
@@ -156,16 +141,7 @@ module.exports = {
                 data.location = result.geometry.location;
                 data.formattedAddress = result.formatted_address;
                 
-                //determin how we are to query.
-                var query;
-                if(req.query.id)//means this request came from a logged in staff member not a Registered Volunteer
-                {
-                    query = { _id: req.query.id };
-                }
-                else 
-                {
-                    query = { _id: req.session.volunteer._id };
-                }   
+                var query = { _id: req.session.volunteer._id }; 
                 var cmd = { $set: data };
                 var opt = { w: 1 };
 
@@ -176,35 +152,16 @@ module.exports = {
                     } else {
                         log('POST: Record successfully updated');
                         log('POST: Updating user session');
-                        if(!req.query.id)//means this request came from a Registered Volunteer
-                        {
-                            updateSession(req.session.volunteer, data);
-                        }
+                        updateSession(req.session.volunteer, data);
 
-                        var user, email;
-                        if(req.query.id)//means the request did not come from a registered volunteer
-                        {
-                            log('VOLUNTEER.ACCOUNT.POST: Using query data for eamil.');
-                            user = result[0];
-                            email = result[0].email;
-                        }
-                        else
-                        {
-                            log('VOLUNTEER.ACCOUNT.POST: Using session data for eamil.');
-                            user = req.session.volunteer;
-                            email = req.session.volunteer.email;
-                        }
                         emailer.send({
-                            to: email,
+                            to: req.session.volunteer.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-changed',
-                            locals: { user: user }
+                            locals: { user: req.session.volunteer }
                         }, function (err) {
                             if (err) {
                                 res.send(400);
-                            }
-                            else if(req.query.id) {
-                                res.send('query', 200);
                             }
                             else {
                                 res.send('ok', 200);
@@ -215,6 +172,58 @@ module.exports = {
             });
         },
         
+        id: function (req, res) {
+            volunteers.findOne({_id: req.params.id}, function(err, record){
+                res.render('volunteer-account', {
+                    title: 'Volunteer Control Panel',
+                    user: record,
+                    _layoutFile: 'default'
+                });
+            });
+        },
+
+        postId: function (req, res) {
+            var data = req.body;
+
+            var address = util.format('%s %s, %s %s',
+                data.address, data.city, data.state, data.zip);
+
+            geocoder.send(address, function (response) {
+                var result = response.results[0];
+
+                data.location = result.geometry.location;
+                data.formattedAddress = result.formatted_address;
+
+                var query = { _id: req.params.id };  
+                var cmd = { $set: data };
+                var opt = { w: 1 };
+
+                volunteers.update(query, cmd, opt, function (err, result) {
+                    if (err || !result) {
+                        log('POST: Update error, volunteer:\n\n%s\n\n', err);
+                        res.send(400);
+                    } else {
+                        log('POST: Record successfully updated');
+                        log('POST: Updating user session');
+
+                        emailer.send({
+                            to: result[0].email,
+                            subject: 'Volunteer Account Update',
+                            template: 'volunteer-changed',
+                            locals: { user: result[0] }
+                        }, function (err) {
+                            if (err) {
+                                res.send(400);
+                            }
+                            else {
+                                res.send('id', 200);
+                            }
+                        });
+                    }
+                });
+            });
+        },
+
         success: function (req, res) {
             res.render('hero-unit', {
                 title: 'Successfully Updated',
