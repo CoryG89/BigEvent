@@ -82,7 +82,7 @@ module.exports = {
 
     review: {
         get: function(req, res){
-            var id = req.query.id;
+            var id = req.params.id;
             log('TOOL.REVIEW.GET: Get Tool with _id: %s', id);
             tools.findOne({ _id: new ObjectId(id)}, function(error, record){
                 if(error){
@@ -117,7 +117,7 @@ module.exports = {
 
         post: function(req, res){
             var newRecord = req.body;
-            var id = req.query.id;
+            var id = req.params.id;
 
             log("TOOL.REVIEW.POST Trying to bet tool with _id: %s", id);
 
@@ -141,7 +141,7 @@ module.exports = {
                     res.send(400);
                 }
                 else if(!result){
-                    log('TOOL.REVIEW.POST: Could not find tool, id:\n\n%s\n\n', id);
+                    log('TOOL.REVIEW.POST: Could not find tool, _id:\n\n%s\n\n', id);
                     res.send(400);
 
                 }

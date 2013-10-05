@@ -30,7 +30,7 @@
 
         success: function (data, status) {
             if (status === 'success') {
-                window.location.replace('/tool/review/?id=' + data.id);
+                window.location.replace('/tool/review/' + data.id);
             }
         },
 
