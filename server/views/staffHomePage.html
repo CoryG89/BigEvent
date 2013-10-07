@@ -28,7 +28,7 @@
             <% for(i=0; i<volunteerList.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="<%= site.url %>volunteer/account?id=<%= volunteerList[i]._id %>">
+                        <a href="<%= site.url %>volunteer/account/id/<%= volunteerList[i]._id %>">
                             <%= volunteerList[i].firstName + " " + volunteerList[i].lastName  %>
                         </a>
                     </td>
@@ -40,6 +40,11 @@
                 </tr>
             <% } %>
         </tbody>
+        <tfoot>
+            <tr>
+
+            </tr>
+        </tfoot>
     </table>
 </div>
 <h2>Job Site Table</h2>
@@ -58,7 +63,7 @@
             <% for(i=0; i<jobSiteList.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="<%= site.url %>request/evaluation?id=<%= jobSiteList[i]._id %>">
+                        <a href="<%= site.url %>request/evaluation/<%= jobSiteList[i]._id %>">
                             <%= jobSiteList[i].firstName + " " + jobSiteList[i].lastName  %>
                         </a>
                     </td>
@@ -88,7 +93,7 @@
             <% for(i=0; i<toolList.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="<%= site.url %>tool/review?id=<%= toolList[i]._id %>">
+                        <a href="<%= site.url %>tool/review/<%= toolList[i]._id %>">
                             <%= toolList[i].name %>
                         </a>
                     </td>
