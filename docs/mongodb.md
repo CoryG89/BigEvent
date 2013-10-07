@@ -10,12 +10,21 @@ being used in other Node projects so it's a good fit for our project.
 
 MongoDB is different from a relation DBMS such as MySQL as it does not store
 data in the form of tables (relations) with rows and columns. Instead, MongoDB
-is stores data in JSON style documents,
+stores data in JSON-style *documents* in groups of *collections*. Documents
+in MongoDB collections have what is called dynamic schema, which means that
+documents of the same collection can differ in what fields they contain.
+Similarly, two documents with the same field can be of different type.
+Some libraries such as Mongoose add a strict schema which is associated with
+a collection, guaranteeing that any documents within said collection have the
+fields and field types declared by the schema. There are advantages and
+disadvantages to both approaches. I prefer to use dynamic schema for more
+rapid prototyping and iteration.
 
 
 [mongodb]: mongodb.org
 [mongodb-docs]: http://docs.mongodb.org/manual/
 [mongodb-native-driver]: http://mongodb.github.io/node-mongodb-native/
+[mongodb-drivers]: http://docs.mongodb.org/ecosystem/drivers/downloads/
 [mongodb-downloads]: http://www.mongodb.org/downloads
 [mongodb-crud-intro]: http://docs.mongodb.org/manual/core/crud-introduction/
 [mongodb-read-ops]: http://docs.mongodb.org/manual/core/read-operations/

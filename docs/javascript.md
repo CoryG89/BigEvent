@@ -60,7 +60,7 @@ be determined by the interpreter on the fly.
 
 Client-Side JavaScript
 ----------------------
-Node.JS uses an implementation of the CommonJS module spec
+Node.JS uses an implementation of the CommonJS module 
 
 Advanced Features and Techniques (TODO)
 --------------------------------
