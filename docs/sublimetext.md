@@ -72,18 +72,34 @@ packages that I am using are.
        Java, C/C++. JSHint is highly configurable with `.jshintrc` files which
        is a JSON file.
 
-   - **Smart Markdown** - Markdown syntax highlighting, preview, rendering, etc.
-
    - **jQuery** - Adds autocompletion, snippets, etc for jQuery.
-   
-   -
+
+   - **Smart Markdown** - Markdown syntax highlighting, preview, rendering, etc.
 
 #### Installation
 
 You can install Package Control easily by opening the console by selecting from
-the top menu `View --> Show Console` and copying and entering the following
-text
+the top menu `View --> Show Console` and copying/entering the following text
 
-    import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+>import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+
+#### Installing Packages
+
+I would *definitely* recommend installing JSHint Gutter. JSHint can save you a
+lot of time by catching mistakes for you, as well as keeping our code uniformly
+formatted in the process. Once you have Package Control installed, install
+JSHint Gutter by selecting from the upper menu `Preferences -> Package Control`
+and typing or clicking `Install Package`. Search for `jshint` in order to find
+and select JSHint Gutter. After it installs you'll need to configure it by
+selecting from the menu:
+
+    Preferences -> Package Settings -> JSHint Gutter -> Set Plugin Options
+
+Set it to lint on save. If you get lots of errors in lots of the project files
+you may need to copy the contents of the `.jshintrc` file into the settings
+file found at:
+
+    Preferences -> Package Settings -> JSHint Gutter -> Set Linting Options
+
 
 [sublime-text-3]: http://sublimetext.com/3

@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('util');
+
 var debug = require('../../debug');
 var dbman = require('../../dbman');
 var emailer = require('../../emailer');

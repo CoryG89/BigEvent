@@ -74,28 +74,47 @@ dependencies are specified in the `package.json` file.
     may decide either to handle the request or pass it on to the next middleware 
     function.
 
+ * [**`ejs`**][ejs]
+  - EJS is template engine written by the creator of Express, 
+    [TJ Holowaychuk][tj-holowaychuk], who is also the author of Express and the
+    Mocha test-running framework we're using. EJS supports both client-side and
+    server-side templating. We're using EJS server-side by depending on the
+    `ejs` npm. EJS stands for Embedded JavaScript, which is fitting because
+    supports template logic by executing JavaScript embedded within
+    micro-template style tags. `<% %>`.
+
  * [**`ejs-locals`**][ejs-locals]
-  - [EJS][ejs] (Embedded JavaScript) template engine for Express with support
-    for view partials and layouts.
+  - [ejs-locals][ejs-locals] is a library wrapping the `ejs` module which adds
+    support for view partials, layouts, and block include functions within EJS
+    templates.
 
  * [**`nodemailer`**][nodemailer]
-  - Allows you to send e-mails in Node using various transport methods, the most
-    common being an SMTP server. Nodemailer supports these
-    [well known services][nodemailer-wpks].
+  - Allows e-mails to be sent by a Node server using various transport methods,
+    the most common being an SMTP server. Nodemailer supports these
+    [well known services][nodemailer-wpks] in order to make configuration easy.
 
  * [**`mongodb`**][mongodb]
-  - The MongoDB native driver for Node.JS. Allows a Node application to connect
-    to and use a MongoDB database.
+  - MongoDB is the leading NoSQL database management system, meaning it is 
+    *not* work with relational databases like more common SQL-based database
+    management systems. MongoDB does not work with tables and rows and those
+    words are not part of the terminology used. MongoDB stores and queries data
+    from **collections** of JSON-style **documents**
+  - The MongoDB system itself is written in C++ for performance, but it's
+    native driver is actually written in JavaScript as a Node.JS module. MongoDB
+    offers   is itself written for  a Node module so we're using it as it was
+    meant to be used. There are some other alternatives to using this module
+    two of which I have considered are `Mongoose` and `mongoskin`
 
  * [**`moment`**][moment]
-  - Pretty timestamping in Node.JS
+  - Parsing and creating timestamps using the JavaScript Date object.
 
- * [**`markedejs`**][markedejs]
-  - Templating engine for Express using [markdown][markdown-cheatsheet] and EJS.
-    Markdown is markup that is compiled to HTML.
+ * [**`marked`**][marked]
+  - Markdown parser and compiler written in JavaScript. Built for speed.
 
  * [**`export-dir`**][export-dir]
-  - Module which allows you to export entire directories as modules in Node.JS.
+  - This is an example of a Node module that I wrote myself. It's purpose is
+    to allow you to export an entire directory of files as an object. It is
+    used in the routes
 
 Documentation
 -------------
