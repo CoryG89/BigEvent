@@ -5,6 +5,7 @@ var util = require('util');
 /** Import MongoDB Native Driver */
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
+var ObjectId = mongodb.ObjectID;
 
 /** Import database authentication details */
 var auth = require('./auth');
@@ -47,7 +48,7 @@ module.exports = {
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
                 db = database;
-                var names = ['users', 'volunteers', 'requests'];
+                var names = ['users', 'volunteers', 'jobSites', 'tools'];
                 createCollections(db, names, callback);
             }
         });
@@ -57,5 +58,8 @@ module.exports = {
     },
     getDatabase: function () {
         return db;
+    },
+    getObjectId: function() {
+        return ObjectId;
     }
 };

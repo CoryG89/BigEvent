@@ -1,0 +1,54 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/tool-review-controller.js') -%>
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <div>
+      <h4>Reasons To Join</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>More Reasons</h4>
+      <hr class="thin"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>Even More</h4>
+      <hr class="thin" />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <div>   
+        <h4 class="pull-left">Edit Tool</h4>
+        <a id="edit-button" class="pull-right btn">Edit <span class="icon-edit"></span></a>
+        <a id="cancel-button" class="pull-right btn hidden">Cancel <span class="icon-remove"></span></a>
+      </div><br /><br /><hr />
+      <form id="toolReview-form" method="post">
+        <label for="name">Name</label>
+        <input class="input-block-level" type="text" id="name" name="name" value="<%= record.name %>" disabled/>
+        <label for="totalAvailable">Total Available</label>
+        <input class="tool-review-input input-block-level" type="number" id="totalAvailable" name="totalAvailable" min="0" value="<%= record.totalAvailable %>" required disabled/>
+        <label for="numberInUse">Number In Use</label>
+        <input class="tool-review-input input-block-level" type="number" id="numberInUse" name="numberInUse" min="0" value="<%= record.numberInUse %>" required disabled/>
+        <label for="numberRequested">Number Requested</label>
+        <input class="tool-review-input input-block-level" type="number" id="numberRequested" name="numberRequested" value="<%= record.numberRequested %>" min="0" required disabled/>
+        <label for="numberReamaining">Number Remaining</label>
+        <input class="input-block-level" type="number" id="numberRemaining" name="numberRemaining" value="<%= record.numberRemaining %>" min="0" disabled/>
+        <% if(record.maxRequest === 'on') { %>
+          <input class="tool-review-input " type="checkbox" id="maxRequest" name="maxRequest" checked disabled/> 
+        <% } else { %>
+          <input class="tool-review-input" type="checkbox" id="maxRequest" name="maxRequest" disabled/> 
+        <% } %>
+        <label for="maxRequest">Set Maximum Request Amount</label>
+        <label for="maxRequestValue" id="maxRequestLable">Maximum Request Amount</label>
+        <input class="tool-review-input input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" value="<%= record.maxRequestValue %>" min="0" disabled/>
+        <hr />
+        <input class="tool-review-input btn" type="reset" value="Clear" disabled/>
+        <input class="tool-review-input btn btn-primary pull-right" type="submit" value="Submit" disabled/>
+      </form>
+    </div>
+  </div>
+</div>
+

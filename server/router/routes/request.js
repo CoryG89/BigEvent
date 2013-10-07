@@ -5,7 +5,7 @@ var dbman = require('../../dbman');
 var emailer = require('../../emailer');
 
 var log = debug.getLogger({ prefix: '[route.request]-  ' });
-var requests = dbman.getCollection('requests');
+var requests = dbman.getCollection('jobSites');
 
 module.exports = {
 
@@ -20,6 +20,9 @@ module.exports = {
         var record = req.body;
         var options = { w: 1 };
         
+        record.formattedAddress = util.format('%s %s, %s %s',
+            record.address, record.city, record.state, record.zip);
+
         requests.insert(record, options, function (err) {
             if (err) {
                 log('POST: Error inserting record:\n\n%s\n\n', err);

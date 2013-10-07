@@ -18,12 +18,27 @@ module.exports = {
         app.post('/volunteer/account', routes.volunteer.account.post);
         app.get('/volunteer/account/success', routes.volunteer.account.success);
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
+        
+        app.get('/volunteer/account/id/:id', routes.volunteer.account.id);
+        app.post('/volunteer/account/id/:id', routes.volunteer.account.postId);
 
         app.get('/request', routes.request.get);
         app.post('/request', routes.request.post);
         app.get('/request/success', routes.request.success);
         app.get('/request/failure', routes.request.failure);
+	
+	    app.get('/tool', routes.tool.get);
+        app.post('/tool', routes.tool.post);
+        app.get('/tool/success', routes.tool.success);
+        app.get('/tool/failure', routes.tool.failure);
 
+        app.get('/tool/review/:id', routes.tool.review.get);
+        app.post('/tool/review/:id', routes.tool.review.post);
+        app.get('/tool/review/success', routes.tool.review.success);
+        app.get('/tool/review/failure', routes.tool.review.failure);
+
+        app.get('/staffHomePage', routes.staffHomePage.get);
+        
         app.get('*', routes.notfound);
     }
 };
