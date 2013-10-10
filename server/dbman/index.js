@@ -20,6 +20,8 @@ var log = debug.getLogger({ prefix: '[dbman]-  ' });
 var db;
 var cl = { };
 
+var collectionNames = ['users', 'volunteers', 'jobsites', 'tools'];
+
 var createCollections = function (db, names, callback) {
     var current = 0;
     names.forEach(function (name) {
@@ -48,8 +50,7 @@ module.exports = {
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
                 db = database;
-                var names = ['users', 'volunteers', 'jobSites', 'tools'];
-                createCollections(db, names, callback);
+                createCollections(db, collectionNames, callback);
             }
         });
     },

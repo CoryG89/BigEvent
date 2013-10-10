@@ -10,7 +10,7 @@ var isOpenPath = (function () {
         '/': true,
         '/home': true,
         '/signin': true,
-        '/request': true,
+        '/jobsite/request': true,
         '/contact': true,
         '/about': true
     };

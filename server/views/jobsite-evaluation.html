@@ -1,0 +1,34 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/job-eval-controller.js') -%>
+
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <h3>Job Site Request Data</h4>
+    <hr class="thin" />
+    <ul>
+      <li><strong>Name:</strong> <%= jobRequest.firstName + ' ' + jobRequest.lastName %></li>
+      <li><strong>Address:</strong>
+        <ul>
+          <li><strong>Steet:</strong> <%= jobRequest.address %></li>
+          <li><strong>City:</strong> <%= jobRequest.city %></li>
+          <li><strong>State:</strong> <%= jobRequest.state %></li>
+          <li><strong>Zip:</strong> <%= jobRequest.zip %></li>
+      </li>
+      <li><strong>Formatted Address:</strong> <%= jobRequest.formattedAddress %></li>
+      <li><strong>Phone Number:</strong> <%= jobRequest.phone %></li>
+      <li><strong>Alternate Phone Number:</strong> <%= jobRequest.altPhone %></li>
+      <li><strong>Description:</strong> <%= jobRequest.description %></li>
+    </ul>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <form id="job-eval-form" method="post">
+        <label for="description">Description of Work Requested</label>
+        <textarea class="input-block-level" form="request-form" id="description" name="description" required></textarea>
+        <hr />
+        <input class="btn" type="reset" value="Clear" />
+        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>
