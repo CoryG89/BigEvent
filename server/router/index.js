@@ -28,8 +28,8 @@ module.exports = {
         app.get('/jobsite/request/success', routes.jobsite.request.success);
         app.get('/jobsite/request/failure', routes.jobsite.request.failure);
 
-        app.get('/jobsite/evaluation', routes.jobsite.evaluation.get);
-        app.post('/jobsite/evaluation', routes.jobsite.evaluation.post);
+        app.get('/jobsite/evaluation/:id', routes.jobsite.evaluation.get);
+        app.post('/jobsite/evaluation/:id', routes.jobsite.evaluation.post);
         app.get('/jobsite/evaluation/success', routes.jobsite.evaluation.success);
         app.get('/jobsite/evaluation/failure', routes.jobsite.evaluation.failure);
 	

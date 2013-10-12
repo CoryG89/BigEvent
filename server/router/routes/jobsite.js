@@ -9,6 +9,8 @@ var emailer = require('../../emailer');
 var log = debug.getLogger({ prefix: '[route.jobsite]-  ' });
 var jobsites = dbman.getCollection('jobsites');
 
+var ObjectId = dbman.getObjectId();
+
 module.exports = {
     request: {
         get: function (req, res) {
@@ -67,10 +69,37 @@ module.exports = {
 
     evaluation: {
         get: function (req, res) {
-            res.render('jobsite-evaluation', {
-                title: 'Job Site Evaluation',
-                user: req.session.user,
-                _layoutFile: 'default'
+            var id = req.params.id;
+            jobsites.findOne({_id: new ObjectId(id)}, function(err, record){
+                if(err){
+                    log('JOBSITE.EVALUATION.GET: Error getting jobsite: %s', err);
+                    res.render('hero-unit', {
+                        title: 'Error',
+                        header: 'Sorry!',
+                        message: 'There was a problem retrieving the jobsite from the database. Please try again later.',
+                        user: req.session.user,
+                        _layoutFile: 'default'
+                    });
+                }
+                else if(!record){
+                    log('JOBSITE.EVALUATION.GET: Jobsite not found', err);
+                    res.render('hero-unit', {
+                        title: 'Error',
+                        header: 'Sorry!',
+                        message: 'Jobsite not found in the database. Please try again later.',
+                        user: req.session.user,
+                        _layoutFile: 'default'
+                    });
+                }
+                else{
+                    log('JOBSITE.EVALUATION.GET: Jobsite Found.');
+                    res.render('jobsite-evaluation', {
+                        title: 'Job Site Evaluation',
+                        user: req.session.user,
+                        jobRequest: record,
+                        _layoutFile: 'default'
+                    });
+                }
             });
         },
 
