@@ -9,55 +9,120 @@ var volunteers = dbman.getCollection('volunteers');
 var jobSites = dbman.getCollection('jobSites');
 var ObjectId = dbman.getObjectId();
 
+//set vars to control paginations.
+var numberOfItems = 10;
+
+function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, callback) {
+    //get tools
+    tools.find().skip(numberOfItems * (toolPageNumber - 1)).limit(numberOfItems).toArray(function(terr, toolDocs){
+        if(terr){
+            log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: %s', terr);
+            error += "Error getting Tools.\n";
+        } else if (!toolDocs) {
+            log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: unknown');
+            error += "Error getting Tools.\n";
+        }
+        //get volunteers
+        volunteers.find().skip(numberOfItems * (volunteersPageNumber - 1)).limit(numberOfItems).toArray(function(verr, volunteerDocs){
+            if(verr){
+                log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: %s', verr);
+                error += "Error getting Volunteers.\n";
+            } else if (!volunteerDocs) {
+                log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: unknown');
+                error += "Error getting Volunteers.\n";
+            }
+            //get job sites
+            jobSites.find().skip(numberOfItems * (jobSitePageNumber - 1)).limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
+                if(jerr){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: %s', jerr);
+                    error += "Error getting Job Sites.\n";
+                } else if (!jobSiteDocs) {
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: unknown');
+                    error += "Error getting Job Sites.\n";
+                }
+                callback(error, toolDocs, volunteerDocs, jobSiteDocs);
+            });
+        });
+    });
+}
+
+function getCounts(callback){
+    var error = "";
+    tools.count(function(terr, toolCount) {
+        if(terr){
+            log('STAFFHOMEPAGE.GETLISTS: Error getting tool count -> err: %s', terr);
+            error += "Error getting Tool Count.\n";
+        } else if(!toolCount){
+            log('STAFFHOMEPAGE.GETLISTS: Error getting tool count -> err: unknown');
+            error += "Error getting Tool Count.\n";
+        } 
+        volunteers.count(function(verr, volCount){
+            if(verr){
+                log('STAFFHOMEPAGE.GETLISTS: Error getting volunteer count -> err: %s', verr);
+                error += "Error getting Volunteer Count.\n";
+            } else if(!volCount){
+                log('STAFFHOMEPAGE.GETLISTS: Error getting volunteer count -> err: unknown');
+                error += "Error getting volunteer count.\n";
+            } 
+            jobSites.count(function(jerr, jobCount){
+               if(jerr){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting job count -> err: %s', jerr);
+                    error += "Error getting Job Count.\n";
+                } else if(!volCount){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting job count -> err: unknown');
+                    error += "Error getting Job Count.\n";
+                }
+                callback(toolCount, volCount, jobCount);
+            });
+        });
+    });
+}
+
 module.exports = {
 
     get: function (req, res) {
-        var error = "";
-        //get the roll of this user in order to filter content he or she is allowed to touch
-        var userRoll = req.session.user.roll;
-        //set the staff variable to control how the site works while this user is logged in
-        
-        //set var to control paginations.
-        //get tools
-        tools.find().toArray(function(err, toolDocs){
-            if(err){
-                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: %s', err);
-                error += "Error getting Tools.\n";
-            } else if (!toolDocs) {
-                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: unknown');
-                error += "Error getting Tools.\n";
-            }
-            //get volunteers
-            volunteers.find().toArray(function(err, volunteerDocs){
-                if(err){
-                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: %s', err);
-                    error += "Error getting Volunteers.\n";
-                } else if (!volunteerDocs) {
-                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: unknown');
-                    error += "Error getting Volunteers.\n";
-                }
-                //get job sites
-                jobSites.find().toArray(function(err, jobSiteDocs){
-                    if(err){
-                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: %s', err);
-                        error += "Error getting Job Sites.\n";
-                    } else if (!jobSiteDocs) {
-                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: unknown');
-                        error += "Error getting Job Sites.\n";
-                    }
-                    //render page
-                    res.render('staffHomePage', {
-                        title: 'Staff Home Page',
-                        toolList: toolDocs,
-                        volunteerList: volunteerDocs,
-                        jobSiteList: jobSiteDocs,
-                        userRoll: userRoll,
-                        error: error,
-                        _layoutFile: 'default'
-                    });
+        //set the staff variable to let the site know everything is from a staff point of view
+
+
+        //get the role of this user in order to filter content he or she is allowed to touch
+        var userRole = req.session.user.role;
+
+        //tool
+        var toolPageNumber = req.params.tp;
+
+        //volunteer
+        var volunteersPageNumber = req.params.vp;
+
+        //job sites
+        var jobSitePageNumber = req.params.jp;
+
+        getCounts(function(error, toolCount, volCount, jobCount) {
+            //get number of pages for each table
+            var toolNumPages = toolCount/numberOfItems;
+            var volNumPages = volCount/numberOfItems;
+            var jobSiteNumPages = jobCount/numberOfItems;
+            //get lists to populate each table
+            getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
+                //render page
+                res.render('staffHomePage', {
+                    title: 'Staff Home Page',
+                    toolList: toolDocs,
+                    tp: toolPageNumber,
+                    tps: toolNumPages,
+                    volunteerList: volunteerDocs,
+                    vp: volunteersPageNumber,
+                    vps: volNumPages,
+                    jobSiteList: jobSiteDocs,
+                    jp: jobSitePageNumber,
+                    jps: jobSiteNumPages,
+                    userRole: userRole,
+                    error: error,
+                    _layoutFile: 'default'
                 });
             });
         });
+
+        
     },
 
     post: function (req, res) {
