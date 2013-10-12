@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var $form = $('form#account-form');
+    var $form = $('form#volunteer-account-form');
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $accountInputs = $('.account-input');

@@ -6,14 +6,14 @@
   <div class="offset1 span8">
     <div class="hero-unit">
       <h2>Welcome to Auburn's Big Event Staff Home Page</h2>
-        <p>This is the staff headquarters to conttol all things Big Event.</p>
+        <p>This is the staff headquarters to control all things Big Event.</p>
     </div>
   </div>
 </div>
   <!-- Data Tables -->
 <h2>Volunteer Table</h2>
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -49,7 +49,7 @@
 </div>
 <h2>Job Site Table</h2>
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -63,7 +63,7 @@
             <% for(i=0; i<jobSiteList.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="<%= site.url %>request/evaluation/<%= jobSiteList[i]._id %>">
+                        <a href="<%= site.url %>jobsite/evaluation/<%= jobSiteList[i]._id %>">
                             <%= jobSiteList[i].firstName + " " + jobSiteList[i].lastName  %>
                         </a>
                     </td>
@@ -78,7 +78,7 @@
 </div>
 <h2>Tool Table</h2>
 <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Name</th>

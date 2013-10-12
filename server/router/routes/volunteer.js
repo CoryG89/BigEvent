@@ -12,7 +12,6 @@ var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
 
 var users = dbman.getCollection('users');
 var volunteers = dbman.getCollection('volunteers');
-var ObjectId = dbman.getObjectId();
 
 function updateSession (session, object) {
     if (typeof object === 'object') {
@@ -141,7 +140,7 @@ module.exports = {
                 data.location = result.geometry.location;
                 data.formattedAddress = result.formatted_address;
                 
-                var query = { _id: req.session.volunteer._id }; 
+                var query = { _id: req.session.volunteer._id };
                 var cmd = { $set: data };
                 var opt = { w: 1 };
 
@@ -157,7 +156,7 @@ module.exports = {
                         emailer.send({
                             to: req.session.volunteer.email,
                             subject: 'Volunteer Account Update',
-                            template: 'volunteer-changed',
+                            template: 'volunteer-account',
                             locals: { user: req.session.volunteer }
                         }, function (err) {
                             if (err) {
@@ -172,56 +171,59 @@ module.exports = {
             });
         },
         
-        id: function (req, res) {
-            volunteers.findOne({_id: req.params.id}, function(err, record){
-                res.render('volunteer-account', {
-                    title: 'Volunteer Control Panel',
-                    user: record,
-                    _layoutFile: 'default'
+        id: {
+
+            get: function (req, res) {
+                volunteers.findOne({_id: req.params.id}, function(err, record){
+                    res.render('volunteer-account', {
+                        title: 'Volunteer Control Panel',
+                        user: record,
+                        _layoutFile: 'default'
+                    });
                 });
-            });
-        },
+            },
 
-        postId: function (req, res) {
-            var data = req.body;
+            post: function (req, res) {
+                var data = req.body;
 
-            var address = util.format('%s %s, %s %s',
-                data.address, data.city, data.state, data.zip);
+                var address = util.format('%s %s, %s %s',
+                    data.address, data.city, data.state, data.zip);
 
-            geocoder.send(address, function (response) {
-                var result = response.results[0];
+                geocoder.send(address, function (response) {
+                    var result = response.results[0];
 
-                data.location = result.geometry.location;
-                data.formattedAddress = result.formatted_address;
+                    data.location = result.geometry.location;
+                    data.formattedAddress = result.formatted_address;
 
-                var query = { _id: req.params.id };  
-                var cmd = { $set: data };
-                var opt = { w: 1 };
+                    var query = { _id: req.params.id };
+                    var cmd = { $set: data };
+                    var opt = { w: 1 };
 
-                volunteers.update(query, cmd, opt, function (err, result) {
-                    if (err || !result) {
-                        log('POST: Update error, volunteer:\n\n%s\n\n', err);
-                        res.send(400);
-                    } else {
-                        log('POST: Record successfully updated');
-                        log('POST: Updating user session');
+                    volunteers.update(query, cmd, opt, function (err, result) {
+                        if (err || !result) {
+                            log('POST: Update error, volunteer:\n\n%s\n\n', err);
+                            res.send(400);
+                        } else {
+                            log('POST: Record successfully updated');
+                            log('POST: Updating user session');
 
-                        emailer.send({
-                            to: result[0].email,
-                            subject: 'Volunteer Account Update',
-                            template: 'volunteer-changed',
-                            locals: { user: result[0] }
-                        }, function (err) {
-                            if (err) {
-                                res.send(400);
-                            }
-                            else {
-                                res.send('id', 200);
-                            }
-                        });
-                    }
+                            emailer.send({
+                                to: result[0].email,
+                                subject: 'Volunteer Account Update',
+                                template: 'volunteer-changed',
+                                locals: { user: result[0] }
+                            }, function (err) {
+                                if (err) {
+                                    res.send(400);
+                                }
+                                else {
+                                    res.send('id', 200);
+                                }
+                            });
+                        }
+                    });
                 });
-            });
+            }
         },
 
         success: function (req, res) {

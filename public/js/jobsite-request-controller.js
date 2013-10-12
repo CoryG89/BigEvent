@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var $form = $('form#request-form');
+    var $form = $('form#jobsite-request-form');
     var $email = $form.children('input#email');
     var $emailConf = $form.children('input#email-conf');
     var $zip = $form.children('input#zip');
@@ -46,12 +46,12 @@
 
         success: function (data, status) {
             if (status === 'success' && data === 'ok') {
-                window.location.replace('/request/success');
+                window.location.replace('request/success');
             }
         },
 
         error: function () {
-            window.location.replace('/request/failure');
+            window.location.replace('jobsite/request/failure');
         }
     });
 

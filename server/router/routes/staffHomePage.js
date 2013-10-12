@@ -6,12 +6,12 @@ var dbman = require('../../dbman');
 var log = debug.getLogger({ prefix: '[route.tool]-  ' });
 var tools = dbman.getCollection('tools');
 var volunteers = dbman.getCollection('volunteers');
-var jobSites = dbman.getCollection('jobSites');
-var ObjectId = dbman.getObjectId();
+var jobSites = dbman.getCollection('jobsites');
 
 //set vars to control paginations.
 var numberOfItems = 10;
 
+<<<<<<< HEAD
 function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, callback) {
     //get tools
     tools.find().skip(numberOfItems * (toolPageNumber - 1)).limit(numberOfItems).toArray(function(terr, toolDocs){
@@ -118,6 +118,52 @@ module.exports = {
                     userRole: userRole,
                     error: error,
                     _layoutFile: 'default'
+=======
+    get: function (req, res) {
+        var error = '';
+        //get the roll of this user in order to filter content he or she is allowed to touch
+        var userRoll = req.session.user.roll;
+        //set the staff variable to control how the site works while this user is logged in
+        
+        //set var to control paginations.
+        //get tools
+        tools.find().toArray(function(err, toolDocs){
+            if(err){
+                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: %s', err);
+                error += 'Error getting Tools.\n';
+            } else if (!toolDocs) {
+                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: unknown');
+                error += 'Error getting Tools.\n';
+            }
+            //get volunteers
+            volunteers.find().toArray(function(err, volunteerDocs){
+                if(err){
+                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: %s', err);
+                    error += 'Error getting Volunteers.\n';
+                } else if (!volunteerDocs) {
+                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: unknown');
+                    error += 'Error getting Volunteers.\n';
+                }
+                //get job sites
+                jobSites.find().toArray(function(err, jobSiteDocs){
+                    if(err){
+                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: %s', err);
+                        error += 'Error getting Job Sites.\n';
+                    } else if (!jobSiteDocs) {
+                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: unknown');
+                        error += 'Error getting Job Sites.\n';
+                    }
+                    //render page
+                    res.render('staffHomePage', {
+                        title: 'Staff Home Page',
+                        toolList: toolDocs,
+                        volunteerList: volunteerDocs,
+                        jobSiteList: jobSiteDocs,
+                        userRoll: userRoll,
+                        error: error,
+                        _layoutFile: 'default'
+                    });
+>>>>>>> a9380833db4446a3fba74119f12598b22b392b9e
                 });
             });
         });
@@ -134,7 +180,7 @@ module.exports = {
         //check to see if the checkbox was checked. If it was not checked there will be no field for it in the record. Add one
         if(!newRecord.maxRequest)
         {
-            newRecord.maxRequest = "off";
+            newRecord.maxRequest = 'off';
         }
 
         //check to see if we already have a tool by this name
@@ -143,7 +189,7 @@ module.exports = {
             if(error)
             {
                 log('POST: Error checking database for tool', error);
-                res.send(400, "Error");
+                res.send(400, 'Error');
             }
             else if(!oldRecord)
             {
@@ -164,7 +210,7 @@ module.exports = {
             else
             {
                 log('POST: Found an entry -> notifying user');
-                res.send(400, "Entry Found");
+                res.send(400, 'Entry Found');
             }
         });
     },
