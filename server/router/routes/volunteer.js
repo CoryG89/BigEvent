@@ -106,6 +106,7 @@ module.exports = {
             title: 'Successful Registration',
             header: 'Thanks!',
             message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.',
+            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -115,6 +116,7 @@ module.exports = {
             title: 'Registration Failed',
             header: 'Sorry!',
             message: 'There was a problem with the registration. Please try again later.',
+            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -231,6 +233,7 @@ module.exports = {
                 title: 'Successfully Updated',
                 header: 'Thanks!',
                 message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -240,6 +243,7 @@ module.exports = {
                 title: 'Registration Failed',
                 header: 'Sorry!',
                 message: 'There was a problem updating your data. Please try again later.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         }

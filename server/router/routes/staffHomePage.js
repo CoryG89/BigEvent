@@ -11,7 +11,6 @@ var jobSites = dbman.getCollection('jobsites');
 //set vars to control paginations.
 var numberOfItems = 10;
 
-<<<<<<< HEAD
 function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, callback) {
     //get tools
     tools.find().skip(numberOfItems * (toolPageNumber - 1)).limit(numberOfItems).toArray(function(terr, toolDocs){
@@ -81,19 +80,24 @@ function getCounts(callback){
 module.exports = {
 
     get: function (req, res) {
-        //set the staff variable to let the site know everything is from a staff point of view
-
-
-        //get the role of this user in order to filter content he or she is allowed to touch
-        var userRole = req.session.user.role;
-
-        //tool
+        //check to see if you the user is a staff member
+        var user = req.session.user;
+        if(!(user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership')){
+            res.render('hero-unit', {
+                title: 'Access Denied',
+                header: 'Access Denied',
+                message: 'You are not allowed to view this page because you are not part of the Big Event Staff.',
+                user: user,
+                _layoutFile: 'default'
+            });
+        }
+        //tool pagination variables
         var toolPageNumber = req.params.tp;
 
-        //volunteer
+        //volunteer pagination variables
         var volunteersPageNumber = req.params.vp;
 
-        //job sites
+        //job sites pagination variables
         var jobSitePageNumber = req.params.jp;
 
         getCounts(function(error, toolCount, volCount, jobCount) {
@@ -115,60 +119,12 @@ module.exports = {
                     jobSiteList: jobSiteDocs,
                     jp: jobSitePageNumber,
                     jps: jobSiteNumPages,
-                    userRole: userRole,
+                    user: user,
                     error: error,
                     _layoutFile: 'default'
-=======
-    get: function (req, res) {
-        var error = '';
-        //get the roll of this user in order to filter content he or she is allowed to touch
-        var userRoll = req.session.user.roll;
-        //set the staff variable to control how the site works while this user is logged in
-        
-        //set var to control paginations.
-        //get tools
-        tools.find().toArray(function(err, toolDocs){
-            if(err){
-                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: %s', err);
-                error += 'Error getting Tools.\n';
-            } else if (!toolDocs) {
-                log('STAFFHOMEPAGE.GET: Error getting list of tools -> err: unknown');
-                error += 'Error getting Tools.\n';
-            }
-            //get volunteers
-            volunteers.find().toArray(function(err, volunteerDocs){
-                if(err){
-                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: %s', err);
-                    error += 'Error getting Volunteers.\n';
-                } else if (!volunteerDocs) {
-                    log('STAFFHOMEPAGE.GET: Error getting list of volunteers -> err: unknown');
-                    error += 'Error getting Volunteers.\n';
-                }
-                //get job sites
-                jobSites.find().toArray(function(err, jobSiteDocs){
-                    if(err){
-                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: %s', err);
-                        error += 'Error getting Job Sites.\n';
-                    } else if (!jobSiteDocs) {
-                        log('STAFFHOMEPAGE.GET: Error getting list of job sites -> err: unknown');
-                        error += 'Error getting Job Sites.\n';
-                    }
-                    //render page
-                    res.render('staffHomePage', {
-                        title: 'Staff Home Page',
-                        toolList: toolDocs,
-                        volunteerList: volunteerDocs,
-                        jobSiteList: jobSiteDocs,
-                        userRoll: userRoll,
-                        error: error,
-                        _layoutFile: 'default'
-                    });
->>>>>>> a9380833db4446a3fba74119f12598b22b392b9e
                 });
             });
-        });
-
-        
+        });        
     },
 
     post: function (req, res) {
@@ -220,6 +176,7 @@ module.exports = {
             title: 'Tool Added',
             header: 'Tool Added',
             message: 'Tool was added successfully.',
+            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -229,6 +186,7 @@ module.exports = {
             title: 'Could Not Add Tool',
             header: 'Sorry!',
             message: 'There was a problem adding your tool. Please try again later.',
+            user: req.session.user,
             _layoutFile: 'default'
         });
     }

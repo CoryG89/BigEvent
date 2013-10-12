@@ -14,6 +14,7 @@ module.exports = {
         get: function (req, res) {
             res.render('jobsite-request', {
                 title: 'Job Site Request',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -48,6 +49,7 @@ module.exports = {
                 title: 'Jobsite Request Submitted',
                 header: 'Jobsite Request Submitted',
                 message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -57,6 +59,7 @@ module.exports = {
                 title: 'Submission Failed',
                 header: 'Sorry!',
                 message: 'There was a problem submitting your jobsite request. Please try again later.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         }
@@ -66,6 +69,7 @@ module.exports = {
         get: function (req, res) {
             res.render('jobsite-evaluation', {
                 title: 'Job Site Evaluation',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -79,6 +83,7 @@ module.exports = {
                 title: 'Jobsite Evaluation Submitted',
                 header: 'Jobsite Evaluation Submitted',
                 message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -88,6 +93,7 @@ module.exports = {
                 title: 'Submission Failed',
                 header: 'Sorry!',
                 message: 'There was a problem submitting your jobsite evaluation. Please try again later.',
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         }
