@@ -50,7 +50,7 @@
               <% if( user &&
                     (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership')) { %>
                   <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-                  <a href="<%= site.url %>staffHomePage">Home</a>
+                  <a href="<%= site.url %>staffHomePage?tp=1&jp=1&vp=1">Home</a>
                   </li>
                   <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
                     <a href="<%= site.url %>volunteer">Add Volunteer</a>
@@ -78,7 +78,7 @@
                     <a href="<%= site.url %>jobsite/request">Request Job</a>
                   </li>
           	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-          		    <a href="<%= site.url %>staffHomePage">Staff Home Page</a>
+          		    <a href="<%= site.url %>staffHomePage?tp=1&jp=1&vp=1">Staff Home Page</a>
           	      </li>
                   <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
                     <a href="<%= site.url %>contact">Contact</a>

@@ -42,7 +42,37 @@
         </tbody>
         <tfoot>
             <tr>
-
+                <ul class="pager">
+                    <% if(vp === 1 && vp === vpt) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Previous</a>
+                        </li>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else if(vp === 1) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp %>&vp=<%= vp + 1 %>">Next</a>
+                        </li>
+                    <% } else if(vp === vpt) { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp %>&vp=<%= vp - 1 %>">Previous</a>
+                        </li>
+                        <li class='disabled'>
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp %>&vp=<%= vp - 1 %>">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp %>&vp=<%= vp + 1 %>">Next</a>
+                        </li>
+                    <% } %>
+                </ul>
             </tr>
         </tfoot>
     </table>
@@ -74,6 +104,41 @@
                 </tr>
             <% } %>
         </tbody>
+        <tfoot>
+            <tr>
+                <ul class="pager">
+                    <% if(jp === 1 && jp === jpt) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Previous</a>
+                        </li>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else if(jp === 1) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp + 1 %>&vp=<%= vp %>">Next</a>
+                        </li>
+                    <% } else if(jp === jpt) { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp - 1 %>&vp=<%= vp %>">Previous</a>
+                        </li>
+                        <li class='disabled'>
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp - 1 %>&vp=<%= vp %>">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp %>&jp=<%= jp + 1 %>&vp=<%= vp %>">Next</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </tr>
+        </tfoot>
     </table>
 </div>
 <h2>Tool Table</h2>
@@ -105,5 +170,40 @@
                 </tr>
             <% } %>
         </tbody>
+        <tfoot>
+            <tr>
+                <ul class="pager">
+                    <% if(tp === 1 && tp === tpt) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Previous</a>
+                        </li>
+                        <li class="disabled">
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else if(tp === 1) { %>
+                        <li class="disabled">
+                            <a onclick='return false;' href="<%= tpt %>">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp + 1 %>&jp=<%= jp %>&vp=<%= vp %>">Next</a>
+                        </li>
+                    <% } else if(tp === tpt) { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp - 1 %>&jp=<%= jp %>&vp=<%= vp %>">Previous</a>
+                        </li>
+                        <li class='disabled'>
+                            <a onclick='return false;' href="#">Next</a>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp - 1 %>&jp=<%= jp %>&vp=<%= vp %>">Previous</a>
+                        </li>
+                        <li>
+                            <a href="<%= site.url %>staffHomePage?tp=<%= tp + 1 %>&jp=<%= jp %>&vp=<%= vp %>">Next</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </tr>
+        </tfoot>
     </table>
 </div>

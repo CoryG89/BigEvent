@@ -47,31 +47,28 @@ function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber
 
 function getCounts(callback){
     var error = "";
+    //count the number of tools
     tools.count(function(terr, toolCount) {
         if(terr){
-            log('STAFFHOMEPAGE.GETLISTS: Error getting tool count -> err: %s', terr);
+            log('STAFFHOMEPAGE.GETCOUNTS: Error getting tool count -> err: %s', terr);
             error += "Error getting Tool Count.\n";
-        } else if(!toolCount){
-            log('STAFFHOMEPAGE.GETLISTS: Error getting tool count -> err: unknown');
-            error += "Error getting Tool Count.\n";
-        } 
+        }
+        log('STAFFHOMEOAGE.GETCOUNTS: Tool Count: %s', toolCount);
+        //get volunteer count
         volunteers.count(function(verr, volCount){
             if(verr){
-                log('STAFFHOMEPAGE.GETLISTS: Error getting volunteer count -> err: %s', verr);
+                log('STAFFHOMEPAGE.GETCOUNTS: Error getting volunteer count -> err: %s', verr);
                 error += "Error getting Volunteer Count.\n";
-            } else if(!volCount){
-                log('STAFFHOMEPAGE.GETLISTS: Error getting volunteer count -> err: unknown');
-                error += "Error getting volunteer count.\n";
-            } 
+            }
+            log('STAFFHOMEOAGE.GETCOUNTS: Volunteer Count: %s', volCount);
+            //get job site count 
             jobSites.count(function(jerr, jobCount){
                if(jerr){
-                    log('STAFFHOMEPAGE.GETLISTS: Error getting job count -> err: %s', jerr);
-                    error += "Error getting Job Count.\n";
-                } else if(!volCount){
-                    log('STAFFHOMEPAGE.GETLISTS: Error getting job count -> err: unknown');
+                    log('STAFFHOMEPAGE.GETCOUNTS: Error getting job count -> err: %s', jerr);
                     error += "Error getting Job Count.\n";
                 }
-                callback(toolCount, volCount, jobCount);
+                log('STAFFHOMEOAGE.GETCOUNTS: Job Site Count: %s', jobCount);
+                callback(error, toolCount, volCount, jobCount);
             });
         });
     });
@@ -92,33 +89,34 @@ module.exports = {
             });
         }
         //tool pagination variables
-        var toolPageNumber = req.params.tp;
+        var toolPageNumber = parseInt(req.query.tp);
 
         //volunteer pagination variables
-        var volunteersPageNumber = req.params.vp;
+        var volunteersPageNumber = parseInt(req.query.vp);
 
         //job sites pagination variables
-        var jobSitePageNumber = req.params.jp;
+        var jobSitePageNumber = parseInt(req.query.jp);
 
         getCounts(function(error, toolCount, volCount, jobCount) {
             //get number of pages for each table
-            var toolNumPages = toolCount/numberOfItems;
-            var volNumPages = volCount/numberOfItems;
-            var jobSiteNumPages = jobCount/numberOfItems;
+            var toolNumPages = Math.ceil(toolCount/numberOfItems);
+            var volNumPages = Math.ceil(volCount/numberOfItems);
+            var jobSiteNumPages = Math.ceil(jobCount/numberOfItems);
             //get lists to populate each table
             getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
+                log('\n\nvolPages: %s    volPageNumber: %s    volCount: %s\n\n', volNumPages, volunteersPageNumber, volCount);
                 //render page
                 res.render('staffHomePage', {
                     title: 'Staff Home Page',
                     toolList: toolDocs,
                     tp: toolPageNumber,
-                    tps: toolNumPages,
+                    tpt: (toolNumPages === 0) ? 1 : toolNumPages,
                     volunteerList: volunteerDocs,
                     vp: volunteersPageNumber,
-                    vps: volNumPages,
+                    vpt: (volNumPages === 0) ? 1 : volNumPages,
                     jobSiteList: jobSiteDocs,
                     jp: jobSitePageNumber,
-                    jps: jobSiteNumPages,
+                    jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
                     user: user,
                     error: error,
                     _layoutFile: 'default'
