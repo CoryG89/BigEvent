@@ -28,7 +28,7 @@ module.exports = function () {
             log('User session detected --> calling next()');
             next();
         } else {
-            res.cookie('request_path', req.path, {
+            res.cookie('request_path', req.originalUrl, {
                 maxAge: 900000,
                 signed: false
             });
