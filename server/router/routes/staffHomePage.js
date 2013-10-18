@@ -11,9 +11,9 @@ var jobSites = dbman.getCollection('jobsites');
 //set vars to control paginations.
 var numberOfItems = 10;
 
-function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, callback) {
+function getLists(error, callback) {
     //get tools
-    tools.find().skip(numberOfItems * (toolPageNumber - 1)).limit(numberOfItems).toArray(function(terr, toolDocs){
+    tools.find().limit(numberOfItems).toArray(function(terr, toolDocs){
         if(terr){
             log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: %s', terr);
             error += "Error getting Tools.\n";
@@ -22,7 +22,7 @@ function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber
             error += "Error getting Tools.\n";
         }
         //get volunteers
-        volunteers.find().skip(numberOfItems * (volunteersPageNumber - 1)).limit(numberOfItems).toArray(function(verr, volunteerDocs){
+        volunteers.find().skip(0).limit(numberOfItems).toArray(function(verr, volunteerDocs){
             if(verr){
                 log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: %s', verr);
                 error += "Error getting Volunteers.\n";
@@ -31,7 +31,7 @@ function getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber
                 error += "Error getting Volunteers.\n";
             }
             //get job sites
-            jobSites.find().skip(numberOfItems * (jobSitePageNumber - 1)).limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
+            jobSites.find().skip(0).limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
                 if(jerr){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: %s', jerr);
                     error += "Error getting Job Sites.\n";
@@ -88,14 +88,6 @@ module.exports = {
                 _layoutFile: 'default'
             });
         }
-        //tool pagination variables
-        var toolPageNumber = parseInt(req.query.tp);
-
-        //volunteer pagination variables
-        var volunteersPageNumber = parseInt(req.query.vp);
-
-        //job sites pagination variables
-        var jobSitePageNumber = parseInt(req.query.jp);
 
         getCounts(function(error, toolCount, volCount, jobCount) {
             //get number of pages for each table
@@ -103,19 +95,15 @@ module.exports = {
             var volNumPages = Math.ceil(volCount/numberOfItems);
             var jobSiteNumPages = Math.ceil(jobCount/numberOfItems);
             //get lists to populate each table
-            getLists(error, toolPageNumber, volunteersPageNumber, jobSitePageNumber, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
-                log('\n\nvolPages: %s    volPageNumber: %s    volCount: %s\n\n', volNumPages, volunteersPageNumber, volCount);
+            getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
                 //render page
                 res.render('staffHomePage', {
                     title: 'Staff Home Page',
                     toolList: toolDocs,
-                    tp: toolPageNumber,
                     tpt: (toolNumPages === 0) ? 1 : toolNumPages,
                     volunteerList: volunteerDocs,
-                    vp: volunteersPageNumber,
                     vpt: (volNumPages === 0) ? 1 : volNumPages,
                     jobSiteList: jobSiteDocs,
-                    jp: jobSitePageNumber,
                     jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
                     user: user,
                     error: error,
@@ -165,6 +153,38 @@ module.exports = {
             {
                 log('POST: Found an entry -> notifying user');
                 res.send(400, 'Entry Found');
+            }
+        });
+    },
+
+    updateTable: function (req, res) {
+        var type = req.query.type;
+        var page = parseInt(req.query.p);
+        log('pageNumber: %s', page);
+        var collection;
+        if(type === 'vol') {
+            collection = volunteers;
+        } else if(type === 'tool') {
+            collection = tools;
+        } else if(type === 'jobsite') {
+            collection = jobSites;
+        } else {
+            //there was an error
+            res.send(400, 'Invalid Type');
+        }
+        //get the entries for the page
+        collection.find().skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+            if(err){
+                log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: %s', err);
+                error += "Error Updating Table.\n";
+                res.send(400, 'Error');
+            } else if (!docs) {
+                log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: unknown');
+                error += "Error getting Entries for the table.\n";
+                res.send(400, 'No Entries');
+            }
+            else {
+                res.send(200, docs);
             }
         });
     },
