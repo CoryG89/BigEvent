@@ -54,15 +54,15 @@ function goToPage(type, linkType, totalNumberOfPages, siteUrl)
 	};
 	if (type === 'volunteer')
 	{
-		xmlhttp.open("GET","/staffHomePage/updateTable?type=vol&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=vol&p=" + goToPageNumber, true);
 	} 
 	else if (type === 'tool') 
 	{
-		xmlhttp.open("GET","/staffHomePage/updateTable?type=tool&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=tool&p=" + goToPageNumber, true);
 	} 
 	else if (type === 'jobsite') 
 	{
-		xmlhttp.open("GET","/staffHomePage/updateTable?type=jobsite&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=jobsite&p=" + goToPageNumber, true);
 	} 
 	else 
 	{
@@ -200,15 +200,15 @@ function determineHyperLinkRoute(type, siteUrl)
 	var route = siteUrl;
 	if(type === 'tool')
 	{
-		route += "tool/review/";
+		route += "staff/tool/review/";
 	}
 	else if(type === 'volunteer')
 	{
-		route += "volunteer/account/id/";
+		route += "staff/volunteer/account/";
 	}
 	else if(type === 'jobsite')
 	{
-		route += "jobsite/evaluation/";
+		route += "staff/jobsite/evaluation/";
 	}
 	return route;
 }

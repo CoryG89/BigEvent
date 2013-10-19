@@ -4,6 +4,7 @@ module.exports = {
     init: function (app) {
         var routes = require('./routes');
         
+        //user side routes
         app.get('/', routes.home);
         app.get('/home', routes.home);
 
@@ -19,31 +20,45 @@ module.exports = {
         app.post('/volunteer/account', routes.volunteer.account.post);
         app.get('/volunteer/account/success', routes.volunteer.account.success);
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
-        
-        app.get('/volunteer/account/id/:id', routes.volunteer.account.id.get);
-        app.post('/volunteer/account/id/:id', routes.volunteer.account.id.post);
 
         app.get('/jobsite/request', routes.jobsite.request.get);
         app.post('/jobsite/request', routes.jobsite.request.post);
         app.get('/jobsite/request/success', routes.jobsite.request.success);
         app.get('/jobsite/request/failure', routes.jobsite.request.failure);
 
-        app.get('/jobsite/evaluation/:id', routes.jobsite.evaluation.get);
-        app.post('/jobsite/evaluation/:id', routes.jobsite.evaluation.post);
-        app.get('/jobsite/evaluation/success', routes.jobsite.evaluation.success);
-        app.get('/jobsite/evaluation/failure', routes.jobsite.evaluation.failure);
+        //staff side routes
+        app.get('/staff/volunteer', routes.volunteer.staff.get);
+        app.post('/staff/volunteer', routes.volunteer.staff.post);
+        app.get('/staff/volunteer/success', routes.volunteer.success);
+        app.get('/staff/volunteer/failure', routes.volunteer.failure);
+
+        app.get('/staff/volunteer/account/:id', routes.volunteer.account.staff.get);
+        app.post('/staff/volunteer/account/:id', routes.volunteer.account.staff.post);
+        app.get('/staff/volunteer/account/success', routes.volunteer.account.success);
+        app.get('/staff/volunteer/account/failure', routes.volunteer.account.failure);
+
+        app.get('/staff/jobsite/request', routes.jobsite.request.get);
+        app.post('/staff/jobsite/request', routes.jobsite.request.staff.post);
+        app.get('/staff/jobsite/request/success', routes.jobsite.request.success);
+        app.get('/staff/jobsite/request/failure', routes.jobsite.request.failure);
+
+        app.get('/staff/jobsite/evaluation/:id', routes.jobsite.evaluation.get);
+        app.post('/staff/jobsite/evaluation/:id', routes.jobsite.evaluation.post);
+        app.get('/staff/jobsite/evaluation/success', routes.jobsite.evaluation.success);
+        app.get('/staff/jobsite/evaluation/failure', routes.jobsite.evaluation.failure);
 	
-        app.get('/tool', routes.tool.get);
-        app.post('/tool', routes.tool.post);
-        app.get('/tool/success', routes.tool.success);
-        app.get('/tool/failure', routes.tool.failure);
+        app.get('/staff/tool', routes.tool.get);
+        app.post('/staff/tool', routes.tool.post);
+        app.get('/staff/tool/success', routes.tool.success);
+        app.get('/staff/tool/failure', routes.tool.failure);
 
-        app.get('/tool/review/:id', routes.tool.review.get);
-        app.post('/tool/review/:id', routes.tool.review.post);
-        app.get('/tool/review/success', routes.tool.review.success);
-        app.get('/tool/review/failure', routes.tool.review.failure);
+        app.get('/staff/tool/review/:id', routes.tool.review.get);
+        app.post('/staff/tool/review/:id', routes.tool.review.post);
+        app.get('/staff/tool/review/success', routes.tool.review.success);
+        app.get('/staff/tool/review/failure', routes.tool.review.failure);
 
-        app.get('/staffHomePage', routes.staffHomePage.get);
+        app.get('/staff/staffHomePage', routes.staffHomePage.get);
+        app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
         
         app.get('*', routes.notfound);
     }

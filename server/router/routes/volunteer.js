@@ -13,6 +13,8 @@ var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
 var users = dbman.getCollection('users');
 var volunteers = dbman.getCollection('volunteers');
 
+var ObjectId = dbman.getObjectId();
+
 function updateSession (session, object) {
     if (typeof object === 'object') {
         for (var prop in object) {
@@ -34,6 +36,7 @@ module.exports = {
             res.render('volunteer', {
                 title: 'Volunteer',
                 user: req.session.user,
+                staff: 0,
                 _layoutFile: 'default'
             });
         }
@@ -101,6 +104,52 @@ module.exports = {
         });
     },
 
+    staff: {
+        get: function (req, res) {
+            res.render('volunteer', {
+                title: 'Volunteer',
+                user: req.session.user,
+                staff: 1,
+                _layoutFile: 'default'
+            });
+        },
+
+        post: function (req, res) {
+            var data = req.body;
+
+            var address = util.format('%s %s, %s %s',
+                data.address, data.city, data.state, data.zip);
+
+            geocoder.send(address, function (response) {
+                var result = response.results[0];
+                data.location = result.geometry.location;
+                data.formattedAddress = result.formatted_address;
+
+                volunteers.insert(data, { w: 1 }, function (err, result) {
+                    if (err || !result) {
+                        log('POST: Error inserting record:\n\n%s\n\n', err);
+                        res.send(400, 'staff');
+                    } else {
+                        log('POST: Volunteer record inserted');
+
+                        emailer.send({
+                            to: data.email,
+                            subject: 'Volunteer Account Registration',
+                            template: 'volunteer',
+                            locals: { user: data }
+                        }, function (err) {
+                            if (err) {
+                                res.send(400, 'staff');
+                            } else {
+                                res.send(200, {id: result[0]._id});
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    },
+
     success: function (req, res) {
         res.render('hero-unit', {
             title: 'Successful Registration',
@@ -125,7 +174,8 @@ module.exports = {
         get: function (req, res) {
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                user: req.session.volunteer,
+                record: req.session.volunteer,
+                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -146,10 +196,40 @@ module.exports = {
                 var cmd = { $set: data };
                 var opt = { w: 1 };
 
-                volunteers.update(query, cmd, opt, function (err, result) {
-                    if (err || !result) {
-                        log('POST: Update error, volunteer:\n\n%s\n\n', err);
-                        res.send(400);
+                volunteers.update(query, cmd, opt, function (err, result) 
+                {
+                    if (err || !result) 
+                    {
+                        log('VOLUNTEER.ACCOUNT.POST: unable to find record with id %s', req.session.volunteer._id);
+                        log('VOLUNTEER.ACCOUNT.POST: Trying an ObjectId %s', req.session.volunteer._id);
+                        volunteers.update({_id: new ObjectId(req.session.volunteer._id)}, cmd, opt, function (error, record) 
+                        {
+                            if(error || !record)
+                            {
+                                log('POST: Update error, volunteer:\n\n%s\n\n', err);
+                                res.send(400);
+                            } 
+                            else 
+                            {
+                                log('POST: Record successfully updated');
+                                log('POST: Updating user session');
+                                updateSession(req.session.volunteer, data);
+
+                                emailer.send({
+                                    to: req.session.volunteer.email,
+                                    subject: 'Volunteer Account Update',
+                                    template: 'volunteer-account',
+                                    locals: { user: req.session.volunteer }
+                                }, function (err) {
+                                    if (err) {
+                                        res.send(400);
+                                    }
+                                    else {
+                                        res.send('ok', 200);
+                                    }
+                                });
+                            }
+                        });
                     } else {
                         log('POST: Record successfully updated');
                         log('POST: Updating user session');
@@ -173,15 +253,38 @@ module.exports = {
             });
         },
         
-        id: {
+        staff: {
 
             get: function (req, res) {
-                volunteers.findOne({_id: req.params.id}, function(err, record){
-                    res.render('volunteer-account', {
-                        title: 'Volunteer Control Panel',
-                        user: record,
-                        _layoutFile: 'default'
-                    });
+                volunteers.findOne({_id: req.params.id}, function(err, rec){
+                    if(err || !rec)
+                    {
+                        log('VOLUNTEER.STAFF.GET: Record not found for id %s', req.params.id);
+                        log('VOLUNTEER.STAFF.GET: Using an ObjectId');
+                        volunteers.findOne({_id: new ObjectId(req.params.id)}, function(error, record){
+                            if(error || !record){
+                                log('VOLUNTEER.STAFF.GET: Record not found for object id %s', req.params.id);
+                                res.send(400);
+                            } else {
+                                log('VOLUNTEER.STAFF.GET: Record found')
+                                res.render('volunteer-account', {
+                                    title: 'Volunteer Account',
+                                    record: record,
+                                    user: req.session.user,
+                                    _layoutFile: 'default'
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        log('VOLUNTEER.STAFF.GET: Record found')
+                        res.render('volunteer-account', {
+                            title: 'Volunteer Account',
+                            record: rec,
+                            user: req.session.user,
+                            _layoutFile: 'default'
+                        });
+                    }
                 });
             },
 
@@ -199,27 +302,47 @@ module.exports = {
 
                     var query = { _id: req.params.id };
                     var cmd = { $set: data };
-                    var opt = { w: 1 };
+                    var opt = { w: 1, new:true};
 
-                    volunteers.update(query, cmd, opt, function (err, result) {
+                    volunteers.findAndModify(query, null, cmd, opt, function (err, result) {
                         if (err || !result) {
-                            log('POST: Update error, volunteer:\n\n%s\n\n', err);
-                            res.send(400);
+                            log('VOLUNTEER.ACCOUNT.STAFF.POST: Unable to find record with id %s', req.params.id);
+                            log('VOLUNTEER.ACCOUNT.STAFF.POST: Using an ObjectId %s', req.params.id);
+                            volunteers.findAndModify({_id: new ObjectId(req.params.id)}, null, cmd, opt, function (error, record) {
+                                if (error || !record) {
+                                    log('POST: Update error, volunteer:\n\n%s\n\n', err);
+                                    res.send(400, 'staff');
+                                } else {
+                                    log('POST: Record successfully updated');
+
+                                    emailer.send({
+                                        to: record.email,
+                                        subject: 'Volunteer Account Update',
+                                        template: 'volunteer-account',
+                                        locals: { user: record }
+                                    }, function (err) {
+                                        if (err) {
+                                            res.send(400, 'staff');
+                                        }
+                                        else {
+                                            res.send('staff', 200);
+                                        }
+                                    });
+                                }
+                            });
                         } else {
                             log('POST: Record successfully updated');
-                            log('POST: Updating user session');
-
                             emailer.send({
-                                to: result[0].email,
+                                to: result.email,
                                 subject: 'Volunteer Account Update',
-                                template: 'volunteer-changed',
-                                locals: { user: result[0] }
+                                template: 'volunteer-account',
+                                locals: { user: result }
                             }, function (err) {
                                 if (err) {
-                                    res.send(400);
+                                    res.send(400, 'staff');
                                 }
                                 else {
-                                    res.send('id', 200);
+                                    res.send('staff', 200);
                                 }
                             });
                         }

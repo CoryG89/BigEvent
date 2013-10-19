@@ -24,15 +24,19 @@
       <hr />
       <form id="volunteer-form" method="post">
         <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
+        <% if(staff === 0) { %>
+            <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
+        <% } else { %>
+            <input class="input-block-level" type="email" id="email" name="email" required/>
+        <% } %>
         <label for="first-name">First Name</label>
         <input class="input-block-level" type="text" id="first-name" name="firstName" value="" required />
         <label for="last-name">Last Name</label>
         <input class="input-block-level" type="text" id="first-name" name="lastName" value="" required />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
-          <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
-          <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
+            <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
+            <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
         </div>
         <label for="address">Address</label>
         <input class="input-block-level" type="text" id="address" name="address" required />
@@ -40,7 +44,7 @@
         <input class="input-block-level" type="text" id="city" name="city" required />
         <label for="state">State</label>
         <select class="input-block-level" form="volunteer-form" id="state" name="state" required readonly> 
-          <option value="AL" selected>Alabama</option>
+            <option value="AL" selected>Alabama</option>
         </select>
         <label for="zip">Zip</label>
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
@@ -48,11 +52,11 @@
         <input class="input-block-level" type="tel" id="phone" name="phone" pattern="\d{10}" required />
         <label>Shirt Size</label>
         <div class="radio-group">
-          <div><input type="radio" name="shirtSize" value="S" required />S</div>
-          <div><input type="radio" name="shirtSize" value="M" required />M</div>
-          <div><input type="radio" name="shirtSize" value="L" required />L</div>
-          <div><input type="radio" name="shirtSize" value="XL" required />XL</div>
-          <div><input type="radio" name="shirtSize" value="XXL" required />XXL</div>
+            <div><input type="radio" name="shirtSize" value="S" required />S</div>
+            <div><input type="radio" name="shirtSize" value="M" required />M</div>
+            <div><input type="radio" name="shirtSize" value="L" required />L</div>
+            <div><input type="radio" name="shirtSize" value="XL" required />XL</div>
+            <div><input type="radio" name="shirtSize" value="XXL" required />XXL</div>
         </div>
         <hr />
         <input class="btn" type="reset" value="Clear" />

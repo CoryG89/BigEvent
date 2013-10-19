@@ -45,13 +45,23 @@
         },
 
         success: function (data, status) {
-            if (status === 'success' && data === 'ok') {
-                window.location.replace('request/success');
+            if (status === 'success') {
+                if(data === 'ok') {
+                    window.location.replace('/jobsite/request/success');
+                }
+                else
+                {
+                    window.location.replace('/staff/jobsite/evaluation/' + data.id);
+                }
             }
         },
 
-        error: function () {
-            window.location.replace('jobsite/request/failure');
+        error: function (data, status) {
+            if(data === 'staff'){
+                window.location.replace('/staff/jobsite/request/failure');
+            } else {
+                window.location.replace('/jobsite/request/failure');
+            }
         }
     });
 

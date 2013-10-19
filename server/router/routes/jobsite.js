@@ -46,6 +46,33 @@ module.exports = {
             });
         },
 
+        staff : {
+            post: function(req, res){
+                var record = req.body;
+                var options = { w: 1 };
+            
+                record.formattedAddress = util.format('%s %s, %s %s',
+                    record.address, record.city, record.state, record.zip);
+
+                jobsites.insert(record, options, function (err) {
+                    if (err) {
+                        log('POST: Error inserting record:\n\n%s\n\n', err);
+                        res.send(400, 'staff');
+                    } else {
+                        emailer.send({
+                            to: record.email,
+                            subject: 'Job Request Confirmation',
+                            template: 'jobsite-request',
+                            locals: { user: record }
+                        }, function (err) {
+                            if (err) res.send(400, 'staff');
+                            else res.send(200, {id: records[0]._id});
+                        });
+                    }
+                });
+            }
+        },
+
         success: function (req, res) {
             res.render('hero-unit', {
                 title: 'Jobsite Request Submitted',

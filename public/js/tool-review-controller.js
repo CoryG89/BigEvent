@@ -40,12 +40,13 @@
 
         success: function (data, status) {
             if (status === 'success' && data === 'OK') {
-                window.location.replace('/staffHomePage');
+                alert('Tool Updated Successfully.');
+                window.location.replace('/staff/staffHomePage');
             }
         },
 
         error: function () {
-            window.location.replace('/tool/review/failure');
+            window.location.replace('/staff/tool/review/failure');
         }
     });
 

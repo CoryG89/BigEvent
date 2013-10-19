@@ -3,18 +3,32 @@
 
     $('form#volunteer-form').ajaxForm({
         beforeSubmit: function () {
-            /** Client-side data form validation goes here */
-        },
-
-        success: function (data, status) {
-            if (status === 'success' && data === 'ok') {
-                window.location.replace('/volunteer/success');
+            //validate email for staff side processing
+            var email = $('#email').val();
+            if(email.search(/^.+@tigermail.auburn.edu$/) === -1 &&
+                email.search(/^.+@auburn.edu$/) === -1)
+            {
+                alert('Email must be a valid Auburn Email address');
             }
         },
 
-        error: function () {
-            window.location.replace('/volunteer/failure');
+        success: function (data, status) {
+            if (status === 'success'){
+                if(data === 'ok') {
+                    window.location.replace('/volunteer/success');
+                }
+                else {
+                    window.location.replace('/staff/volunteer/account/' + data.id);
+                }
+            }
+        },
+
+        error: function (data, status) {
+            if(data === 'staff') {
+                window.location.replace('/staff/volunteer/failure');
+            } else {
+                window.location.replace('/volunteer/failure');
+            }
         }
-    });
-    
+    });    
 })();

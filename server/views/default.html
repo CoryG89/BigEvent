@@ -51,22 +51,22 @@
               <% if( user &&
                     (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership')) { %>
                   <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-                  <a href="<%= site.url %>staffHomePage">Home</a>
+                    <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
                   <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
-                    <a href="<%= site.url %>volunteer">Add Volunteer</a>
+                    <a href="<%= site.url %>staff/volunteer">Add Volunteer</a>
                   </li>
                   <li class="<% if (reqdata.path === 'jobsite/request') { %>active<% } %>">
-                    <a href="<%= site.url %>jobsite/request">Add Job Site</a>
+                    <a href="<%= site.url %>staff/jobsite/request">Add Job Site</a>
                   </li>
                   <li class="<% if (reqdata.path === '/tool') { %>active<% } %>">
-                    <a href="<%= site.url %>tool">Add Tool</a>
+                    <a href="<%= site.url %>staff/tool">Add Tool</a>
                   </li>
                   <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
-                    <a href="<%= site.url %>contact">Contact</a>
+                    <a href="<%= site.url %>staff/contact">Contact</a>
                   </li>
                   <li class="<% if (reqdata.path === '/about') { %>active<% } %>">
-                    <a href="<%= site.url %>about">About</a>
+                    <a href="<%= site.url %>staff/about">About</a>
                   </li>
               <% } else { %>
                   <li class="<% if (reqdata.path === '/' || reqdata.path === '/home') { %> active <% } %>">
@@ -79,7 +79,7 @@
                     <a href="<%= site.url %>jobsite/request">Request Job</a>
                   </li>
           	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-          		    <a href="<%= site.url %>staffHomePage">Staff Home Page</a>
+          		    <a href="<%= site.url %>staff/staffHomePage">Staff Home Page</a>
           	      </li>
                   <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
                     <a href="<%= site.url %>contact">Contact</a>

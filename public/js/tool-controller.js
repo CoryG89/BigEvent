@@ -30,7 +30,7 @@
 
         success: function (data, status) {
             if (status === 'success') {
-                window.location.replace('/tool/review/' + data.id);
+                window.location.replace('/staff/tool/review/' + data.id);
             }
         },
 
@@ -42,7 +42,7 @@
             }
             else
             {
-                window.location.replace('/tool/failure');
+                window.location.replace('/staff/tool/failure');
             }
         }
     });

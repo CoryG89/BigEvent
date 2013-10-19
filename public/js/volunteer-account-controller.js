@@ -27,13 +27,18 @@
             if (status === 'success' && data === 'ok') {
                 window.location.replace('/volunteer/account/success');
             }
-            else if(status === 'success' && data === 'id') {
-                window.location.replace('/staffHomePage');
+            else if(status === 'success' && data === 'staff') {
+                alert('The Volunteer was successfully updated.');
+                window.location.replace('/staff/staffHomePage');
             }
         },
 
-        error: function () {
-            window.location.replace('/volunteer/account/failure');
+        error: function (data, status) {
+            if(data === 'staff'){
+                window.location.replace('/staff/volunteer/account/failure');
+            } else {
+                window.location.replace('/volunteer/account/failure');
+            }
         }
     });
 
