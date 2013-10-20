@@ -1,3 +1,186 @@
+(function () {
+    'use strict';
+    //get needed info
+    var toolNumPages = parseInt($('#toolNumPages').val());
+    var volunteerNumPages = parseInt($('#volunteerNumPages').val());
+    var jobsiteNumPages = parseInt($('#jobsiteNumPages').val());
+    var siteUrl = $('#siteUrl').val();
+
+    //set up table headers to be clickable
+    var tableHeaders = document.getElementsByTagName('th');
+
+    for (var i=0; i<tableHeaders.length; i++) 
+    {
+    	var cell = tableHeaders[i];
+		setMouseOver(cell);
+		var tableId = cell.offsetParent.id;
+		if(tableId === 'volunteerTable')
+		{
+			setOnClickListnerHeader(cell, 'volunteer', siteUrl, volunteerNumPages);
+		}
+		else if(tableId === 'jobsiteTable')
+		{
+			setOnClickListnerHeader(cell, 'jobsite', siteUrl, jobsiteNumPages);
+		}
+		else if(tableId === 'toolTable')
+		{
+			setOnClickListnerHeader(cell, 'tool', siteUrl, toolNumPages);
+		}
+	}
+
+	//set on click listeners for previous and next links
+	var links = document.getElementsByTagName('a');
+	var curLink, linkId;
+	for (var j=0; j<links.length; j++)
+	{
+		curLink = links[j];
+		linkId = curLink.id;
+		if(linkId === 'toolNextLink')
+		{
+			setOnClickListenerLink(curLink, 'tool', 'Next', siteUrl, toolNumPages);
+		}
+		if(linkId === 'jobsiteNextLink')
+		{
+			setOnClickListenerLink(curLink, 'jobsite', 'Next', siteUrl, jobsiteNumPages);
+		}
+		if(linkId === 'volunteerNextLink')
+		{
+			setOnClickListenerLink(curLink, 'volunteer', 'Next', siteUrl, volunteerNumPages);
+		}
+		if(linkId === 'toolPreviousLink')
+		{
+			setOnClickListenerLink(curLink, 'tool', 'Previous', siteUrl, toolNumPages);
+		}
+		if(linkId === 'jobsitePreviousLink')
+		{
+			setOnClickListenerLink(curLink, 'jobsite', 'Previous', siteUrl, jobsiteNumPages);
+		}
+		if(linkId === 'volunteerPreviousLink')
+		{
+			setOnClickListenerLink(curLink, 'volunteer', 'Previous', siteUrl, volunteerNumPages);
+		}
+	}
+
+})();
+
+function sort(type, sortKey, siteUrl, totalNumberOfPages)
+{
+	//set up the http request
+	var xmlhttp = new XMLHttpRequest();
+	//set the sorting values
+	var $sortDirection = $('#' + type + 'SortDir');
+	var $column = $('#' + type + 'SortColumn');
+	setSortValues($column, $sortDirection, sortKey);
+
+	xmlhttp.onreadystatechange = function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{
+			
+			//reset the table to page one
+			$('#' + type + "PageNumber").val(1);
+
+			//determine which links if any need to be enabled or disabled
+			determineNewPageLinkStates(type, 1, totalNumberOfPages);
+
+			//determin the route for hyperlinks in the first column.
+			var route = determineHyperLinkRoute(type, siteUrl);
+			var response = JSON.parse(xmlhttp.response);
+			var rowIndex = 1;
+			var table = document.getElementById(type + "Table");
+
+			//get headers id's so we know how to access each item
+			var row = table.rows[0]; 
+			var headers = getColumnHeaders(row);
+
+			//loop through and change each row in the table. 
+			var record;
+			for (var responseIndex = 0; responseIndex < response.length; responseIndex++) 
+			{
+				row = table.rows[rowIndex]; 
+				record = response[responseIndex];
+				if(row)
+				{
+				    replaceRow(type, row, headers, record, route);
+				}
+				else
+				{
+					row = insertTableRow(table, rowIndex, headers.length);
+					replaceRow(type, row, headers, record, route);
+				}
+			    rowIndex++;
+			}
+			clearRemainingRows(table, rowIndex);
+		}
+	};
+	if (type === 'volunteer')
+	{
+		xmlhttp.open("GET","/staff/staffHomePage/sort?type=vol&key=" + sortKey + "&dir=" + $sortDirection.val(), true);
+	} 
+	else if (type === 'tool') 
+	{
+		xmlhttp.open("GET","/staff/staffHomePage/sort?type=tool&key=" + sortKey + "&dir=" + $sortDirection.val(), true);
+	} 
+	else if (type === 'jobsite') 
+	{
+		xmlhttp.open("GET","/staff/staffHomePage/sort?type=jobsite&key=" + sortKey + "&dir=" + $sortDirection.val(), true);
+	} 
+	else 
+	{
+		//no type is an error just return false;
+		return false;
+	}
+
+	//make the http request
+	xmlhttp.send();
+	return true;
+}
+
+function setSortValues(column, sortDirection, sortKey)
+{
+	column.val(sortKey);
+	if(sortDirection.val() === 'asc')
+	{
+		sortDirection.val('des');
+	}
+	else if(sortDirection.val() === 'des')
+	{
+		sortDirection.val('asc');
+	}
+	else
+	{
+		sortDirection.val('asc');
+	}
+}
+
+function setMouseOver(cell)
+{
+	cell.onmouseover = function()
+	{
+		this.style.backgroundColor = "gainsboro";
+	};
+	cell.onmouseout = function()
+	{
+		this.style.backgroundColor = "white";
+	};
+}
+
+function setOnClickListnerHeader(cell, type, siteUrl, numPages)
+{
+	cell.onclick = function()
+	{
+		sort(type, cell.id, siteUrl, numPages);
+	};
+}
+
+function setOnClickListenerLink(link, type, linkType, siteUrl, numPages)
+{
+	link.onclick = function()
+	{
+		goToPage(type, linkType, numPages, siteUrl);
+	};
+}
+
 function goToPage(type, linkType, totalNumberOfPages, siteUrl)
 {
 	//determin if we are moving forward a page or back a page
@@ -52,17 +235,19 @@ function goToPage(type, linkType, totalNumberOfPages, siteUrl)
 			clearRemainingRows(table, rowIndex);
 		}
 	};
+	var sortDirection = $('#' + type + 'SortDir').val();
+	var column = $('#' + type + 'SortColumn').val();
 	if (type === 'volunteer')
 	{
-		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=vol&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=vol&p=" + goToPageNumber + "&key=" + column + "&dir=" + sortDirection, true);
 	} 
 	else if (type === 'tool') 
 	{
-		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=tool&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=tool&p=" + goToPageNumber + "&key=" + column + "&dir=" + sortDirection, true);
 	} 
 	else if (type === 'jobsite') 
 	{
-		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=jobsite&p=" + goToPageNumber, true);
+		xmlhttp.open("GET","/staff/staffHomePage/updateTable?type=jobsite&p=" + goToPageNumber + "&key=" + column + "&dir=" + sortDirection, true);
 	} 
 	else 
 	{
@@ -103,7 +288,7 @@ function replaceRow(type, row, headers, record, route)
 	if(header === 'doubleName')
 	{
 		cell.innerHTML = "<a href='" + route + record['_id'] + "'>" +
-                record['firstName'] + " " + record['lastName'] + "</a>";
+                record['lastName'] + ", " + record['firstName'] + "</a>";
 	} 
 	else 
 	{
@@ -117,7 +302,7 @@ function replaceRow(type, row, headers, record, route)
    		header = headers[j];
 		if(header === 'doubleName')
 		{
-			cell.innerText = record['firstName'] + ' ' + record['lastName']; 
+			cell.innerText = record['lastName'] + ', ' + record['firstName']; 
 		} 
 		else 
 		{

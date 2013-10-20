@@ -59,6 +59,7 @@ module.exports = {
 
         app.get('/staff/staffHomePage', routes.staffHomePage.get);
         app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
+        app.get('/staff/staffHomePage/sort', routes.staffHomePage.sort);
         
         app.get('*', routes.notfound);
     }

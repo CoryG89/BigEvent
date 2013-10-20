@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span3 hidden-phone">
-    <img src="img/logo.jpg" />
+    <img src="/img/logo.jpg" />
   </div>
   <div class="offset1 span8">
     <div class="hero-unit">
@@ -11,6 +11,7 @@
     </div>
   </div>
 </div>
+<input class="hidden" id="siteUrl" type="text" name="siteUrl" value="<%= site.url %>"/>
   <!-- Data Tables -->
 <h2>Volunteer Table</h2>
 <div class="table-responsive">
@@ -30,7 +31,7 @@
                 <tr>
                     <td>
                         <a href="<%= site.url %>staff/volunteer/account/<%= volunteerList[i]._id %>">
-                            <%= volunteerList[i].firstName + " " + volunteerList[i].lastName  %>
+                            <%= volunteerList[i].lastName + ", " + volunteerList[i].firstName  %>
                         </a>
                     </td>
                     <td><%= volunteerList[i].email             %></td>
@@ -46,28 +47,23 @@
                 <ul class="pager pull-right">
                     <li>
                         <input class="hidden" id="volunteerPageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
+                        <input class="hidden" id="volunteerSortColumn" type="text" name="volunteerSortColumn" value="" style="width:3em;"/>
+                        <input class="hidden" id="volunteerSortDir" type="text" name="volunteerSortDir" value="" style="width:3em;"/>
+                        <input class="hidden" id="volunteerNumPages" type="text" name="volunteerNumPages" value="<%= vpt %>" style="width:3em;"/>
                     </li>  
                     <% if(vpt === 1) { %>
                         <li id="volunteerPreviousLi" class="disabled">
-                            <a id="volunteerPreviousLink" class="disabled" onclick="goToPage('volunteer', 'Previous', <%= vpt %>, '<%= site.url %>');">
-                                Previous
-                            </a>
+                            <a id="volunteerPreviousLink" class="disabled">Previous</a>
                         </li>
                         <li id="volunteerNextLi" class="disabled">
-                            <a id="volunteerNextLink" class="disabled" onclick="goToPage('volunteer', 'Next', <%= vpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="volunteerNextLink" class="disabled">Next</a>
                         </li>
                     <% } else { %>
                         <li id="volunteerPreviousLi" class="disabled">
-                            <a id="volunteerPreviousLink" class="disabled" onclick="goToPage('volunteer', 'Previous', <%= vpt %>, '<%= site.url %>');">
-                                Previous
-                            </a>
+                            <a id="volunteerPreviousLink" class="disabled">Previous</a>
                         </li>
                         <li id="volunteerNextLi">
-                            <a id="volunteerNextLink" onclick="goToPage('volunteer', 'Next', <%= vpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="volunteerNextLink">Next</a>
                         </li>
                     <% } %>
                 </ul>
@@ -92,7 +88,7 @@
                 <tr>
                     <td>
                         <a href="<%= site.url %>staff/jobsite/evaluation/<%= jobSiteList[i]._id %>">
-                            <%= jobSiteList[i].firstName + " " + jobSiteList[i].lastName  %>
+                            <%= jobSiteList[i].lastName + ", " + jobSiteList[i].firstName  %>
                         </a>
                     </td>
                     <td><%= jobSiteList[i].email             %></td>
@@ -107,28 +103,23 @@
                 <ul class="pager pull-right">
                     <li>
                         <input class="hidden" id="jobsitePageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
+                        <input class="hidden" id="jobsiteSortColumn" type="text" name="jobsiteSortColumn" value="" style="width:3em;"/>
+                        <input class="hidden" id="jobsiteSortDir" type="text" name="jodsiteSortDir" value="" style="width:3em;"/>
+                        <input class="hidden" id="jobsiteNumPages" type="text" name="jobsiteNumPages" value="<%= jpt %>" style="width:3em;"/>
                     </li>  
                     <% if(jpt === 1) { %>
                         <li id="jobsitePreviousLi" class="disabled">
-                            <a id="jobsitePreviousLink" class="disabled" onclick="goToPage('jobsite', 'Previous', <%= jpt %>, '<%= site.url %>');">
-                                Previous
-                            </a>
+                            <a id="jobsitePreviousLink" class="disabled">Previous</a>
                         </li>
                         <li id="jobsiteNextLi" class="disabled">
-                            <a id="jobsiteNextLink" class="disabled" onclick="goToPage('jobsite', 'Next', <%= jpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="jobsiteNextLink" class="disabled">Next</a>
                         </li>
                     <% } else { %>
                         <li id="jobsitePreviousLi" class="disabled">
-                            <a id="jobsitePreviousLink" class="disabled" onclick="goToPage('jobsite', 'Previous', <%= jpt %>, '<%= site.url %>');">
-                                Previous
-                            </a>
+                            <a id="jobsitePreviousLink" class="disabled">Previous</a>
                         </li>
                         <li id="jobsiteNextLi">
-                            <a id="jobsiteNextLink" onclick="goToPage('jobsite', 'Next', <%= jpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="jobsiteNextLink">Next</a>
                         </li>
                     <% } %>
                 </ul>
@@ -170,28 +161,24 @@
                 <ul class="pager pull-right">
                     <li>
                         <input class="hidden" id="toolPageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
+                        <input class="hidden" id="toolSortColumn" type="text" name="toolSortColumn" value="" style="width:3em;"/>
+                        <input class="hidden" id="toolSortDir" type="text" name="toolSortDir" value="" style="width:3em;"/>
+                        <input class="hidden" id="toolNumPages" type="text" name="toolNumPages" value="<%= tpt %>" style="width:3em;"/>
                     </li>  
                     <% if(tpt === 1) { %>
                         <li id="toolPreviousLi" class="disabled">
-                            <a id="toolPreviousLink" class="disabled" onclick="goToPage('tool', 'Previous', <%= tpt %>, '<%= site.url %>');">
-                                Previous
-                            </a>
+                            <a id="toolPreviousLink" class="disabled">Previous</a>
                         </li>
                         <li id="toolNextLi" class="disabled">
-                            <a id="toolNextLink" class="disabled" onclick="goToPage('tool', 'Next', <%= tpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="toolNextLink" class="disabled">Next</a>
                         </li>
                     <% } else { %>
                         <li id="toolPreviousLi" class="disabled">
-                            <a id="toolPreviousLink" class="disabled" onclick="goToPage('tool', 'Previous', <%= tpt %>, '<%= site.url %>');">
-                                Previous
+                            <a id="toolPreviousLink" class="disabled">Previous
                             </a>
                         </li>
                         <li id="toolNextLi">
-                            <a id="toolNextLink" onclick="goToPage('tool', 'Next', <%= tpt %>, '<%= site.url %>');">
-                                Next
-                            </a>
+                            <a id="toolNextLink">Next</a>
                         </li>
                     <% } %>
                 </ul>

@@ -22,7 +22,7 @@ function getLists(error, callback) {
             error += "Error getting Tools.\n";
         }
         //get volunteers
-        volunteers.find().skip(0).limit(numberOfItems).toArray(function(verr, volunteerDocs){
+        volunteers.find().limit(numberOfItems).toArray(function(verr, volunteerDocs){
             if(verr){
                 log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: %s', verr);
                 error += "Error getting Volunteers.\n";
@@ -31,7 +31,7 @@ function getLists(error, callback) {
                 error += "Error getting Volunteers.\n";
             }
             //get job sites
-            jobSites.find().skip(0).limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
+            jobSites.find().limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
                 if(jerr){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: %s', jerr);
                     error += "Error getting Job Sites.\n";
@@ -160,6 +160,13 @@ module.exports = {
     updateTable: function (req, res) {
         var type = req.query.type;
         var page = parseInt(req.query.p);
+        if(req.query.dir === 'asc')
+        var sortDir = 1; //this is asceding order. This will be used if sorting is in effect
+        if(req.query.dir === 'des')
+        {
+            sortDir = -1
+        }
+        var key = req.query.key;
         log('pageNumber: %s', page);
         var collection;
         if(type === 'vol') {
@@ -172,21 +179,121 @@ module.exports = {
             //there was an error
             res.send(400, 'Invalid Type');
         }
-        //get the entries for the page
-        collection.find().skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
-            if(err){
-                log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: %s', err);
-                error += "Error Updating Table.\n";
-                res.send(400, 'Error');
-            } else if (!docs) {
-                log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: unknown');
-                error += "Error getting Entries for the table.\n";
-                res.send(400, 'No Entries');
+        //determine if we must sort
+        if(key === '') //this means no sorting is in place.
+        {
+            //get the entries for the page
+            collection.find().skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+                if(err){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
+                    error += "Error Updating Table.\n";
+                    res.send(400, 'Error');
+                } else if (!docs) {
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: unknown');
+                    error += "Error getting Entries for the table.\n";
+                    res.send(400, 'No Entries');
+                }
+                else {
+                    res.send(200, docs);
+                }
+            });
+        }
+        else
+        {
+            //get the entries for the page
+            //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
+            if(key === 'doubleName')
+            {
+                collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+                    if(err){
+                        log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
+                        error += "Error Updating Table.\n";
+                        res.send(400, 'Error');
+                    } else if (!docs) {
+                        log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: unknown');
+                        error += "Error getting Entries for the table.\n";
+                        res.send(400, 'No Entries');
+                    }
+                    else {
+                        res.send(200, docs);
+                    }
+                });
             }
-            else {
-                res.send(200, docs);
+            else
+            {
+                collection.find().sort(key, sortDir).skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+                    if(err){
+                        log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
+                        error += "Error Updating Table.\n";
+                        res.send(400, 'Error');
+                    } else if (!docs) {
+                        log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: unknown');
+                        error += "Error getting Entries for the table.\n";
+                        res.send(400, 'No Entries');
+                    }
+                    else {
+                        res.send(200, docs);
+                    }
+                });
             }
-        });
+        }
+    },
+
+    sort: function (req, res){
+        var type = req.query.type;
+        var key = req.query.key;
+        var sortDir = 1; //this is asceding order
+        if(req.query.dir === 'des')
+        {
+            sortDir = -1
+        }
+        var collection;
+        if(type === 'vol') {
+            collection = volunteers;
+        } else if(type === 'tool') {
+            collection = tools;
+        } else if(type === 'jobsite') {
+            collection = jobSites;
+        } else {
+            //there was an error
+            res.send(400, 'Invalid Type');
+        }
+
+        //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
+        if(key === 'doubleName')
+        {
+            collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).limit(numberOfItems).toArray(function(err, docs){
+                if(err){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
+                    error += "Error Updating Table.\n";
+                    res.send(400, 'Error');
+                } else if (!docs) {
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: unknown');
+                    error += "Error getting Entries for the table.\n";
+                    res.send(400, 'No Entries');
+                }
+                else {
+                    res.send(200, docs);
+                }
+            });
+        }
+        else
+        {
+            collection.find().sort(key, sortDir).limit(numberOfItems).toArray(function(err, docs){
+                if(err){
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
+                    error += "Error Updating Table.\n";
+                    res.send(400, 'Error');
+                } else if (!docs) {
+                    log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: unknown');
+                    error += "Error getting Entries for the table.\n";
+                    res.send(400, 'No Entries');
+                }
+                else {
+                    res.send(200, docs);
+                }
+            });
+        }
     },
 
     success: function (req, res) {
