@@ -3,17 +3,17 @@
 var debug = require('../../debug');
 var dbman = require('../../dbman');
 
-var log = debug.getLogger({ prefix: '[route.tool]-  ' });
+var log = debug.getLogger({ prefix: '[route.staffHomePage]-  ' });
 var tools = dbman.getCollection('tools');
 var volunteers = dbman.getCollection('volunteers');
 var jobSites = dbman.getCollection('jobsites');
 
 //set vars to control paginations.
-var numberOfItems = 10;
+var itemsPerPage = 10;
 
 function getLists(error, callback) {
     //get tools
-    tools.find().limit(numberOfItems).toArray(function(terr, toolDocs){
+    tools.find().limit(itemsPerPage).toArray(function(terr, toolDocs){
         if(terr){
             log('STAFFHOMEPAGE.GETLISTS: Error getting list of tools -> err: %s', terr);
             error += "Error getting Tools.\n";
@@ -22,7 +22,7 @@ function getLists(error, callback) {
             error += "Error getting Tools.\n";
         }
         //get volunteers
-        volunteers.find().limit(numberOfItems).toArray(function(verr, volunteerDocs){
+        volunteers.find().limit(itemsPerPage).toArray(function(verr, volunteerDocs){
             if(verr){
                 log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: %s', verr);
                 error += "Error getting Volunteers.\n";
@@ -31,7 +31,7 @@ function getLists(error, callback) {
                 error += "Error getting Volunteers.\n";
             }
             //get job sites
-            jobSites.find().limit(numberOfItems).toArray(function(jerr, jobSiteDocs){
+            jobSites.find().limit(itemsPerPage).toArray(function(jerr, jobSiteDocs){
                 if(jerr){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: %s', jerr);
                     error += "Error getting Job Sites.\n";
@@ -74,12 +74,18 @@ function getCounts(callback){
     });
 }
 
+function isStaffRole(role) {
+    return role === 'executive' || role === 'coordinator' 
+        || role === 'committee' || role === 'leadership';
+}
+
 module.exports = {
 
     get: function (req, res) {
         //check to see if you the user is a staff member
         var user = req.session.user;
-        if(!(user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership')){
+
+        if(!(isStaffRole(user.role))) {
             res.render('hero-unit', {
                 title: 'Access Denied',
                 header: 'Access Denied',
@@ -87,30 +93,30 @@ module.exports = {
                 user: user,
                 _layoutFile: 'default'
             });
-        }
-
-        getCounts(function(error, toolCount, volCount, jobCount) {
-            //get number of pages for each table
-            var toolNumPages = Math.ceil(toolCount/numberOfItems);
-            var volNumPages = Math.ceil(volCount/numberOfItems);
-            var jobSiteNumPages = Math.ceil(jobCount/numberOfItems);
-            //get lists to populate each table
-            getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
-                //render page
-                res.render('staffHomePage', {
-                    title: 'Staff Home Page',
-                    toolList: toolDocs,
-                    tpt: (toolNumPages === 0) ? 1 : toolNumPages,
-                    volunteerList: volunteerDocs,
-                    vpt: (volNumPages === 0) ? 1 : volNumPages,
-                    jobSiteList: jobSiteDocs,
-                    jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
-                    user: user,
-                    error: error,
-                    _layoutFile: 'default'
+        } else {        
+            getCounts(function(error, toolCount, volCount, jobCount) {
+                //get number of pages for each table
+                var toolNumPages = Math.ceil(toolCount / itemsPerPage);
+                var volNumPages = Math.ceil(volCount / itemsPerPage);
+                var jobSiteNumPages = Math.ceil(jobCount / itemsPerPage);
+                //get lists to populate each table
+                getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs) {
+                    //render page
+                    res.render('staffHomePage', {
+                        title: 'Staff Home Page',
+                        toolList: toolDocs,
+                        tpt: (toolNumPages === 0) ? 1 : toolNumPages,
+                        volunteerList: volunteerDocs,
+                        vpt: (volNumPages === 0) ? 1 : volNumPages,
+                        jobSiteList: jobSiteDocs,
+                        jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
+                        user: user,
+                        error: error,
+                        _layoutFile: 'default'
+                    });
                 });
             });
-        });        
+        }       
     },
 
     post: function (req, res) {
@@ -169,7 +175,7 @@ module.exports = {
         var key = req.query.key;
         log('pageNumber: %s', page);
         var collection;
-        if(type === 'vol') {
+        if(type === 'volunteer') {
             collection = volunteers;
         } else if(type === 'tool') {
             collection = tools;
@@ -183,7 +189,7 @@ module.exports = {
         if(key === '') //this means no sorting is in place.
         {
             //get the entries for the page
-            collection.find().skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+            collection.find().skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
                     error += "Error Updating Table.\n";
@@ -204,7 +210,7 @@ module.exports = {
             //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
             if(key === 'doubleName')
             {
-                collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+                collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                     if(err){
                         log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
                         error += "Error Updating Table.\n";
@@ -221,7 +227,7 @@ module.exports = {
             }
             else
             {
-                collection.find().sort(key, sortDir).skip(numberOfItems * (page - 1)).limit(numberOfItems).toArray(function(err, docs){
+                collection.find().sort(key, sortDir).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                     if(err){
                         log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
                         error += "Error Updating Table.\n";
@@ -248,7 +254,7 @@ module.exports = {
             sortDir = -1
         }
         var collection;
-        if(type === 'vol') {
+        if(type === 'volunteer') {
             collection = volunteers;
         } else if(type === 'tool') {
             collection = tools;
@@ -262,7 +268,7 @@ module.exports = {
         //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
         if(key === 'doubleName')
         {
-            collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).limit(numberOfItems).toArray(function(err, docs){
+            collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
                     error += "Error Updating Table.\n";
@@ -279,7 +285,7 @@ module.exports = {
         }
         else
         {
-            collection.find().sort(key, sortDir).limit(numberOfItems).toArray(function(err, docs){
+            collection.find().sort(key, sortDir).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error getting docs -> err: %s', err);
                     error += "Error Updating Table.\n";

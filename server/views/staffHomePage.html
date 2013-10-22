@@ -11,7 +11,6 @@
     </div>
   </div>
 </div>
-<input class="hidden" id="siteUrl" type="text" name="siteUrl" value="<%= site.url %>"/>
   <!-- Data Tables -->
 <h2>Volunteer Table</h2>
 <div class="table-responsive">
@@ -46,9 +45,6 @@
             <tr>
                 <ul class="pager pull-right">
                     <li>
-                        <input class="hidden" id="volunteerPageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
-                        <input class="hidden" id="volunteerSortColumn" type="text" name="volunteerSortColumn" value="" style="width:3em;"/>
-                        <input class="hidden" id="volunteerSortDir" type="text" name="volunteerSortDir" value="" style="width:3em;"/>
                         <input class="hidden" id="volunteerNumPages" type="text" name="volunteerNumPages" value="<%= vpt %>" style="width:3em;"/>
                     </li>  
                     <% if(vpt === 1) { %>
@@ -102,9 +98,6 @@
             <tr>
                 <ul class="pager pull-right">
                     <li>
-                        <input class="hidden" id="jobsitePageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
-                        <input class="hidden" id="jobsiteSortColumn" type="text" name="jobsiteSortColumn" value="" style="width:3em;"/>
-                        <input class="hidden" id="jobsiteSortDir" type="text" name="jodsiteSortDir" value="" style="width:3em;"/>
                         <input class="hidden" id="jobsiteNumPages" type="text" name="jobsiteNumPages" value="<%= jpt %>" style="width:3em;"/>
                     </li>  
                     <% if(jpt === 1) { %>
@@ -160,9 +153,6 @@
             <tr>
                 <ul class="pager pull-right">
                     <li>
-                        <input class="hidden" id="toolPageNumber" type="number" min='1' name="toolPageNumber" value="1" style="width:3em;"/>
-                        <input class="hidden" id="toolSortColumn" type="text" name="toolSortColumn" value="" style="width:3em;"/>
-                        <input class="hidden" id="toolSortDir" type="text" name="toolSortDir" value="" style="width:3em;"/>
                         <input class="hidden" id="toolNumPages" type="text" name="toolNumPages" value="<%= tpt %>" style="width:3em;"/>
                     </li>  
                     <% if(tpt === 1) { %>
