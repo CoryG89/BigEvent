@@ -12,7 +12,6 @@
         $maxReqValue.prop('disabled', true);
     }
 
-    var $form = $('form#toolReview-form');
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $accountInputs = $('.tool-review-input');
@@ -22,14 +21,14 @@
         beforeSubmit: function () {
 
             //check to see if the inputed numbers are correct
-            if(parseInt($('#totalAvailable').val()) < parseInt($('#numberInUse').val()))
+            if(parseInt($('#totalAvailable').val(), 10) < parseInt($('#numberInUse').val(), 10))
             {
                 alert('Number In Use cannot be greater than Total Available.');
                 return false;
             }
             if($maxReqCheckbox.prop('checked'))
             {
-                if(parseInt($numberRequested.val()) > parseInt($maxReqValue.val()))
+                if(parseInt($numberRequested.val(), 10) > parseInt($maxReqValue.val(), 10))
                 {
                     alert('You cannot request more than the Max Request Limit');
                     return false;

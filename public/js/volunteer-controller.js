@@ -30,5 +30,5 @@
                 window.location.replace('/volunteer/failure');
             }
         }
-    });    
+    });
 })();
