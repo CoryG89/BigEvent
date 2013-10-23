@@ -11,6 +11,8 @@ module.exports = {
         app.get('/signin', routes.signin.get);
         app.post('/signin', routes.signin.post);
 
+        app.get('/waiver', routes.waiver);
+
         app.get('/volunteer', routes.volunteer.get);
         app.post('/volunteer', routes.volunteer.post);
         app.get('/volunteer/success', routes.volunteer.success);
