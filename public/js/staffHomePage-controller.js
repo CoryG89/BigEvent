@@ -5,13 +5,19 @@
     var pageNumber = {
         volunteer: 1,
         jobsite: 1,
-        tool: 1
+        tool: 1,
+        committee: 1,
+        leadership: 1,
+        projectCoordinator: 1
     };
 
     var totalPages = {
         volunteer: parseInt($('#toolNumPages').val()),
         jobsite: parseInt($('#volunteerNumPages').val()),
-        tool: parseInt($('#jobsiteNumPages').val())
+        tool: parseInt($('#jobsiteNumPages').val()),
+        committee: parseInt($('#committeeNumPages').val()),
+        leadership: parseInt($('#leadershipNumPages').val()),
+        projectCoordinator: parseInt($('#projectCoordinatorNumPages').val())
     };
 
     var currentSortStatus = {
@@ -24,6 +30,18 @@
             direction: ''
         },
         tool: {
+            column: '',
+            direction: ''
+        },
+        committee: {
+            column: '',
+            direction: ''
+        },
+        leadership: {
+            column: '',
+            direction: ''
+        },
+        projectCoordinator: {
             column: '',
             direction: ''
         }
@@ -49,6 +67,18 @@
         {
             setOnClickListenerHeader(cell, 'tool');
         }
+        else if(tableId === 'committeeTable')
+        {
+            setOnClickListenerHeader(cell, 'committee');
+        }
+        else if(tableId === 'leadershipTable')
+        {
+            setOnClickListenerHeader(cell, 'leadership');
+        }
+        else if(tableId === 'projectCoordinatorTable')
+        {
+            setOnClickListenerHeader(cell, 'projectCoordinator');
+        }
     }
 
     //set on click listeners for previous and next links
@@ -70,6 +100,18 @@
         {
             setOnClickListenerLink(curLink, 'volunteer', 'Next');
         }
+        if(linkId === 'committeeNextLink')
+        {
+            setOnClickListenerLink(curLink, 'committee', 'Next');
+        }
+        if(linkId === 'leadershipNextLink')
+        {
+            setOnClickListenerLink(curLink, 'leadership', 'Next');
+        }
+        if(linkId === 'projectCoordinatorNextLink')
+        {
+            setOnClickListenerLink(curLink, 'projectCoordinator', 'Next');
+        }
         if(linkId === 'toolPreviousLink')
         {
             setOnClickListenerLink(curLink, 'tool', 'Previous');
@@ -81,6 +123,18 @@
         if(linkId === 'volunteerPreviousLink')
         {
             setOnClickListenerLink(curLink, 'volunteer', 'Previous');
+        }
+        if(linkId === 'committeePreviousLink')
+        {
+            setOnClickListenerLink(curLink, 'committee', 'Previous');
+        }
+        if(linkId === 'leadershipPreviousLink')
+        {
+            setOnClickListenerLink(curLink, 'leadership', 'Previous');
+        }
+        if(linkId === 'projectCoordinatorPreviousLink')
+        {
+            setOnClickListenerLink(curLink, 'projectCoordinator', 'Previous');
         }
     }
 
@@ -381,18 +435,30 @@
 
     function determineHyperLinkRoute(type)
     {
-        var route = '';
+        var route = '/staff/' + type + '/';
         if(type === 'tool')
         {
-            route += '/staff/tool/review/';
+            route += 'review/';
         }
         else if(type === 'volunteer')
         {
-            route += '/staff/volunteer/account/';
+            route += 'account/';
         }
         else if(type === 'jobsite')
         {
-            route += '/staff/jobsite/evaluation/';
+            route += 'evaluation/';
+        }
+        else if(type === 'committee')
+        {
+            route += 'review/';
+        }
+        else if(type === 'leadership')
+        {
+            route += 'review/';
+        }
+        else if(type === 'projectCoordinator')
+        {
+            route += 'review/';
         }
         return route;
     }
