@@ -228,15 +228,9 @@ module.exports = {
         var page = parseInt(req.query.p, 10);
         log('pageNumber: %s', page);
 
-        var sortDir;
-        if (req.query.dir === 'asc') {
-            sortDir = 1;
-        }
-        else if (req.query.dir === 'des') {
+        var sortDir = 1;
+        if (req.query.dir === 'des') {
             sortDir = -1;
-        }
-        else {
-            res.send(400, 'Invalid sort direction');
         }
 
         var key = req.query.key;
@@ -316,15 +310,10 @@ module.exports = {
         var type = req.query.type;
 
         var key = req.query.key;
-        var sortDir;
-        if (req.query.dir === 'asc') {
-            sortDir = 1;
-        }
-        else if (req.query.dir === 'des') {
+        
+        var sortDir = 1;
+        if (req.query.dir === 'des') {
             sortDir = -1;
-        }
-        else {
-            res.send(400, 'Invalid sort direction');
         }
 
         var collection;
