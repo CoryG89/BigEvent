@@ -4,13 +4,12 @@ var moment = require('moment');
 
 module.exports = function () {
     return function (req, res, next) {
-        var path = req.path;
-
         res.locals({
             reqdata: {
-                path: path,
+                path: req.path,
                 date: moment()
-            }
+            },
+            user: req.session.user
         });
         next();
     };
