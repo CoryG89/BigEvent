@@ -196,20 +196,20 @@ module.exports = {
                 var cmd = { $set: data };
                 var opt = { w: 1 };
 
-                volunteers.update(query, cmd, opt, function (err, result) 
+                volunteers.update(query, cmd, opt, function (err, result)
                 {
-                    if (err || !result) 
+                    if (err || !result)
                     {
                         log('VOLUNTEER.ACCOUNT.POST: unable to find record with id %s', req.session.volunteer._id);
                         log('VOLUNTEER.ACCOUNT.POST: Trying an ObjectId %s', req.session.volunteer._id);
-                        volunteers.update({_id: new ObjectId(req.session.volunteer._id)}, cmd, opt, function (error, record) 
+                        volunteers.update({_id: new ObjectId(req.session.volunteer._id)}, cmd, opt, function (error, record)
                         {
                             if(error || !record)
                             {
                                 log('POST: Update error, volunteer:\n\n%s\n\n', err);
                                 res.send(400);
-                            } 
-                            else 
+                            }
+                            else
                             {
                                 log('POST: Record successfully updated');
                                 log('POST: Updating user session');
@@ -266,7 +266,7 @@ module.exports = {
                                 log('VOLUNTEER.STAFF.GET: Record not found for object id %s', req.params.id);
                                 res.send(400);
                             } else {
-                                log('VOLUNTEER.STAFF.GET: Record found')
+                                log('VOLUNTEER.STAFF.GET: Record found');
                                 res.render('volunteer-account', {
                                     title: 'Volunteer Account',
                                     record: record,
@@ -277,7 +277,7 @@ module.exports = {
                         });
                     }
                     else {
-                        log('VOLUNTEER.STAFF.GET: Record found')
+                        log('VOLUNTEER.STAFF.GET: Record found');
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
                             record: rec,

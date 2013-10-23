@@ -26,7 +26,7 @@ module.exports = {
         //check to see if the checkbox was checked. If it was not checked there will be no field for it in the record. Add one
         if(!newRecord.maxRequest)
         {
-            newRecord.maxRequest = "off";
+            newRecord.maxRequest = 'off';
         }
 
         //check to see if we already have a tool by this name
@@ -35,7 +35,7 @@ module.exports = {
             if(error)
             {
                 log('POST: Error checking database for tool', error);
-                res.send(400, "Error");
+                res.send(400, 'Error');
             }
             else if(!oldRecord)
             {
@@ -58,7 +58,7 @@ module.exports = {
             else
             {
                 log('POST: Found an entry -> notifying user');
-                res.send(400, "Entry Found");
+                res.send(400, 'Entry Found');
             }
         });
     },
@@ -89,17 +89,17 @@ module.exports = {
             log('TOOL.REVIEW.GET: Get Tool with _id: %s', id);
             tools.findOne({ _id: new ObjectId(id)}, function(error, record){
                 if(error){
-                    log("TOOL.REVIEW.GET: Error looking for record with _id: %s", id);
-                        res.render('hero-unit', {
-                            title: 'Error getting tool for review.',
-                            header: 'Error',
-                            message: 'There was an unknown error retrieving tool from database.',
-                            user: req.session.user,
-                            _layoutFile: 'default'
-                        });
+                    log('TOOL.REVIEW.GET: Error looking for record with _id: %s', id);
+                    res.render('hero-unit', {
+                        title: 'Error getting tool for review.',
+                        header: 'Error',
+                        message: 'There was an unknown error retrieving tool from database.',
+                        user: req.session.user,
+                        _layoutFile: 'default'
+                    });
                 }
                 else if(!record){
-                    log("TOOL.REVIEW.GET: Unable to find record with _id: %s", id);
+                    log('TOOL.REVIEW.GET: Unable to find record with _id: %s', id);
                     res.render('hero-unit', {
                         title: 'Could not find Tool in datbase.',
                         header: 'Tool Not Found',
@@ -110,7 +110,7 @@ module.exports = {
 
                 }
                 else{
-                    log("TOOL.REVIEW.GET: Found record with id: %s", id);
+                    log('TOOL.REVIEW.GET: Found record with id: %s', id);
                     res.render('toolReview', {
                         title: 'Edit Tool',
                         record: record,
@@ -125,12 +125,12 @@ module.exports = {
             var newRecord = req.body;
             var id = req.params.id;
 
-            log("TOOL.REVIEW.POST Trying to bet tool with _id: %s", id);
+            log('TOOL.REVIEW.POST Trying to bet tool with _id: %s', id);
 
              //check to see if the checkbox was checked. If it was not checked there will be no field for it in the record. Add one
             if(!newRecord.maxRequest)
             {
-                newRecord.maxRequest = "off";
+                newRecord.maxRequest = 'off';
                 //just in case there was a request limit before this was turned off we need to update the limit to 0
                 newRecord.maxRequestValue = 0;
             }
@@ -178,5 +178,4 @@ module.exports = {
             });
         }
     }
-
 };

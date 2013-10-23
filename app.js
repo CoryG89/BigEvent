@@ -29,7 +29,7 @@ app.use(express.session({ secret: 'SuperAppSpecificSecretGoesHere' }));
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.use(server.middleware.wlauth());
-app.use(server.middleware.reqdata());
+app.use(server.middleware.reslocals());
 app.use(app.router);
 
 /** Development configuration */

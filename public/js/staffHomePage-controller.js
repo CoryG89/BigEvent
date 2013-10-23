@@ -12,12 +12,12 @@
     };
 
     var totalPages = {
-        volunteer: parseInt($('#toolNumPages').val()),
-        jobsite: parseInt($('#volunteerNumPages').val()),
-        tool: parseInt($('#jobsiteNumPages').val()),
-        committee: parseInt($('#committeeNumPages').val()),
-        leadership: parseInt($('#leadershipNumPages').val()),
-        projectCoordinator: parseInt($('#projectCoordinatorNumPages').val())
+        volunteer: parseInt($('#toolNumPages').val(), 10),
+        jobsite: parseInt($('#volunteerNumPages').val(), 10),
+        tool: parseInt($('#jobsiteNumPages').val(), 10),
+        committee: parseInt($('#committeeNumPages').val(), 10),
+        leadership: parseInt($('#leadershipNumPages').val(), 10),
+        projectCoordinator: parseInt($('#projectCoordinatorNumPages').val(), 10)
     };
 
     var currentSortStatus = {
@@ -45,7 +45,7 @@
             column: '',
             direction: ''
         }
-    }
+    };
 
     //set up table headers to be clickable
     var tableHeaders = document.getElementsByTagName('th');
@@ -197,20 +197,20 @@
 
     function setSortValues(type, sortKey)
     {
-        currentSortStatus[type]['column'] = sortKey;
-        var direction = currentSortStatus[type]['direction'];
+        currentSortStatus[type].column = sortKey;
+        var direction = currentSortStatus[type].direction;
         if(direction === 'asc')
         {
-            currentSortStatus[type]['direction'] = 'des';
+            currentSortStatus[type].direction = 'des';
             return 'des';
         }
         else if(direction === 'des')
         {
-            currentSortStatus[type]['direction'] = 'asc';
+            currentSortStatus[type].direction = 'asc';
         }
         else
         {
-            currentSortStatus[type]['direction'] = 'asc';
+            currentSortStatus[type].direction = 'asc';
         }
         return 'asc';
     }
@@ -307,7 +307,7 @@
             }
         };
 
-        xmlhttp.open('GET','/staff/staffHomePage/updateTable?type=' + type + '&p=' + goToPageNumber + '&key=' + currentSortStatus[type]['column'] + '&dir=' + currentSortStatus[type]['direction'], true);
+        xmlhttp.open('GET','/staff/staffHomePage/updateTable?type=' + type + '&p=' + goToPageNumber + '&key=' + currentSortStatus[type].column + '&dir=' + currentSortStatus[type].direction, true);
 
         //make the http request
         xmlhttp.send();

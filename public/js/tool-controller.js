@@ -12,14 +12,14 @@
         beforeSubmit: function () {
 
             //check to see if the inputed numbers are correct
-            if(parseInt($('#totalAvailable').val()) < parseInt($('#numberInUse').val()))
+            if(parseInt($('#totalAvailable').val(), 10) < parseInt($('#numberInUse').val(), 10))
             {
                 alert('Number In Use cannot be greater than Total Available.');
                 return false;
             }
             if($maxReqCheckbox.prop('checked'))
             {
-                if(parseInt($numberRequested.val()) > parseInt($maxReqValue.val()))
+                if(parseInt($numberRequested.val(), 10) > parseInt($maxReqValue.val(), 10))
                 {
                     alert('You cannot request more than the Max Request Limit');
                     return false;
@@ -34,9 +34,9 @@
             }
         },
 
-        error: function (data, status) 
+        error: function (data, status)
         {
-            if(data.responseText === "Entry Found")
+            if(data.responseText === 'Entry Found')
             {
                 alert('A Tool by this name already exists. Please go edit this Tool or create a new Tool by giving it a new name.');
             }

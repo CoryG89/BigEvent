@@ -54,7 +54,7 @@ module.exports = {
                 record.formattedAddress = util.format('%s %s, %s %s',
                     record.address, record.city, record.state, record.zip);
 
-                jobsites.insert(record, options, function (err) {
+                jobsites.insert(record, options, function (err, records) {
                     if (err) {
                         log('POST: Error inserting record:\n\n%s\n\n', err);
                         res.send(400, 'staff');
@@ -154,5 +154,4 @@ module.exports = {
             });
         }
     }
-
 };
