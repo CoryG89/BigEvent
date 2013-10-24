@@ -20,30 +20,32 @@
         projectCoordinator: parseInt($('#projectCoordinatorNumPages').val(), 10)
     };
 
+    //this stores the current sorting state for each table. 1 is asc order and
+    //-1 is dec. '' for the column means there is no sorting in place. 
     var currentSortStatus = {
         volunteer: {
             column: '',
-            direction: ''
+            direction: 1
         },
         jobsite: {
             column: '',
-            direction: ''
+            direction: 1
         },
         tool: {
             column: '',
-            direction: ''
+            direction: 1
         },
         committee: {
             column: '',
-            direction: ''
+            direction: 1
         },
         leadership: {
             column: '',
-            direction: ''
+            direction: 1
         },
         projectCoordinator: {
             column: '',
-            direction: ''
+            direction: 1
         }
     };
 
@@ -197,22 +199,26 @@
 
     function setSortValues(type, sortKey)
     {
-        currentSortStatus[type].column = sortKey;
-        var direction = currentSortStatus[type].direction;
-        if(direction === 'asc')
+        // 1 is ascending order -1 is decending order
+        if(currentSortStatus[type].column === sortKey)
         {
-            currentSortStatus[type].direction = 'des';
-            return 'des';
-        }
-        else if(direction === 'des')
-        {
-            currentSortStatus[type].direction = 'asc';
+            var direction = currentSortStatus[type].direction;
+            if(direction === 1)
+            {
+                currentSortStatus[type].direction = -1;
+                return -1;
+            }
+            else
+            {
+                currentSortStatus[type].direction = 1;
+            }
         }
         else
         {
-            currentSortStatus[type].direction = 'asc';
+            currentSortStatus[type].column = sortKey;
+            currentSortStatus[type].direction = 1;
         }
-        return 'asc';
+        return 1;
     }
 
     function setMouseOver(cell)

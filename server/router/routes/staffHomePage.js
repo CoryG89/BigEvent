@@ -228,10 +228,7 @@ module.exports = {
         var page = parseInt(req.query.p, 10);
         log('pageNumber: %s', page);
 
-        var sortDir = 1;
-        if (req.query.dir === 'des') {
-            sortDir = -1;
-        }
+        var sortDir = parseInt(req.query.dir, 10);
 
         var key = req.query.key;
 
@@ -311,10 +308,7 @@ module.exports = {
 
         var key = req.query.key;
         
-        var sortDir = 1;
-        if (req.query.dir === 'des') {
-            sortDir = -1;
-        }
+        var sortDir = parseInt(req.query.dir, 10);
 
         var collection;
         if(type === 'volunteer') {
