@@ -29,8 +29,6 @@ module.exports = {
         app.get('/jobsite/request/failure', routes.jobsite.request.failure);
 
         //staff side routes
-        app.get('/staff/volunteer', routes.volunteer.staff.get);
-        app.post('/staff/volunteer', routes.volunteer.staff.post);
         app.get('/staff/volunteer/success', routes.volunteer.success);
         app.get('/staff/volunteer/failure', routes.volunteer.failure);
 

@@ -104,52 +104,6 @@ module.exports = {
         });
     },
 
-    staff: {
-        get: function (req, res) {
-            res.render('volunteer', {
-                title: 'Volunteer',
-                user: req.session.user,
-                staff: 1,
-                _layoutFile: 'default'
-            });
-        },
-
-        post: function (req, res) {
-            var data = req.body;
-
-            var address = util.format('%s %s, %s %s',
-                data.address, data.city, data.state, data.zip);
-
-            geocoder.send(address, function (response) {
-                var result = response.results[0];
-                data.location = result.geometry.location;
-                data.formattedAddress = result.formatted_address;
-
-                volunteers.insert(data, { w: 1 }, function (err, result) {
-                    if (err || !result) {
-                        log('POST: Error inserting record:\n\n%s\n\n', err);
-                        res.send(400, 'staff');
-                    } else {
-                        log('POST: Volunteer record inserted');
-
-                        emailer.send({
-                            to: data.email,
-                            subject: 'Volunteer Account Registration',
-                            template: 'volunteer',
-                            locals: { user: data }
-                        }, function (err) {
-                            if (err) {
-                                res.send(400, 'staff');
-                            } else {
-                                res.send(200, {id: result[0]._id});
-                            }
-                        });
-                    }
-                });
-            });
-        }
-    },
-
     success: function (req, res) {
         res.render('hero-unit', {
             title: 'Successful Registration',
@@ -261,20 +215,6 @@ module.exports = {
                     {
                         log('VOLUNTEER.STAFF.GET: Record not found for id %s', req.params.id);
                         log('VOLUNTEER.STAFF.GET: Using an ObjectId');
-                        volunteers.findOne({_id: new ObjectId(req.params.id)}, function(error, record){
-                            if(error || !record){
-                                log('VOLUNTEER.STAFF.GET: Record not found for object id %s', req.params.id);
-                                res.send(400);
-                            } else {
-                                log('VOLUNTEER.STAFF.GET: Record found');
-                                res.render('volunteer-account', {
-                                    title: 'Volunteer Account',
-                                    record: record,
-                                    user: req.session.user,
-                                    _layoutFile: 'default'
-                                });
-                            }
-                        });
                     }
                     else {
                         log('VOLUNTEER.STAFF.GET: Record found');
@@ -308,28 +248,7 @@ module.exports = {
                         if (err || !result) {
                             log('VOLUNTEER.ACCOUNT.STAFF.POST: Unable to find record with id %s', req.params.id);
                             log('VOLUNTEER.ACCOUNT.STAFF.POST: Using an ObjectId %s', req.params.id);
-                            volunteers.findAndModify({_id: new ObjectId(req.params.id)}, null, cmd, opt, function (error, record) {
-                                if (error || !record) {
-                                    log('POST: Update error, volunteer:\n\n%s\n\n', err);
-                                    res.send(400, 'staff');
-                                } else {
-                                    log('POST: Record successfully updated');
-
-                                    emailer.send({
-                                        to: record.email,
-                                        subject: 'Volunteer Account Update',
-                                        template: 'volunteer-account',
-                                        locals: { user: record }
-                                    }, function (err) {
-                                        if (err) {
-                                            res.send(400, 'staff');
-                                        }
-                                        else {
-                                            res.send('staff', 200);
-                                        }
-                                    });
-                                }
-                            });
+                            res.send(400, 'staff');
                         } else {
                             log('POST: Record successfully updated');
                             emailer.send({
