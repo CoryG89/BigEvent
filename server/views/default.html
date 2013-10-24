@@ -53,9 +53,6 @@
                   <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
                     <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
-                  <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
-                    <a href="<%= site.url %>staff/volunteer">Add Volunteer</a>
-                  </li>
                   <li class="<% if (reqdata.path === 'jobsite/request') { %>active<% } %>">
                     <a href="<%= site.url %>staff/jobsite/request">Add Job Site</a>
                   </li>
