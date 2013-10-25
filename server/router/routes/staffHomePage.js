@@ -359,6 +359,60 @@ module.exports = {
         }
     },
 
+    logout: function (req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'LogOut is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
+    printHomeDepotReport: function(req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'Printing the Home Depot Report is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
+    clearDatabase: function(req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'Clearing the Database is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
+    updateWaiver: function(req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'Updating the Waiver is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
+    updateZipCodes: function(req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'Updating of Zip Codes is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
+    updateReports: function (req, res) {
+        res.render('hero-unit', {
+            title: 'Implement Me',
+            header: 'Implement Me',
+            message: 'Updating of Reports is not yet implemented.',
+            _layoutFile: 'default'
+        });
+    },
+
     success: function (req, res) {
         res.render('hero-unit', {
             title: 'Tool Added',

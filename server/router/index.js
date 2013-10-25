@@ -60,6 +60,13 @@ module.exports = {
         app.get('/staff/staffHomePage', routes.staffHomePage.get);
         app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
         app.get('/staff/staffHomePage/sort', routes.staffHomePage.sort);
+
+        app.get('/staff/logout', routes.staffHomePage.logout);
+        app.get('/staff/printHomeDepotReport', routes.staffHomePage.printHomeDepotReport);
+        app.get('/staff/clearDatabase', routes.staffHomePage.clearDatabase);
+        app.get('/staff/updateWaiver', routes.staffHomePage.updateWaiver);
+        app.get('/staff/updateZipCodes', routes.staffHomePage.updateZipCodes);
+        app.get('/staff/updateReports', routes.staffHomePage.updateReports);
         
         app.get('*', routes.notfound);
     }
