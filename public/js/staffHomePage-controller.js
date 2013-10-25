@@ -49,39 +49,27 @@
         }
     };
 
-    //set up table headers to be clickable
-    var tableHeaders = document.getElementsByTagName('th');
+    var $tableHeaders = $('th');
 
-    for (var i=0; i<tableHeaders.length; i++)
-    {
-        var cell = tableHeaders[i];
-        setMouseOver(cell);
+    $tableHeaders.on('click', function (evt) {
+        console.log('tableheaders click event: %o', evt);
+        var cell = evt.target;
         var tableId = cell.offsetParent.id;
-        if(tableId === 'volunteerTable')
-        {
-            setOnClickListenerHeader(cell, 'volunteer');
-        }
-        else if(tableId === 'jobsiteTable')
-        {
-            setOnClickListenerHeader(cell, 'jobsite');
-        }
-        else if(tableId === 'toolTable')
-        {
-            setOnClickListenerHeader(cell, 'tool');
-        }
-        else if(tableId === 'committeeTable')
-        {
-            setOnClickListenerHeader(cell, 'committee');
-        }
-        else if(tableId === 'leadershipTable')
-        {
-            setOnClickListenerHeader(cell, 'leadership');
-        }
-        else if(tableId === 'projectCoordinatorTable')
-        {
-            setOnClickListenerHeader(cell, 'projectCoordinator');
-        }
-    }
+        var type = tableId.split('-')[0];
+        sort(type, cell.id);
+    });
+
+    $tableHeaders.on('mouseover', function (evt) {
+        console.log('tableheaders mouseover event: %o', evt);
+        var cell = evt.target;
+        cell.style.backgroundColor = 'gainsboro';
+    });
+
+    $tableHeaders.on('mouseout', function (evt) {
+        console.log('tableheaders mouseout event: %o', evt);
+        var cell = evt.target;
+        cell.style.backgroundColor = 'white';
+    });
 
     //set on click listeners for previous and next links
     var links = document.getElementsByTagName('a');
@@ -163,7 +151,7 @@
                 var route = determineHyperLinkRoute(type);
                 var response = JSON.parse(xmlhttp.response);
                 var rowIndex = 1;
-                var table = document.getElementById(type + 'Table');
+                var table = document.getElementById(type + '-table');
 
                 //get headers id's so we know how to access each item
                 var row = table.rows[0];
@@ -221,26 +209,6 @@
         return 1;
     }
 
-    function setMouseOver(cell)
-    {
-        cell.onmouseover = function()
-        {
-            this.style.backgroundColor = 'gainsboro';
-        };
-        cell.onmouseout = function()
-        {
-            this.style.backgroundColor = 'white';
-        };
-    }
-
-    function setOnClickListenerHeader(cell, type)
-    {
-        cell.onclick = function()
-        {
-            sort(type, cell.id);
-        };
-    }
-
     function setOnClickListenerLink(link, type, linkType)
     {
         link.onclick = function()
@@ -285,7 +253,7 @@
                 var route = determineHyperLinkRoute(type);
                 var response = JSON.parse(xmlhttp.response);
                 var rowIndex = 1;
-                var table = document.getElementById(type + 'Table');
+                var table = document.getElementById(type + '-table');
 
                 //get headers id's so we know how to access each item
                 var row = table.rows[0];
