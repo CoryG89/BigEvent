@@ -14,13 +14,11 @@
     var totalPages = {
         tool: parseInt($('#toolNumPages').val(), 10),
         volunteer: parseInt($('#volunteerNumPages').val(), 10),
-        jbosite: parseInt($('#jobsiteNumPages').val(), 10),
+        jobsite: parseInt($('#jobsiteNumPages').val(), 10),
         committee: parseInt($('#committeeNumPages').val(), 10),
         leadership: parseInt($('#leadershipNumPages').val(), 10),
         projectCoordinator: parseInt($('#projectCoordinatorNumPages').val(), 10)
     };
-
-    console.log('total pages: %o', totalPages);
 
     //this stores the current sorting state for each table. 1 is asc order and
     //-1 is dec. '' for the column means there is no sorting in place. 
@@ -376,25 +374,21 @@
         var totalNumberOfPages = totalPages[type];
         if(goToPageNumber === 1 && totalNumberOfPages === 1) //we only have one page
         {
-            console.log('only have one page');
             disablePrevious(type, true);
             disableNext(type, true);
         }
         else if(goToPageNumber === 1) //we are on the first page and have more pages
         {
-            console.log('on first page and have more');
             disablePrevious(type, true);
             disableNext(type, false);
         }
         else if(goToPageNumber === totalNumberOfPages) //we are on the last page
         {
-            console.log('on the last page');
             disablePrevious(type, false);
             disableNext(type, true);
         }
         else //we are in the middle somewhere enable both links
         {
-            console.log('somewhere in the middle');
             disablePrevious(type, false);
             disableNext(type, false);
         }
