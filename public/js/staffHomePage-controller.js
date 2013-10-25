@@ -60,75 +60,44 @@
     });
 
     $tableHeaders.on('mouseover', function (evt) {
-        console.log('tableheaders mouseover event: %o', evt);
         var cell = evt.target;
         cell.style.backgroundColor = 'gainsboro';
+        document.body.style.cursor = 'pointer';
     });
 
     $tableHeaders.on('mouseout', function (evt) {
-        console.log('tableheaders mouseout event: %o', evt);
         var cell = evt.target;
         cell.style.backgroundColor = 'white';
+        document.body.style.cursor = 'auto';
     });
 
-    //set on click listeners for previous and next links
-    var links = document.getElementsByTagName('a');
-    var curLink, linkId;
-    for (var j=0; j<links.length; j++)
-    {
-        curLink = links[j];
-        linkId = curLink.id;
-        if(linkId === 'toolNextLink')
-        {
-            setOnClickListenerLink(curLink, 'tool', 'Next');
-        }
-        if(linkId === 'jobsiteNextLink')
-        {
-            setOnClickListenerLink(curLink, 'jobsite', 'Next');
-        }
-        if(linkId === 'volunteerNextLink')
-        {
-            setOnClickListenerLink(curLink, 'volunteer', 'Next');
-        }
-        if(linkId === 'committeeNextLink')
-        {
-            setOnClickListenerLink(curLink, 'committee', 'Next');
-        }
-        if(linkId === 'leadershipNextLink')
-        {
-            setOnClickListenerLink(curLink, 'leadership', 'Next');
-        }
-        if(linkId === 'projectCoordinatorNextLink')
-        {
-            setOnClickListenerLink(curLink, 'projectCoordinator', 'Next');
-        }
-        if(linkId === 'toolPreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'tool', 'Previous');
-        }
-        if(linkId === 'jobsitePreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'jobsite', 'Previous');
-        }
-        if(linkId === 'volunteerPreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'volunteer', 'Previous');
-        }
-        if(linkId === 'committeePreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'committee', 'Previous');
-        }
-        if(linkId === 'leadershipPreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'leadership', 'Previous');
-        }
-        if(linkId === 'projectCoordinatorPreviousLink')
-        {
-            setOnClickListenerLink(curLink, 'projectCoordinator', 'Previous');
-        }
-    }
+    var pagerLinks = { };
 
+    $('ul.pager').each(function () {
+        var pagerId = this.id;
+        var type = pagerId.split('-')[0];
 
+        var $nextLi = $(this).children('li.next');
+        var $previousLi = $(this).children('li.previous');
+        var $nextLink = $nextLi.children('a');
+        var $previousLink = $previousLi.children('a');
+
+        $nextLink.on('click', function (evt) {
+            goToPage(type, 'Next', totalPages[type]);
+            evt.preventDefault();
+        });
+
+        $previousLink.on('click', function (evt) {
+            goToPage(type, 'Previous', totalPages[type]);
+            evt.preventDefault();
+        });
+
+        // map pager links to later efficiently access for enabling/disabling
+        pagerLinks[type] = {
+            $next: $nextLi,
+            $previous: $previousLi
+        };
+    });
 
     function sort(type, sortKey)
     {
@@ -207,14 +176,6 @@
             currentSortStatus[type].direction = 1;
         }
         return 1;
-    }
-
-    function setOnClickListenerLink(link, type, linkType)
-    {
-        link.onclick = function()
-        {
-            goToPage(type, linkType, totalPages[type]);
-        };
     }
 
     function goToPage(type, linkType)
@@ -339,58 +300,29 @@
 
     function determineNewPageLinkStates(type, goToPageNumber)
     {
+        var $next = pagerLinks[type].$next;
+        var $previous = pagerLinks[type].$previous;
         var totalNumberOfPages = totalPages[type];
+
         if(goToPageNumber === 1 && totalNumberOfPages === 1) //we only have one page
         {
-            disablePrevious(type, true);
-            disableNext(type, true);
+            $previous.addClass('disabled');
+            $next.addClass('disabled');
         }
         else if(goToPageNumber === 1) //we are on the first page and have more pages
         {
-            disablePrevious(type, true);
-            disableNext(type, false);
+            $previous.addClass('disabled');
+            $next.removeClass('disabled');
         }
         else if(goToPageNumber === totalNumberOfPages) //we are on the last page
         {
-            disablePrevious(type, false);
-            disableNext(type, true);
+            $previous.removeClass('disabled');
+            $next.addClass('disabled');
         }
         else //we are in the middle somewhere enable both links
         {
-            disablePrevious(type, false);
-            disableNext(type, false);
-        }
-    }
-
-    function disablePrevious(type, shouldDisable)
-    {
-        var $previousLi = $('#' + type + 'PreviousLi');
-        var $previousLink = $('#' + type + 'PreviousLink');
-        if(shouldDisable)
-        {
-            $previousLi.addClass('disabled');
-            $previousLink.addClass('disabled');
-        }
-        else
-        {
-            $previousLi.removeClass('disabled');
-            $previousLink.removeClass('disabled');
-        }
-    }
-
-    function disableNext(type, shouldDisable)
-    {
-        var $nextLi = $('#' + type + 'NextLi');
-        var $nextLink = $('#' + type + 'NextLink');
-        if(shouldDisable)
-        {
-            $nextLi.addClass('disabled');
-            $nextLink.addClass('disabled');
-        }
-        else
-        {
-            $nextLi.removeClass('disabled');
-            $nextLink.removeClass('disabled');
+            $previous.removeClass('disabled');
+            $next.removeClass('disabled');
         }
     }
 

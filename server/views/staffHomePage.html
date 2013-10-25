@@ -11,27 +11,22 @@
     </div>
   </div>
 </div>
-  <!-- Data Tables -->
+<input class="hidden" id="volunteerNumPages" type="text" name="volunteerNumPages" value="<%= vpt %>" style="width:3em;"/>
+<input class="hidden" id="jobsiteNumPages" type="text" name="jobsiteNumPages" value="<%= jpt %>" style="width:3em;"/>
+<input class="hidden" id="toolNumPages" type="text" name="toolNumPages" value="<%= tpt %>" style="width:3em;"/>
+<input class="hidden" id="committeeNumPages" type="text" name="committeeNumPages" value="<%= cpt %>" style="width:3em;"/>
+<input class="hidden" id="leadershipNumPages" type="text" name="leadershipNumPages" value="<%= lpt %>" style="width:3em;"/>
+<input class="hidden" id="projectCoordinatorNumPages" type="text" name="projectCoordinatorNumPages" value="<%= ppt %>" style="width:3em;"/>
+<!-- Data Tables -->
 <div>
     <h2 class="pull-left">Volunteer Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="volunteerNumPages" type="text" name="volunteerNumPages" value="<%= vpt %>" style="width:3em;"/>
-        </li>  
+    <ul id="volunteer-pager" class="pager pull-right">
     <% if(vpt === 1) { %>
-        <li id="volunteerPreviousLi" class="disabled">
-            <a id="volunteerPreviousLink" class="disabled">Previous</a>
-        </li>
-        <li id="volunteerNextLi" class="disabled">
-            <a id="volunteerNextLink" class="disabled">Next</a>
-        </li>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next disabled"><a href="#">Next</a></li>
     <% } else { %>
-        <li id="volunteerPreviousLi" class="disabled">
-            <a id="volunteerPreviousLink" class="disabled">Previous</a>
-        </li>
-        <li id="volunteerNextLi">
-            <a id="volunteerNextLink">Next</a>
-        </li>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next"><a href="#">Next</a></li>
     <% } %>
     </ul>
 </div>
@@ -67,24 +62,13 @@
 </div>
 <div>
 <h2 class="pull-left">Job Site Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="jobsiteNumPages" type="text" name="jobsiteNumPages" value="<%= jpt %>" style="width:3em;"/>
-        </li>  
+    <ul id="jobsite-pager" class="pager pull-right">
         <% if(jpt === 1) { %>
-            <li id="jobsitePreviousLi" class="disabled">
-                <a id="jobsitePreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="jobsiteNextLi" class="disabled">
-                <a id="jobsiteNextLink" class="disabled">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next disabled"><a href="#">Next</a></li>
         <% } else { %>
-            <li id="jobsitePreviousLi" class="disabled">
-                <a id="jobsitePreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="jobsiteNextLi">
-                <a id="jobsiteNextLink">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
         <% } %>
     </ul>
 </div>
@@ -118,25 +102,13 @@
 </div>
 <div>
     <h2 class="pull-left">Tool Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="toolNumPages" type="text" name="toolNumPages" value="<%= tpt %>" style="width:3em;"/>
-        </li>  
+    <ul id="tool-pager" class="pager pull-right">
         <% if(tpt === 1) { %>
-            <li id="toolPreviousLi" class="disabled">
-                <a id="toolPreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="toolNextLi" class="disabled">
-                <a id="toolNextLink" class="disabled">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next disabled"><a href="#">Next</a></li>
         <% } else { %>
-            <li id="toolPreviousLi" class="disabled">
-                <a id="toolPreviousLink" class="disabled">Previous
-                </a>
-            </li>
-            <li id="toolNextLi">
-                <a id="toolNextLink">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
         <% } %>
     </ul>
 </div>
@@ -172,25 +144,13 @@
 </div>
 <div>
     <h2 class="pull-left">Committee Member Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="committeeNumPages" type="text" name="committeeNumPages" value="<%= cpt %>" style="width:3em;"/>
-        </li>  
+    <ul id="committee-pager" class="pager pull-right">
         <% if(cpt === 1) { %>
-            <li id="committeePreviousLi" class="disabled">
-                <a id="committeePreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="committeeNextLi" class="disabled">
-                <a id="committeeNextLink" class="disabled">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next disabled"><a href="#">Next</a></li>
         <% } else { %>
-            <li id="committeePreviousLi" class="disabled">
-                <a id="committeePreviousLink" class="disabled">Previous
-                </a>
-            </li>
-            <li id="committeeNextLi">
-                <a id="committeeNextLink">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
         <% } %>
     </ul>
 </div>
@@ -222,25 +182,13 @@
 </div>
 <div>
     <h2 class="pull-left">Leadership Team Member Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="leadershipNumPages" type="text" name="leadershipNumPages" value="<%= lpt %>" style="width:3em;"/>
-        </li>  
+    <ul id="leadership-pager" class="pager pull-right">
         <% if(lpt === 1) { %>
-            <li id="leadershipPreviousLi" class="disabled">
-                <a id="leadershipPreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="leadershipNextLi" class="disabled">
-                <a id="leadershipNextLink" class="disabled">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next disabled"><a href="#">Next</a></li>
         <% } else { %>
-            <li id="leadershipPreviousLi" class="disabled">
-                <a id="leadershipPreviousLink" class="disabled">Previous
-                </a>
-            </li>
-            <li id="leadershipNextLi">
-                <a id="leadershipNextLink">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
         <% } %>
     </ul>
 </div>
@@ -272,25 +220,13 @@
 </div>
 <div>
     <h2 class="pull-left">Project Coordinator Table</h2>
-    <ul class="pager pull-right">
-        <li>
-            <input class="hidden" id="projectCoordinatorNumPages" type="text" name="projectCoordinatorNumPages" value="<%= ppt %>" style="width:3em;"/>
-        </li>  
+    <ul id="projectCoordinator-pager" class="pager pull-right">
         <% if(ppt === 1) { %>
-            <li id="lprojectCoordinatorPreviousLi" class="disabled">
-                <a id="projectCoordinatorPreviousLink" class="disabled">Previous</a>
-            </li>
-            <li id="projectCoordinatorNextLi" class="disabled">
-                <a id="projectCoordinatorNextLink" class="disabled">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next disabled"><a href="#">Next</a></li>
         <% } else { %>
-            <li id="projectCoordinatorPreviousLi" class="disabled">
-                <a id="projectCoordinatorPreviousLink" class="disabled">Previous
-                </a>
-            </li>
-            <li id="projectCoordinatorNextLi">
-                <a id="projectCoordinatorNextLink">Next</a>
-            </li>
+            <li class="previous disabled"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
         <% } %>
     </ul>
 </div>
