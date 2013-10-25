@@ -141,7 +141,6 @@ module.exports = {
                 title: 'Access Denied',
                 header: 'Access Denied',
                 message: 'You are not allowed to view this page because you are not part of the Big Event Staff.',
-                user: user,
                 _layoutFile: 'default'
             });
         } else {
@@ -170,7 +169,6 @@ module.exports = {
                         lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
                         projectCoordinatorList: pcDocs,
                         ppt: (projectCoordinatorNumPages === 0) ? 1 : projectCoordinatorNumPages,
-                        user: user,
                         error: error,
                         _layoutFile: 'default'
                     });
@@ -366,7 +364,6 @@ module.exports = {
             title: 'Tool Added',
             header: 'Tool Added',
             message: 'Tool was added successfully.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -376,7 +373,6 @@ module.exports = {
             title: 'Could Not Add Tool',
             header: 'Sorry!',
             message: 'There was a problem adding your tool. Please try again later.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     }
