@@ -20,8 +20,7 @@ module.exports = {
     get: function (req, res) {
         res.render('signin', {
             title: 'Sign In',
-            _layoutFile: 'default',
-            user: req.session.user
+            _layoutFile: 'default'
         });
     },
 

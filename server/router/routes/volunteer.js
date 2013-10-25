@@ -35,7 +35,6 @@ module.exports = {
         else {
             res.render('volunteer', {
                 title: 'Volunteer',
-                user: req.session.user,
                 staff: 0,
                 _layoutFile: 'default'
             });
@@ -109,7 +108,6 @@ module.exports = {
             title: 'Successful Registration',
             header: 'Thanks!',
             message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -119,7 +117,6 @@ module.exports = {
             title: 'Registration Failed',
             header: 'Sorry!',
             message: 'There was a problem with the registration. Please try again later.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -129,7 +126,6 @@ module.exports = {
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
                 record: req.session.volunteer,
-                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -221,7 +217,6 @@ module.exports = {
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
                             record: rec,
-                            user: req.session.user,
                             _layoutFile: 'default'
                         });
                     }
@@ -275,7 +270,6 @@ module.exports = {
                 title: 'Successfully Updated',
                 header: 'Thanks!',
                 message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
-                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -285,7 +279,6 @@ module.exports = {
                 title: 'Registration Failed',
                 header: 'Sorry!',
                 message: 'There was a problem updating your data. Please try again later.',
-                user: req.session.user,
                 _layoutFile: 'default'
             });
         }

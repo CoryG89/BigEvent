@@ -12,7 +12,6 @@ module.exports = {
     get: function (req, res) {
         res.render('tool', {
             title: 'Add Tool',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -68,7 +67,6 @@ module.exports = {
             title: 'Tool Added',
             header: 'Tool Added',
             message: 'Tool was added successfully.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -78,7 +76,6 @@ module.exports = {
             title: 'Could Not Add Tool',
             header: 'Sorry!',
             message: 'There was a problem adding your tool. Please try again later.',
-            user: req.session.user,
             _layoutFile: 'default'
         });
     },
@@ -94,7 +91,6 @@ module.exports = {
                         title: 'Error getting tool for review.',
                         header: 'Error',
                         message: 'There was an unknown error retrieving tool from database.',
-                        user: req.session.user,
                         _layoutFile: 'default'
                     });
                 }
@@ -104,7 +100,6 @@ module.exports = {
                         title: 'Could not find Tool in datbase.',
                         header: 'Tool Not Found',
                         message: 'Did not find the tool in the database.',
-                        user: req.session.user,
                         _layoutFile: 'default'
                     });
 
@@ -114,7 +109,6 @@ module.exports = {
                     res.render('toolReview', {
                         title: 'Edit Tool',
                         record: record,
-                        user: req.session.user,
                         _layoutFile: 'default'
                     });
                 }
@@ -163,7 +157,6 @@ module.exports = {
                 title: 'Success',
                 header: 'Tool Updated',
                 message: 'You successfully updated the Tool.',
-                user: req.session.user,
                 _layoutFile: 'default'
             });
         },
@@ -173,7 +166,6 @@ module.exports = {
                 title: 'Could Not Update Tool',
                 header: 'Sorry!',
                 message: 'There was a problem Updating the tool. Please try again later.',
-                user: req.session.user,
                 _layoutFile: 'default'
             });
         }
