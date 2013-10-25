@@ -14,7 +14,7 @@
     var totalPages = {
         tool: parseInt($('#toolNumPages').val(), 10),
         volunteer: parseInt($('#volunteerNumPages').val(), 10),
-        jbosite: parseInt($('#jobsiteNumPages').val(), 10),
+        jobsite: parseInt($('#jobsiteNumPages').val(), 10),
         committee: parseInt($('#committeeNumPages').val(), 10),
         leadership: parseInt($('#leadershipNumPages').val(), 10),
         projectCoordinator: parseInt($('#projectCoordinatorNumPages').val(), 10)
