@@ -49,7 +49,7 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <% if( user && (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership') ) { %>
-                  <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === 'staff/staffHomePage') { %>active<% } %>">
                     <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
                   <li class="<% if (reqdata.path === 'staff/jobsite/request') { %>active<% } %>">
