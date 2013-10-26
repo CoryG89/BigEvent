@@ -1,3 +1,7 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
 <% script(site.url + 'js/volunteer-account-controller.js') -%>
 <div class="row">
@@ -54,13 +58,11 @@
         <label for="city">City</label>
         <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= record.city %>" required disabled />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-account-form" id="state"  name="state" required disabled> 
-          <option value="AL" selected>Alabama</option>
-        </select>
+        <select class="form-control bfh-states input-block-level account-input" name="state" form="volunteer-account-form" data-country="US" data-state="<%= record.state %>" required disabled></select>
         <label for="zip">Zip</label>
         <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= record.zip %>" required disabled />
         <label for="phone">Phone</label>
-        <input class="input-block-level account-input" type="tel" id="phone" name="phone" pattern="\d{10}" value="<%= record.phone %>" required disabled />
+        <input class="form-control bfh-phone input-block-level account-input" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= record.phone %>" required disabled />
         <label>Shirt Size</label>
         <div class="radio-group">
           <div>

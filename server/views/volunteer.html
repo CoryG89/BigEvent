@@ -1,3 +1,7 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
 <% script(site.url + 'js/volunteer-controller.js') -%>
 <div class="row">
@@ -43,13 +47,11 @@
         <label for="city">City</label>
         <input class="input-block-level" type="text" id="city" name="city" required />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-form" id="state" name="state" required readonly> 
-            <option value="AL" selected>Alabama</option>
-        </select>
+        <select class="form-control bfh-states input-block-level" name="state" form="volunteer-form" data-country="US" data-state="AL" required></select>
         <label for="zip">Zip</label>
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
         <label for="phone">Phone</label>
-        <input class="input-block-level" type="tel" id="phone" name="phone" pattern="\d{10}" required />
+        <input class="form-control bfh-phone input-block-level" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" required />
         <label>Shirt Size</label>
         <div class="radio-group">
             <div><input type="radio" name="shirtSize" value="S" required />S</div>
