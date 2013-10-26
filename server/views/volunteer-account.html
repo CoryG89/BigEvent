@@ -1,21 +1,25 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
 <% script(site.url + 'js/volunteer-account-controller.js') -%>
 <div class="row">
   <div class="offset1 span5 hidden-phone">
     <div>
-      <h4>Reasons To Join</h4>
+      <h4>Volunteer Information</h4>
       <hr class="thin" />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
     </div>
     <div>
-      <h4>More Reasons</h4>
+      <h4>Volunteer Status</h4>
       <hr class="thin"/>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+      <p>You're currently registered to volunteer in the annual event. Click here to view or change your <a href="<%= site.url %>volunteer/status">volunteer status</a>.</p>
     </div>
     <div>
-      <h4>Even More</h4>
+      <h4>Make it a team effort</h4>
       <hr class="thin" />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+      <p>You can <a href="<%= site.url %>volunteer/team">register as a team captain</a> in order to invite other volunteers to join you. Pull together and make a difference as a team.</p>
     </div>
   </div>
   <div class="span5">
@@ -54,13 +58,11 @@
         <label for="city">City</label>
         <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= record.city %>" required disabled />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-account-form" id="state"  name="state" required disabled> 
-          <option value="AL" selected>Alabama</option>
-        </select>
+        <select class="form-control bfh-states input-block-level account-input" name="state" form="volunteer-account-form" data-country="US" data-state="<%= record.state %>" required disabled></select>
         <label for="zip">Zip</label>
         <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= record.zip %>" required disabled />
         <label for="phone">Phone</label>
-        <input class="input-block-level account-input" type="tel" id="phone" name="phone" pattern="\d{10}" value="<%= record.phone %>" required disabled />
+        <input class="form-control bfh-phone input-block-level account-input" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= record.phone %>" required disabled />
         <label>Shirt Size</label>
         <div class="radio-group">
           <div>

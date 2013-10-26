@@ -13,6 +13,8 @@ module.exports = {
 
         app.get('/waiver', routes.waiver);
 
+        app.get('/access-denied', routes.accessDenied);
+
         app.get('/volunteer', routes.volunteer.get);
         app.post('/volunteer', routes.volunteer.post);
         app.get('/volunteer/success', routes.volunteer.success);

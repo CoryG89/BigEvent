@@ -1,3 +1,7 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
 <% script(site.url + 'js/volunteer-controller.js') -%>
 <div class="row">
@@ -24,39 +28,38 @@
       <hr />
       <form id="volunteer-form" method="post">
         <label for="email">Email</label>
-        <% if(staff === 0) { %>
-            <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
-        <% } else { %>
-            <input class="input-block-level" type="email" id="email" name="email" required/>
-        <% } %>
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
         <label for="first-name">First Name</label>
         <input class="input-block-level" type="text" id="first-name" name="firstName" value="" required />
         <label for="last-name">Last Name</label>
         <input class="input-block-level" type="text" id="first-name" name="lastName" value="" required />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
-            <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
-            <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
+          <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
+          <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
         </div>
         <label for="address">Address</label>
         <input class="input-block-level" type="text" id="address" name="address" required />
         <label for="city">City</label>
         <input class="input-block-level" type="text" id="city" name="city" required />
         <label for="state">State</label>
-        <select class="input-block-level" form="volunteer-form" id="state" name="state" required readonly> 
-            <option value="AL" selected>Alabama</option>
-        </select>
+        <select class="form-control bfh-states input-block-level" name="state" form="volunteer-form" data-country="US" data-state="AL" required></select>
         <label for="zip">Zip</label>
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
         <label for="phone">Phone</label>
-        <input class="input-block-level" type="tel" id="phone" name="phone" pattern="\d{10}" required />
-        <label>Shirt Size</label>
+        <input class="form-control bfh-phone input-block-level" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" required />
+        <label for="shirt-s">Shirt Size</label>
         <div class="radio-group">
-            <div><input type="radio" name="shirtSize" value="S" required />S</div>
-            <div><input type="radio" name="shirtSize" value="M" required />M</div>
-            <div><input type="radio" name="shirtSize" value="L" required />L</div>
-            <div><input type="radio" name="shirtSize" value="XL" required />XL</div>
-            <div><input type="radio" name="shirtSize" value="XXL" required />XXL</div>
+          <div><input type="radio" id="shirt-s" name="shirtSize" value="S" required />S</div>
+          <div><input type="radio" id="shirt-m" name="shirtSize" value="M" required />M</div>
+          <div><input type="radio" id="shirt-l" name="shirtSize" value="L" required />L</div>
+          <div><input type="radio" id="shirt-xl" name="shirtSize" value="XL" required />XL</div>
+          <div><input type="radio" id="shirt-xxl" name="shirtSize" value="XXL" required />XXL</div>
+        </div>
+        <label for="team-affiliation">Team Affiliation</label>
+        <div class="radio-group">
+          <div><input type="radio" id="team-individual" name="teamStatus" value="individual" required />Individual</div>
+          <div><input type="radio" id="team-individual" name="teamStatus" value="captain" required />Team Captain</div>
         </div>
         <hr />
         <input class="btn" type="reset" value="Clear" />

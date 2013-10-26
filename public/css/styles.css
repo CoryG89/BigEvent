@@ -47,3 +47,7 @@ a.smaller-text {
 a#edit-button, a#cancel-button {
     margin-top: 10px;
 }
+
+ul.pager li.previous {
+    margin-right: 10px;
+}

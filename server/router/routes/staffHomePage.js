@@ -125,56 +125,39 @@ function getCounts(callback){
     });
 }
 
-function isStaffRole(role) {
-    return role === 'executive' || role === 'coordinator' ||
-        role === 'committee' || role === 'leadership';
-}
-
 module.exports = {
 
     get: function (req, res) {
-        //check to see if you the user is a staff member
-        var user = req.session.user;
-
-        if(!(isStaffRole(user.role))) {
-            res.render('hero-unit', {
-                title: 'Access Denied',
-                header: 'Access Denied',
-                message: 'You are not allowed to view this page because you are not part of the Big Event Staff.',
-                _layoutFile: 'default'
-            });
-        } else {
-            getCounts(function(error, toolCount, volCount, jobCount, committeeMemberCount, projectCoordinatorCount, leadershipCount) {
-                //get number of pages for each table
-                var toolNumPages = Math.ceil(toolCount / itemsPerPage);
-                var volNumPages = Math.ceil(volCount / itemsPerPage);
-                var jobSiteNumPages = Math.ceil(jobCount / itemsPerPage);
-                var committeeNumPages = Math.ceil(committeeMemberCount / itemsPerPage);
-                var leadershipNumPages = Math.ceil(leadershipCount / itemsPerPage);
-                var projectCoordinatorNumPages = Math.ceil(projectCoordinatorCount / itemsPerPage);
-                //get lists to populate each table
-                getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs, committeeMemberDocs, leadershipDocs, pcDocs) {
-                    //render page
-                    res.render('staffHomePage', {
-                        title: 'Staff Home Page',
-                        toolList: toolDocs,
-                        tpt: (toolNumPages === 0) ? 1 : toolNumPages,
-                        volunteerList: volunteerDocs,
-                        vpt: (volNumPages === 0) ? 1 : volNumPages,
-                        jobSiteList: jobSiteDocs,
-                        jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
-                        committeeList: committeeMemberDocs,
-                        cpt: (committeeNumPages === 0) ? 1 : committeeNumPages,
-                        leadershipList: leadershipDocs,
-                        lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
-                        projectCoordinatorList: pcDocs,
-                        ppt: (projectCoordinatorNumPages === 0) ? 1 : projectCoordinatorNumPages,
-                        error: error,
-                        _layoutFile: 'default'
-                    });
+        getCounts(function(error, toolCount, volCount, jobCount, committeeMemberCount, projectCoordinatorCount, leadershipCount) {
+            //get number of pages for each table
+            var toolNumPages = Math.ceil(toolCount / itemsPerPage);
+            var volNumPages = Math.ceil(volCount / itemsPerPage);
+            var jobSiteNumPages = Math.ceil(jobCount / itemsPerPage);
+            var committeeNumPages = Math.ceil(committeeMemberCount / itemsPerPage);
+            var leadershipNumPages = Math.ceil(leadershipCount / itemsPerPage);
+            var projectCoordinatorNumPages = Math.ceil(projectCoordinatorCount / itemsPerPage);
+            //get lists to populate each table
+            getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs, committeeMemberDocs, leadershipDocs, pcDocs) {
+                //render page
+                res.render('staffHomePage', {
+                    title: 'Staff Home Page',
+                    toolList: toolDocs,
+                    tpt: (toolNumPages === 0) ? 1 : toolNumPages,
+                    volunteerList: volunteerDocs,
+                    vpt: (volNumPages === 0) ? 1 : volNumPages,
+                    jobSiteList: jobSiteDocs,
+                    jpt: (jobSiteNumPages === 0) ? 1 : jobSiteNumPages,
+                    committeeList: committeeMemberDocs,
+                    cpt: (committeeNumPages === 0) ? 1 : committeeNumPages,
+                    leadershipList: leadershipDocs,
+                    lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
+                    projectCoordinatorList: pcDocs,
+                    ppt: (projectCoordinatorNumPages === 0) ? 1 : projectCoordinatorNumPages,
+                    error: error,
+                    _layoutFile: 'default'
                 });
             });
-        }
+        });
     },
 
     post: function (req, res) {
