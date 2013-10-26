@@ -21,7 +21,7 @@ var db;
 var cl = { };
 
 var collectionNames = [
-    'users', 'volunteers', 'jobsites', 'tools',
+    'users', 'volunteers', 'jobsites', 'tools', 'teams',
     'executive', 'committee', 'leadership', 'projectcoordinators'
 ];
 

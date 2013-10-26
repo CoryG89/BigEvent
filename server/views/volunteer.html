@@ -29,9 +29,9 @@
       <form id="volunteer-form" method="post">
         <label for="email">Email</label>
         <% if(staff === 0) { %>
-            <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
+          <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
         <% } else { %>
-            <input class="input-block-level" type="email" id="email" name="email" required/>
+          <input class="input-block-level" type="email" id="email" name="email" required/>
         <% } %>
         <label for="first-name">First Name</label>
         <input class="input-block-level" type="text" id="first-name" name="firstName" value="" required />
@@ -39,8 +39,8 @@
         <input class="input-block-level" type="text" id="first-name" name="lastName" value="" required />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
-            <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
-            <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
+          <div><input type="radio" id="gender-m" name="gender" value="Male" required />Male</div>
+          <div><input type="radio" id="gender-f" name="gender" value="Female" required />Female</div>
         </div>
         <label for="address">Address</label>
         <input class="input-block-level" type="text" id="address" name="address" required />
@@ -52,14 +52,16 @@
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
         <label for="phone">Phone</label>
         <input class="form-control bfh-phone input-block-level" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" required />
-        <label>Shirt Size</label>
+        <label for="shirt-s">Shirt Size</label>
         <div class="radio-group">
-            <div><input type="radio" name="shirtSize" value="S" required />S</div>
-            <div><input type="radio" name="shirtSize" value="M" required />M</div>
-            <div><input type="radio" name="shirtSize" value="L" required />L</div>
-            <div><input type="radio" name="shirtSize" value="XL" required />XL</div>
-            <div><input type="radio" name="shirtSize" value="XXL" required />XXL</div>
+          <div><input type="radio" id="shirt-s" name="shirtSize" value="S" required />S</div>
+          <div><input type="radio" id="shirt-m" name="shirtSize" value="M" required />M</div>
+          <div><input type="radio" id="shirt-l" name="shirtSize" value="L" required />L</div>
+          <div><input type="radio" id="shirt-xl" name="shirtSize" value="XL" required />XL</div>
+          <div><input type="radio" id="shirt-xxl" name="shirtSize" value="XXL" required />XXL</div>
         </div>
+        <label>Team Affiliation</label>
+
         <hr />
         <input class="btn" type="reset" value="Clear" />
         <input class="btn btn-primary pull-right" type="submit" value="Submit" />
