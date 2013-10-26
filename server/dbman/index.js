@@ -20,7 +20,10 @@ var log = debug.getLogger({ prefix: '[dbman]-  ' });
 var db;
 var cl = { };
 
-var collectionNames = ['users', 'volunteers', 'jobsites', 'tools', 'committee', 'leadership', 'projectcoordinators'];
+var collectionNames = [
+    'users', 'volunteers', 'jobsites', 'tools',
+    'executive', 'committee', 'leadership', 'projectcoordinators'
+];
 
 var createCollections = function (db, names, callback) {
     var current = 0;
