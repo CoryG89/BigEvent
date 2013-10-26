@@ -12,6 +12,7 @@ var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
 
 var users = dbman.getCollection('users');
 var volunteers = dbman.getCollection('volunteers');
+var teams = dbman.getCollection('teams');
 
 function updateSession (session, object) {
     if (typeof object === 'object') {
@@ -32,8 +33,7 @@ module.exports = {
         }
         else {
             res.render('volunteer', {
-                title: 'Volunteer',
-                staff: 0,
+                title: 'Volunteer Registration',
                 _layoutFile: 'default'
             });
         }
@@ -68,6 +68,28 @@ module.exports = {
                     var numTasks = 2;
                     var responseSent = false;
 
+                    if (data.teamStatus === 'captain') {
+                        numTasks++;
+                        var teamData = {
+                            captain: data._id,
+                            members: [data._id]
+                        };
+                        teams.insert(teamData, { w: 1 }, function (err, result) {
+                            if (err || !result) {
+                                log('POST: Error inserting team record');
+                                if (!responseSent) {
+                                    res.send(400);
+                                    responseSent = true;
+                                }
+                            } else {
+                                log('POST: Team record successfully created');
+                                if (++tasksCompleted === numTasks) {
+                                    res.send('ok', 200);
+                                }
+                            }
+                        });
+                    }
+
                     var query = { _id: req.session.volunteer._id };
                     var cmd = { $set: { role: 'volunteer' } };
                     var opt = { w: 1 };
@@ -75,7 +97,10 @@ module.exports = {
                     users.update(query, cmd, opt, function (err, result) {
                         if (err || !result) {
                             log('POST: Error updating record: \n\n%s\n\n', err);
-                            if (!responseSent) res.send(400);
+                            if (!responseSent) {
+                                res.send(400);
+                                responseSent = true;
+                            }
                         } else {
                             log('POST: User record successfully updated');
                             if (++tasksCompleted === numTasks) {
@@ -91,7 +116,10 @@ module.exports = {
                         locals: { user: data }
                     }, function (err) {
                         if (err) {
-                            if (!responseSent) res.send(400);
+                            if (!responseSent) {
+                                res.send(400);
+                                responseSent = true;
+                            }
                         } else if (++tasksCompleted === numTasks) {
                             res.send('ok', 200);
                         }

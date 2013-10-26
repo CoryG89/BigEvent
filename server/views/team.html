@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="span6 offset3 well">
+    <h3>Volunteer Team</h3>
+    <p><strong>Volunteer Name:</strong> <%= user.firstName %> <% user.lastName %></p>
+    <p><strong>Current Team Status:</strong> <%= user.teamStatus %></p>
+    <% if (user.teamStatus === 'member') { %>
+      <p><strong>Team Captain Name:</strong> <%= user.firstName %></p>
+    <% } %>
+  </div>
+</div>
+<% if (user.teamStatus === 'member' || user.teamStatus === 'captain') { %>
+  <div class="row">
+    <div class="span8 offset2">
+      <h3>Team Members</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="volunteer-table">
+          <thead>
+            <tr>
+              <th id="doubleName">Name</th>
+              <th id="email">Email</th>
+              <th id="phone">Phone Number</th>
+              <th id="gender">Gender</th>
+              <th id="shirtSize">Shirt Size</th>
+              <th id="formattedAddress">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (i = 0; i < teamList.length; i++) { %>
+              <tr>
+                <td><%= teamList[i].lastName + ", " + teamList[i].firstName  %></td>
+                <td><a href="<%= teamList[i].email %>"><%= teamList[i].email %></a></td>
+                <td><%= teamList[i].phone %></td>
+                <td><%= teamList[i].gender %></td>
+                <td><%= teamList[i].shirtSize %></td>
+                <td><%= teamList[i].formattedAddress %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% } %>
+<% if (user.teamStatus === 'captain') { %>
+  <div class="row">
+    <div class="span6 offset3">
+      <p>You can invite other students to volunteer as part of your team by giving them the link below.</p>
+      <input type="text" id="invite-input" value="<%= teamInviteLink %>" />
+    </div>
+  </div>
+<% } %>

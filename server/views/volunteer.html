@@ -28,11 +28,7 @@
       <hr />
       <form id="volunteer-form" method="post">
         <label for="email">Email</label>
-        <% if(staff === 0) { %>
-          <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
-        <% } else { %>
-          <input class="input-block-level" type="email" id="email" name="email" required/>
-        <% } %>
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required readonly />
         <label for="first-name">First Name</label>
         <input class="input-block-level" type="text" id="first-name" name="firstName" value="" required />
         <label for="last-name">Last Name</label>
@@ -59,6 +55,11 @@
           <div><input type="radio" id="shirt-l" name="shirtSize" value="L" required />L</div>
           <div><input type="radio" id="shirt-xl" name="shirtSize" value="XL" required />XL</div>
           <div><input type="radio" id="shirt-xxl" name="shirtSize" value="XXL" required />XXL</div>
+        </div>
+        <label for="team-affiliation">Team Affiliation</label>
+        <div class="radio-group">
+          <div><input type="radio" id="team-individual" name="teamStatus" value="individual" required />Individual</div>
+          <div><input type="radio" id="team-individual" name="teamStatus" value="captain" required />Team Captain</div>
         </div>
         <hr />
         <input class="btn" type="reset" value="Clear" />
