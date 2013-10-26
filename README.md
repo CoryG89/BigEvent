@@ -142,7 +142,7 @@ Documentation
 [nodemailer]: https://github.com/andris9/Nodemailer
 [nodemailer-wpks]: https://github.com/andris9/Nodemailer#well-known-services-for-smtp
 [moment]: https://github.com/moment/moment
-[markedejs]: https://github.com/CoryG89/markedejs
+[marked]: https://github.com/chjj/marked
 [export-dir]: https://github.com/CoryG89/export-dir
 
 [doc-architecture]: docs/architecture.md
