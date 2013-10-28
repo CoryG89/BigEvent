@@ -49,10 +49,10 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <% if( user && (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership') ) { %>
-                  <li class="<% if (reqdata.path === 'staff/staffHomePage') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/staffHomePage') { %>active<% } %>">
                     <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'staff/jobsite/request') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/jobsite/request') { %>active<% } %>">
                     <a href="<%= site.url %>staff/jobsite/request">Add Job Site</a>
                   </li>
                   <li class="<% if (reqdata.path === '/staff/tool') { %>active<% } %>">
@@ -67,7 +67,7 @@
                   <li class="<% if (reqdata.path === '/staff/about') { %>active<% } %>">
                     <a href="<%= site.url %>staff/about">About</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'staff/logout') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/logout') { %>active<% } %>">
                     <a href="<%= site.url %>staff/logout">Logout</a>
                   </li>
               <% } else { %>
@@ -77,7 +77,7 @@
                   <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
                     <a href="<%= site.url %>volunteer">Volunteer</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'jobsite/request') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/jobsite/request') { %>active<% } %>">
                     <a href="<%= site.url %>jobsite/request">Request Job</a>
                   </li>
           	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
