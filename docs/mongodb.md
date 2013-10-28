@@ -3,23 +3,30 @@ Getting Started With MongoDB
 
 We are using [MongoDB][mongodb] for our backend database. MongoDB is an open
 source project written in C++ and is the leading NoSQL document database
-management system. It's based on JSON and its
-[native driver][mongodb-native-driver] is written for Node.JS. There is great
-[documentation][mongodb-docs] available and there are lots of examples of it
-being used in other Node projects so it's a good fit for our project.
+management system. There is great [documentation][mongodb-docs] available for
+MongoDB in general as well as good docs for the 
+[native driver][mongodb-native-driver] which is written in as a Node.JS module. 
+There are a number of [other drivers][mongodb-drivers] available as well. and 
+there are lots of examples of it being used in other Node projects so it's a
+good fit for our project.
 
-MongoDB is different from a relation DBMS such as MySQL as it does not store
-data in the form of tables (relations) with rows and columns. Instead, MongoDB
-stores data in JSON-style *documents* in groups of *collections*. Documents
-in MongoDB collections have what is called dynamic schema, which means that
-documents of the same collection can differ in what fields they contain.
-Similarly, two documents with the same field can be of different type.
-Some libraries such as Mongoose add a strict schema which is associated with
-a collection, guaranteeing that any documents within said collection have the
-fields and field types declared by the schema. There are advantages and
-disadvantages to both approaches. I prefer to use dynamic schema for more
-rapid prototyping and iteration.
+MongoDB is different from more common relation database systems such as MySQL as
+it does not store data in the form of tables (relations) with rows and columns.
+Instead, MongoDB stores data in JSON-style *documents* in groups of
+*collections*. Documents in MongoDB collections have what is called dynamic
+schema, which means that documents of the same collection can differ in what 
+fields they contain. Similarly, two documents with the same field can be of
+different type. Some libraries such as Mongoose add a strict schema which is 
+associated with a collection, guaranteeing that any documents within said
+collection have the fields and field types declared by the schema. There are 
+advantages and disadvantages to both approaches. I prefer to use dynamic schema 
+for more rapid prototyping and iteration.
 
+Recommended Reading
+-------------------------
+ - [A Basic Introduction to MongoDB][mongodb-node-basic-intro]
+ - [And Then There Was CRUD][mongodb-node-crud-intro]
+ - [Time to Query][mongodb-node-querying]
 
 [mongodb]: mongodb.org
 [mongodb-docs]: http://docs.mongodb.org/manual/
@@ -46,3 +53,8 @@ rapid prototyping and iteration.
 [mongodb-update-operators]: http://docs.mongodb.org/manual/reference/operator/nav-update/
 [mongodb-aggregation-operators]: http://docs.mongodb.org/manual/reference/aggregation/operators/
 [mongodb-meta-query-operators]: http://docs.mongodb.org/manual/reference/operator/nav-meta-query/
+[mongodb-two-phase-commits]: http://docs.mongodb.org/manual/tutorial/perform-two-phase-commits/
+
+[mongodb-node-basic-intro]: http://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html
+[mongodb-node-crud-intro]: http://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html#and-then-there-was-crud
+[mongodb-node-querying]: http://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html#time-to-query
