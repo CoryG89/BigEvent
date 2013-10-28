@@ -75,7 +75,7 @@ module.exports = {
                                 res.send(400);
                             }
                             else if (!record) {
-                                log('POST: Cannot find record %s in collection %s', record._id, role);
+                                log('POST: Cannot find record in collection %s', role);
                                 res.send('ok', 200);
                             } else {
                                 log('POST: Successfully read record from collection %s', role);
