@@ -69,18 +69,18 @@ module.exports = {
                     } else if (role === 'user') {
                         res.send('ok', 200);
                     } else {
-                        usersCollections[role].findOne({ _id: record._id }, function (err, record) {
+                        usersCollections[role].findOne({ _id: record._id }, function (err, result) {
                             if (err) {
                                 log('POST: Read Error reading collection %s for id %s', role, record._id);
                                 res.send(400);
                             }
-                            else if (!record) {
+                            else if (!result) {
                                 log('POST: Cannot find record %s in collection %s', record._id, role);
                                 res.send('ok', 200);
                             } else {
                                 log('POST: Successfully read record from collection %s', role);
                                 log('POST: Updating req.session.%s', role);
-                                req.session[role] = record;
+                                req.session[role] = result;
                                 res.send('ok', 200);
                             }
                         });
