@@ -36,14 +36,6 @@ hr.thin {
     margin: 0px 0px 7px;
 }
 
-a.smaller-text {
-    font-size: 12px;
-}
-
-.smaller-font {
-    font-size: smaller;
-}
-
 a#edit-button, a#cancel-button {
     margin-top: 10px;
 }
