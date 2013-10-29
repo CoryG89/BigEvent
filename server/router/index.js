@@ -38,6 +38,7 @@ module.exports = {
         app.post('/staff/volunteer/account/:id', routes.volunteer.account.staff.post);
         app.get('/staff/volunteer/account/success', routes.volunteer.account.success);
         app.get('/staff/volunteer/account/failure', routes.volunteer.account.failure);
+        app.post('/staff/volunteer/account/delete/:id', routes.volunteer.account.staff.delete);
 
         app.get('/staff/jobsite/request', routes.jobsite.request.get);
         app.post('/staff/jobsite/request', routes.jobsite.request.staff.post);
@@ -48,6 +49,7 @@ module.exports = {
         app.post('/staff/jobsite/evaluation/:id', routes.jobsite.evaluation.post);
         app.get('/staff/jobsite/evaluation/success', routes.jobsite.evaluation.success);
         app.get('/staff/jobsite/evaluation/failure', routes.jobsite.evaluation.failure);
+        app.post('/staff/jobsite/evaluation/delete/:id', routes.jobsite.evaluation.delete);
 	
         app.get('/staff/tool', routes.tool.get);
         app.post('/staff/tool', routes.tool.post);
@@ -56,6 +58,7 @@ module.exports = {
 
         app.get('/staff/tool/review/:id', routes.tool.review.get);
         app.post('/staff/tool/review/:id', routes.tool.review.post);
+        app.post('/staff/tool/review/delete/:id', routes.tool.review.delete);
         app.get('/staff/tool/review/success', routes.tool.review.success);
         app.get('/staff/tool/review/failure', routes.tool.review.failure);
 

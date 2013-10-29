@@ -103,7 +103,7 @@ function getCounts(callback){
                         log('STAFFHOMEPAGE.GETCOUNTS: Error getting committee member count -> err: %s', cerr);
                         error += 'Error getting committee member count.\n';
                     }
-                    log('STAFFHOMEOAGE.GETCOUNTS: Committee Member Count: %s', comitteeMemberCount);
+                    log('STAFFHOMEOAGE.GETCOUNTS: Committee Member Count: %s', committeeMemberCount);
                     leadershipTeamMembers.count(function(lerr, leadershipCount){
                         if(lerr){
                             log('STAFFHOMEPAGE.GETCOUNTS: Error getting leadership team member count -> err: %s', lerr);

@@ -255,7 +255,11 @@ module.exports = {
                         }
                     });
                 });
-            }
+            },
+
+            delete: function (req, res){
+                res.send(200);
+            },
         },
 
         success: function (req, res) {

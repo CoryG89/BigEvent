@@ -128,6 +128,10 @@ module.exports = {
             res.send('ok', 200);
         },
 
+        delete: function (req, res){
+            res.send(200);
+        },
+        
         success: function (req, res) {
             res.render('hero-unit', {
                 title: 'Jobsite Evaluation Submitted',
