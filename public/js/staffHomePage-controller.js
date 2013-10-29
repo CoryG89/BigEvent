@@ -328,7 +328,21 @@
 
     function determineIfLinkPressedIsDisabled(type, linkType)
     {
-        var $link = $('#' + type + linkType + 'Link');
+        //get link
+        var $link;
+        if(linkType === 'Previous')
+        {
+            $link = pagerLinks[type].$previous;
+        }
+        else if(linkType === 'Next')
+        {
+            $link = pagerLinks[type].$next;
+        }
+        else //error case
+        {
+            return true; //say the link is disabled so nothing happens. 
+        }
+        
         if($link.hasClass('disabled'))
         {
             return true;
