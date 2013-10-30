@@ -49,10 +49,10 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <% if( user && (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership') ) { %>
-                  <li class="<% if (reqdata.path === 'staff/staffHomePage') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/staffHomePage') { %>active<% } %>">
                     <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'staff/jobsite/request') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/jobsite/request') { %>active<% } %>">
                     <a href="<%= site.url %>staff/jobsite/request">Add Job Site</a>
                   </li>
                   <li class="<% if (reqdata.path === '/staff/tool') { %>active<% } %>">
@@ -67,22 +67,29 @@
                   <li class="<% if (reqdata.path === '/staff/about') { %>active<% } %>">
                     <a href="<%= site.url %>staff/about">About</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'staff/logout') { %>active<% } %>">
+                  <li class="<% if (reqdata.path === '/staff/logout') { %>active<% } %>">
                     <a href="<%= site.url %>staff/logout">Logout</a>
                   </li>
               <% } else { %>
                   <li class="<% if (reqdata.path === '/' || reqdata.path === '/home') { %> active <% } %>">
                     <a href="<%= site.url %>home">Home</a>
                   </li>
-                  <li class="<% if (reqdata.path.search(/\/volunteer\/g/) !== -1) { %>active<% } %>">
-                    <a href="<%= site.url %>volunteer">Volunteer</a>
+                  <li class="<% if (reqdata.path !== '/volunteer/team' && reqdata.path.search(/^\/volunteer.*$/) !== -1) { %>active<% } %>">
+                    <a href="<%= site.url %>volunteer">Volunteers</a>
                   </li>
-                  <li class="<% if (reqdata.path === 'jobsite/request') { %>active<% } %>">
-                    <a href="<%= site.url %>jobsite/request">Request Job</a>
+                  <% if (user && user.role === 'volunteer') { %>
+                    <li class="<%= reqdata.path === '/volunteer/team' ? 'active' : '' %>">
+                      <a href="<%= site.url %>volunteer/team">Team</a>
+                    </li>
+                  <% } %>
+                  <li class="<% if (reqdata.path === '/jobsite/request') { %>active<% } %>">
+                    <a href="<%= site.url %>jobsite/request">Job Requests</a>
                   </li>
-          	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-          		    <a href="<%= site.url %>staff/staffHomePage">Staff Home Page</a>
-          	      </li>
+                  <% if (!user || user.role !== 'volunteer') { %>
+            	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
+            		      <a href="<%= site.url %>staff/staffHomePage">Staff</a>
+            	      </li>
+                  <% } %>
                   <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
                     <a href="<%= site.url %>contact">Contact</a>
                   </li>
