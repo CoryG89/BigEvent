@@ -100,16 +100,16 @@ function getCounts(callback){
                 log('STAFFHOMEOAGE.GETCOUNTS: Job Site Count: %s', jobCount);
                 committeeMembers.count(function(cerr, committeeMemberCount){
                     if(cerr){
-                        log('STAFFHOMEPAGE.GETCOUNTS: Error getting committee member count -> err: %s', jerr);
+                        log('STAFFHOMEPAGE.GETCOUNTS: Error getting committee member count -> err: %s', cerr);
                         error += 'Error getting committee member count.\n';
                     }
-                    log('STAFFHOMEOAGE.GETCOUNTS: Committee Member Count: %s', jobCount);
+                    log('STAFFHOMEOAGE.GETCOUNTS: Committee Member Count: %s', committeeMemberCount);
                     leadershipTeamMembers.count(function(lerr, leadershipCount){
                         if(lerr){
-                            log('STAFFHOMEPAGE.GETCOUNTS: Error getting leadership team member count -> err: %s', jerr);
+                            log('STAFFHOMEPAGE.GETCOUNTS: Error getting leadership team member count -> err: %s', lerr);
                             error += 'Error getting leadership team member Count.\n';
                         }
-                        log('STAFFHOMEOAGE.GETCOUNTS: Leadership Member Count: %s', jobCount);
+                        log('STAFFHOMEOAGE.GETCOUNTS: Leadership Member Count: %s', leadershipCount);
                         projectCoordinators.count(function(perr, projectCoordinatorCount){
                             if(perr){
                                 log('STAFFHOMEPAGE.GETCOUNTS: Error getting project coordinator count -> err: %s', perr);
