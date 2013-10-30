@@ -32,7 +32,10 @@ module.exports = {
                     subject: opt.subject,
                     html: html
                 }, function (error, response) {
-                    if (error) log('Error sending mail -- %s', error);
+                    if (error) {
+                        log('Error sending mail -- %s', error);
+                        callback(error);
+                    }
                     else {
                         log ('Message sent successfully');
                         callback(null, response);

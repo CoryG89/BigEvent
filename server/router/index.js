@@ -25,6 +25,10 @@ module.exports = {
         app.get('/volunteer/account/success', routes.volunteer.account.success);
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
 
+        app.get('/volunteer/team', routes.team.get);
+        app.get('/volunteer/team/create', routes.team.create);
+        app.get('/volunteer/team/invite', routes.team.create);
+
         app.get('/jobsite/request', routes.jobsite.request.get);
         app.post('/jobsite/request', routes.jobsite.request.post);
         app.get('/jobsite/request/success', routes.jobsite.request.success);

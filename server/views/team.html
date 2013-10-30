@@ -1,51 +1,63 @@
 <div class="row">
-  <div class="span6 offset3 well">
-    <h3>Volunteer Team</h3>
-    <p><strong>Volunteer Name:</strong> <%= user.firstName %> <% user.lastName %></p>
-    <p><strong>Current Team Status:</strong> <%= user.teamStatus %></p>
-    <% if (user.teamStatus === 'member') { %>
-      <p><strong>Team Captain Name:</strong> <%= user.firstName %></p>
-    <% } %>
+  <div class="span8 offset2">
+    <h2>Volunteer Team Management</h2>
+    <div class="well">
+      <p><strong>Volunteer Name:</strong> <%= volunteer.firstName %> <%= volunteer.lastName %></p>
+      <% if (team === null) { %>
+        <p><strong>Status:</strong> Individual</p>
+        <p>You're currently registered as an individual volunteer, but not part of any team. You can create a new team in order to then invite other students to volunteer with Big Event as part of your team. Pull together with friends and make a difference together.</p>
+        <hr />
+        <p class="text-right">
+          <a href="<%= site.url %>volunteer" role="button" class="btn">Back to Account</a>
+          <a href="#create-team" role="button" class="btn btn-success" data-toggle="modal">Create Team</a>
+        </p>
+      <% } else { %>
+        <p><strong>Team Status:</strong> Member</p>
+        <p><strong>Team ID:</strong> <%= team._id %></p>
+      <% } %>
+    </div>
   </div>
 </div>
-<% if (user.teamStatus === 'member' || user.teamStatus === 'captain') { %>
+<div id="create-team" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="create-team-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="create-team-label">Create Team</h3>
+  </div>
+  <div class="modal-body">
+    <p>By creating a team you can invite other students to join your team and work together volunteering on the day of the event. However, if you create your own team you will not be able to join the team of another student.</p><p>Are you sure that you want to create a new team?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <a href="<%= site.url + 'volunteer/team/create' %>" class="btn btn-primary" type="submit">Confirm</a>
+  </div>
+</div>
+<% if (typeof team !== 'undefined' && team !== null) { %>
+  <div class="row">
+    <div class="span8 offset2">
+      <p>Invite other students to volunteer as part of your team by giving them the following link.</p>
+      <input id="invite-input" type="text" class="input-block-level" onclick="select()" value="<%= site.url %>team-invite?id=<%= team._id %>" editable />
+    </div>
+  </div>
   <div class="row">
     <div class="span8 offset2">
       <h3>Team Members</h3>
       <div class="table-responsive">
         <table class="table table-bordered table-striped" id="volunteer-table">
           <thead>
-            <tr>
-              <th id="doubleName">Name</th>
-              <th id="email">Email</th>
-              <th id="phone">Phone Number</th>
-              <th id="gender">Gender</th>
-              <th id="shirtSize">Shirt Size</th>
-              <th id="formattedAddress">Address</th>
-            </tr>
+            <tr><th>Name</th><th>Email</th><th>Phone</th><th>Gender</th></tr>
           </thead>
           <tbody>
-            <% for (i = 0; i < teamList.length; i++) { %>
+            <% team.members.forEach(function (member) { %>
               <tr>
-                <td><%= teamList[i].lastName + ", " + teamList[i].firstName  %></td>
-                <td><a href="<%= teamList[i].email %>"><%= teamList[i].email %></a></td>
-                <td><%= teamList[i].phone %></td>
-                <td><%= teamList[i].gender %></td>
-                <td><%= teamList[i].shirtSize %></td>
-                <td><%= teamList[i].formattedAddress %></td>
+                <td><%= member.lastName + ", " + member.firstName  %></td>
+                <td><a href="<%= member.email %>"><%= member.email %></a></td>
+                <td><%= member.phone %></td>
+                <td><%= member.gender %></td>
               </tr>
-            <% } %>
+            <% }); %>
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-<% } %>
-<% if (user.teamStatus === 'captain') { %>
-  <div class="row">
-    <div class="span6 offset3">
-      <p>You can invite other students to volunteer as part of your team by giving them the link below.</p>
-      <input type="text" id="invite-input" value="<%= teamInviteLink %>" />
     </div>
   </div>
 <% } %>

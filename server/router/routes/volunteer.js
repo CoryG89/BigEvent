@@ -2,7 +2,6 @@
 
 var util = require('util');
 
-var debug = require('../../debug');
 var dbman = require('../../dbman');
 var emailer = require('../../emailer');
 var geocoder = require('../../geocoder');
@@ -12,7 +11,6 @@ var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
 
 var users = dbman.getCollection('users');
 var volunteers = dbman.getCollection('volunteers');
-var teams = dbman.getCollection('teams');
 
 function updateSession (session, object) {
     if (typeof object === 'object') {
@@ -27,11 +25,9 @@ module.exports = {
 
     get: function (req, res) {
         if (req.session.volunteer) {
-            log('GET: Volunteer session detected');
-            log('GET: Redirecting to /volunteer/account');
+            log('GET: Volunteer session detected, redirecting to /volunteer/account');
             res.redirect('/volunteer/account');
-        }
-        else {
+        } else {
             res.render('volunteer', {
                 title: 'Volunteer Registration',
                 _layoutFile: 'default'
@@ -44,6 +40,7 @@ module.exports = {
 
         data._id = req.session.user._id;
         data.email = req.session.user.email;
+        data.team = null;
 
         var address = util.format('%s %s, %s %s',
             data.address, data.city, data.state, data.zip);
@@ -67,28 +64,6 @@ module.exports = {
                     var tasksCompleted = 0;
                     var numTasks = 2;
                     var responseSent = false;
-
-                    if (data.teamStatus === 'captain') {
-                        numTasks++;
-                        var teamData = {
-                            captain: data._id,
-                            members: [data._id]
-                        };
-                        teams.insert(teamData, { w: 1 }, function (err, result) {
-                            if (err || !result) {
-                                log('POST: Error inserting team record');
-                                if (!responseSent) {
-                                    res.send(400);
-                                    responseSent = true;
-                                }
-                            } else {
-                                log('POST: Team record successfully created');
-                                if (++tasksCompleted === numTasks) {
-                                    res.send('ok', 200);
-                                }
-                            }
-                        });
-                    }
 
                     var query = { _id: req.session.volunteer._id };
                     var cmd = { $set: { role: 'volunteer' } };
