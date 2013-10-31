@@ -6,11 +6,15 @@ var engine = require('ejs-locals');
 
 var server = require('./server');
 var packageData = require('./package');
-
 var debug = require('./server/debug');
+
+/** Initialize Express app object */
+var app = express();
+
+/** Initialize the debugging module and get a logger */
+debug.setEnabled(app.get('env') === 'development');
 var log = debug.getLogger({ prefix: '[app]-  ' });
 
-var app = express();
 log('Express framework initialized');
 
 /** Default Express App Configuration */
@@ -34,7 +38,7 @@ app.use(server.middleware.reslocals());
 app.use(app.router);
 
 /** Development configuration */
-if (app.get('env') === 'developement') {
+if (app.get('env') === 'development') {
     app.use(express.errorHandler());
 }
 
