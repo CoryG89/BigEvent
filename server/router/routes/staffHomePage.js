@@ -10,6 +10,7 @@ var jobSites = dbman.getCollection('jobsites');
 var committeeMembers = dbman.getCollection('committee');
 var leadershipTeamMembers = dbman.getCollection('leadership');
 var projectCoordinators = dbman.getCollection('projectcoordinators');
+var zipsCollection = dbman.getCollection('zips');
 
 //set vars to control paginations.
 var itemsPerPage = 10;
@@ -374,15 +375,6 @@ module.exports = {
             title: 'Implement Me',
             header: 'Implement Me',
             message: 'Updating the Waiver is not yet implemented.',
-            _layoutFile: 'default'
-        });
-    },
-
-    updateZipCodes: function(req, res) {
-        res.render('hero-unit', {
-            title: 'Implement Me',
-            header: 'Implement Me',
-            message: 'Updating of Zip Codes is not yet implemented.',
             _layoutFile: 'default'
         });
     },

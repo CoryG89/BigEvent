@@ -74,8 +74,11 @@ module.exports = {
         app.get('/staff/printHomeDepotReport', routes.staffHomePage.printHomeDepotReport);
         app.get('/staff/clearDatabase', routes.staffHomePage.clearDatabase);
         app.get('/staff/updateWaiver', routes.staffHomePage.updateWaiver);
-        app.get('/staff/updateZipCodes', routes.staffHomePage.updateZipCodes);
         app.get('/staff/updateReports', routes.staffHomePage.updateReports);
+
+        app.get('/staff/updateZipCodes', routes.zipcodes.get);
+        app.post('/staff/updateZipCodes', routes.zipcodes.post);
+        app.get('/staff/updateZipCodes/failure', routes.zipcodes.failure);
         
         app.get('*', routes.notfound);
     }

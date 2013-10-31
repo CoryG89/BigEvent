@@ -5,6 +5,7 @@
     var $email = $form.children('input#email');
     var $emailConf = $form.children('input#email-conf');
     var $zip = $form.children('input#zip');
+    var zipValues = $('#zip-values').val().split(',');
 
     $email.popover({
         title: 'Validate Email',
@@ -13,9 +14,14 @@
         trigger: 'manual'
     });
 
+    var zipMessage = 'Currently accepted zip codes are: ';
+    for(var i=0; i<zipValues.length; i++)
+    {
+        zipMessage += zipValues[i] + ', ';
+    }
     $zip.popover({
         title: 'Validate Zip Code',
-        content: 'Currently accepted zip codes are: 36830, 36832, and 36849.',
+        content: zipMessage.substr(0, zipMessage.length - 2),
         placement: 'left',
         trigger: 'manual'
     });
@@ -29,18 +35,13 @@
                 });
                 return false;
             }
-
-            switch ($zip.val()) {
-                case '36830':
-                case '36832':
-                case '36849':
-                    break;
-                default:
-                    $zip.popover('show');
-                    $(document).one('focusin', function () {
-                        $zip.popover('hide');
-                    });
-                    return false;
+            if($.inArray($zip.val(), zipValues) === -1)
+            {
+                $zip.popover('show');
+                $(document).one('focusin', function () {
+                    $zip.popover('hide');
+                });
+                return false;
             }
         },
 
@@ -56,7 +57,7 @@
             }
         },
 
-        error: function (data, status) {
+        error: function (data) {
             if(data === 'staff'){
                 window.location.replace('/staff/jobsite/request/failure');
             } else {

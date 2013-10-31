@@ -1,0 +1,104 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/zips-controller.js') -%>
+
+<input type="text" class="hidden" id="zip-values" value="<%= zipCodes %>"/>
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <h3>Current Zip Codes</h4>
+    <hr class="thin" />
+    <ul class="nav" id="allowed-zip-codes">
+      <li><p>Allowed Zip Codes</p></li>
+    </ul>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <form id="zips-form" method="post">
+        <label for="lee-county-zips">Lee County Alabama Zip Codes</label>
+        <select id="lee-county-zips" name="lee-county-zips" multiple>
+            <option value="36802">36802</option>
+            <option value="36803">36803</option>
+            <option value="36831">36831</option>
+            <option value="36832">36832</option>
+            <option value="36849">36849</option>
+            <option value="36865">36865</option>
+            <option value="36872">36872</option>
+        </select>
+        <label for="chambers-county-zips">Chambers County Alabama Zip Codes</label>
+        <select id="chambers-county-zips" name="chambers-county-zips" multiple>
+            <option value="36844">36844</option>
+            <option value="36854">36854</option>
+            <option value="36862">36862</option>
+            <option value="36863">36863</option>
+        </select>
+        <label for="russell-county-zips">Russell County Alabama Zip Codes</label>
+        <select id="russell-county-zips" name="russell-county-zips" multiple>
+            <option value="36851">36851</option>
+            <option value="36856">36856</option>
+            <option value="36858">36858</option>
+            <option value="36859">36859</option>
+            <option value="36860">36860</option>
+            <option value="36857">36867</option>
+            <option value="36868">36868</option>
+            <option value="36869">36869</option>
+            <option value="36871">36871</option>
+            <option value="36875">36875</option>
+        </select>
+        <label for="macon-county-zips">Macon County Alabama Zip Codes</label>
+        <select id="macon-county-zips" name="macon-county-zips" multiple>
+            <option value="36031">36031</option>
+            <option value="36039">36039</option>
+            <option value="36075">36075</option>
+            <option value="36083">36083</option>
+            <option value="36087">36087</option>
+            <option value="36088">36088</option>
+            <option value="36866">36866</option>
+        </select>
+        <label for="tallapoosa-county-zips">Tallapoosa County Alabama Zip Codes</label>
+        <select id="tallapoosa-county-zips" name="tallapoosa-county-zips" multiple>
+            <option value="36010">36010</option>
+            <option value="36011">36011</option>
+            <option value="36023">36023</option>
+            <option value="36256">36256</option>
+            <option value="36850">36850</option>
+            <option value="36853">36853</option>
+            <option value="36861">36861</option>
+        </select>
+        <label for="harris-county-zips">Harris County Georgia Zip Codes</label>
+        <select id="harris-county-zips" name="harris-county-zips" multiple>
+            <option value="36804">36804</option>
+            <option value="36807">36807</option>
+            <option value="36811">36811</option>
+            <option value="36822">36822</option>
+            <option value="36823">36823</option>
+            <option value="36826">36826</option>
+            <option value="36821">36831</option>
+        </select>
+        <label for="muscogee-county-zips">Muscogee County Georgia Zip Codes</label>
+        <select id="muscogee-county-zips" name="muscogee-county-zips" multiple>
+            <option value="36808">36808</option>
+            <option value="36820">36820</option>
+            <option value="36829">36829</option>
+            <option value="36901">36901</option>
+            <option value="36902">36902</option>
+            <option value="36903">36903</option>
+            <option value="36904">36904</option>
+            <option value="36905">36905</option>
+            <option value="36906">36906</option>
+            <option value="36907">36907</option>
+            <option value="36908">36908</option>
+            <option value="36909">36909</option>
+            <option value="36914">36914</option>
+            <option value="36917">36917</option>
+            <option value="36993">36993</option>
+            <option value="36995">36995</option>
+            <option value="36997">36997</option>
+            <option value="36998">36998</option>
+            <option value="36999">36999</option>
+        </select>
+        <hr />
+        <input class="btn" type="reset" value="Clear" />
+        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>

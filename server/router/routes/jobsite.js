@@ -8,15 +8,44 @@ var emailer = require('../../emailer');
 
 var log = debug.getLogger({ prefix: '[route.jobsite]-  ' });
 var jobsites = dbman.getCollection('jobsites');
+var zipsCollection = dbman.getCollection('zips');
 
 var ObjectId = dbman.getObjectId();
 
 module.exports = {
     request: {
         get: function (req, res) {
-            res.render('jobsite-request', {
-                title: 'Job Site Request',
-                _layoutFile: 'default'
+            zipsCollection.find().toArray(function(err, zipDocs){
+                if(err || !zipDocs){
+                    log('Could not get Zip Codes');
+                }
+                else{
+                    var zipMap = zipDocs[0];
+                    var counties = ['Lee', 'Chambers', 'Russell', 'Macon', 'Tallapoosa', 'Harris', 'Muscogee'];
+                    var zipValues = {
+                        Lee: zipMap['lee-county-zips'],
+                        Chambers: zipMap['chambers-county-zips'],
+                        Russell: zipMap['russell-county-zips'],
+                        Macon: zipMap['macon-county-zips'],
+                        Tallapoosa: zipMap['tallapoosa-county-zips'],
+                        Harris: zipMap['harris-county-zips'],
+                        Muscogee: zipMap['muscogee-county-zips']
+                    };
+                    var zips = [];
+                    for(var i=0; i<counties.length; i++)
+                    {
+                        var currentValue = zipValues[counties[i]];
+                        if(currentValue !== undefined)
+                        {
+                            zips.push.apply(zips, currentValue.toString().split(','));
+                        }
+                    }
+                    res.render('jobsite-request', {
+                        title: 'Job Site Request',
+                        zips: zips,
+                        _layoutFile: 'default'
+                    });
+                }
             });
         },
 
