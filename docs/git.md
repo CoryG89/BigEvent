@@ -162,6 +162,13 @@ remote repo such as mine
 
     git pull cory master
 
+Recommended Docs
+----------------
+ - [Gitolite - Git Concepts Tutorial][git-concepts-tut]
+ - [ProfHacker - Forks and Pull Requests][profhacker-forks-pull-requests]
+ - [Github - Fork and Pull][github-fork-and-pull]
+ - [Github - Resolving Conflicts][github-conflicts]
+
 [git]: http://git-scm.com
 [git-docs]: http://git-scm.com/docs
 [git-tutorial]: http://git-scm.com/docs/gittutorial
@@ -180,6 +187,7 @@ remote repo such as mine
 [github]: http://github.com
 [github-forks]: https://help.github.com/articles/fork-a-repo
 [github-pull-requests]:https://help.github.com/articles/using-pull-requests
+[github-conflicts]: https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line
 [github-git-setup]: https://help.github.com/articles/set-up-git
 
 [github-fork-and-pull]: https://help.github.com/articles/using-pull-requests#fork--pull

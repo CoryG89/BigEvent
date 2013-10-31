@@ -145,11 +145,69 @@ run-time environment which can be set to development, production, etc.
 Middleware
 ----------
 
-Expres
+Middleware can be thought of as a stack of functions through which requests to
+the server are passed through in order as the come in. In Express, middleware
+is added to a particular application by passing a function to a call to 
+[**`app.use`**][express-api-app.use]. You can optionally specify a path as the
+first parameter which the use of the middleware will be restricted to. 
 
+A middleware function is passed three parameters `req`, `res`, and `next` which
+is the request object, the response object, and the next callback, respectively.
+The request object contains the data for the current request being passed
+through the middleware stack and has properties such as 
+[`req.path`][express-api-req.path] and
+[`req.session`][connect-api-session-middleware]. The reponse object contains
+methods such as [`res.send`][express-api-res.send] and
+[`res.render`][express-api-res.render] which allow the middleware to handle the
+current request if it chooses to do so based on the data contained in the
+request object. If the middleware function decides not to handle the request
+it must call `next()` which passes the request to the next function in the
+middleware stack.
 
+Express depends on the [Connect module][connect] so some of the included
+middleware is documented in the Connect API.
 
+### Basic Express Middleware
 
+    app.use(function (req, res, next) { 
+        if (req.path === '/hello') {
+            res.send(200, 'world');
+        } else {
+            next();
+        }
+    });
+
+Functionally equivalent to the above would be to use the optional first
+parameter to limit the middleware to a particular path.
+
+    app.use('/hello', function (req, res) {
+        res.send(200, 'world');
+    });
+
+The above will match any http requests on a path that begins with  `/hello`.
+
+Most Express middleware modules are defined as functions which return a callback
+to be passed to app.use. We could make the middleware example above reusable,
+modular, and configurable like so:
+
+    module.exports = {
+        greeter: function (msg) {
+            return function (req, res) {
+                res.send(200, msg);
+            }
+        }
+    };
+
+If the above was put in a file called `middleware.js` you could then import it
+and use it in your Express app middleware.
+
+    var express = require('express');
+    var middleware = require('./middleware');
+
+    var app = express();
+    app.use(middleware.greeter('hiya'));
+    
+    app.listen(3000);
 
 [node]: http://nodejs.org
 [npm]: http://npmjs.org
@@ -157,3 +215,10 @@ Expres
 [connect]: http://www.senchalabs.org/connect/
 [express-repo]: http://expressjs.com/visionmedia/express
 [express-api]: http://expressjs.com/api
+
+[express-api-app.use]: http://expressjs.com/api#app.use
+[express-api-req.path]: http://expressjs.com/api#req.path
+[express-api-res.send]: http://expressjs.com/api#res.send
+[express-api-res.render]: http://expressjs.com/api#res.render
+[connect-api-session-middleware]: http://www.senchalabs.org/connect/session.html#session
+

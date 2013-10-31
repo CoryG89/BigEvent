@@ -65,8 +65,8 @@ installed via the [npm repository][npm] by running `npm install`. These
 dependencies are specified in the `package.json` file.
 
  * [**`express`**][express]
-  - Express is a popular, [open-source][express-repo], web-framework for node.  
-    It wraps the HTTP server module. Provides features like dynamic routing, 
+  - Express is a popular, [open-source][express-repo], web-framework for node.
+    It wraps the HTTP server module. Provides features like dynamic routing,
     session support, view rendering/templating, etc. Express also has support
     for what is called middleware. A server's middleware is a stack of functions
     through which requests are passed before a response is generated from the
