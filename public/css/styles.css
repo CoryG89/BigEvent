@@ -43,3 +43,19 @@ a#edit-button, a#cancel-button {
 ul.pager li.previous {
     margin-right: 10px;
 }
+
+ul.thumbnails {
+    vertical-align: central;
+    text-align: center;
+}
+ul.thumbnails li {
+    max-width: 200px;
+    height: auto;
+    display: inline-block;
+    float: none;
+    zoom: 1;
+    margin: 7px;
+}
+ul.thumbnails img {
+    border: 1px solid #000;
+}
