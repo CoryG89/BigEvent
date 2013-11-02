@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="offset2 span8">
+    <div><h3>Volunteer Team List</h3></div>
+    <% if (teams.length === 0) { %>
+      <p class="muted">There are currently no teams registered for Big Event.</p>
+    <% } else { %>
+      <% teams.forEach(function (team) { %>
+        <hr />
+          <h4>Team ID <%= team._id %> 
+            <small class="pull-right">
+              <%= team.members.length %> of <%= maxTeamSize %> members
+            </small>
+          </h4>
+          <table class="table table-bordered table-striped" id="volunteer-table">
+            <thead>
+            <tr><th>Name</th><th>Email</th><th>Phone</th><th>Address</th></tr>
+          </thead>
+          <tbody>
+            <% team.members.forEach(function (member) { %>
+              <tr>
+                <td><%= member.lastName + ", " + member.firstName  %></td>
+                <td><a href="<%= member.email %>"><%= member.email %></a></td>
+                <td><%= member.phone %></td>
+                <td><%= member.formattedAddress %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% }); %>
+    <% } %>
+  </div>
+</div>

@@ -26,8 +26,11 @@ module.exports = {
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
 
         app.get('/volunteer/team', routes.team.get);
-        app.get('/volunteer/team/create', routes.team.create);
-        app.get('/volunteer/team/invite', routes.team.create);
+        app.get('/volunteer/team/invite', routes.team.invite);
+        app.get('/volunteer/team/join', routes.team.join);
+        app.get('/volunteer/team/leave', routes.team.leave);
+        
+        app.get('/staff/volunteer/team-list', routes.staffTeamList);
 
         app.get('/jobsite/request', routes.jobsite.request.get);
         app.post('/jobsite/request', routes.jobsite.request.post);

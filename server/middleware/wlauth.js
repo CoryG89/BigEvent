@@ -11,6 +11,7 @@ var isOpenPath = (function () {
         '/home': true,
         '/signin': true,
         '/jobsite/request': true,
+        '/volunteer/team/invite': true,
         '/contact': true,
         '/about': true
     };

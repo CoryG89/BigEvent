@@ -1,6 +1,7 @@
 'use strict';
 
 var util = require('util');
+var uuid = require('node-uuid');
 
 var dbman = require('../../dbman');
 var emailer = require('../../emailer');
@@ -40,7 +41,7 @@ module.exports = {
 
         data._id = req.session.user._id;
         data.email = req.session.user.email;
-        data.team = null;
+        data.team = uuid.v4();
 
         var address = util.format('%s %s, %s %s',
             data.address, data.city, data.state, data.zip);
