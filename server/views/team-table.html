@@ -1,4 +1,8 @@
-<h4>Team <a href="<%= site.url + 'volunteer/team/' + team._id %>"><small class="text-info"><%= team._id %></small></a>
+<h4>
+  Team 
+  <a href="<%= site.url + (isStaff ? 'staff/' : '') + 'volunteer/team/' + team._id %>">
+    <small class="text-info"><%= team._id %></small>
+  </a>
   <small class="pull-right"><%= team.members.length %> of <%= maxTeamSize %> members</small>
 </h4>
 <table class="table table-bordered table-striped">
