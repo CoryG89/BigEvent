@@ -12,8 +12,9 @@ module.exports = {
         var enabled = options.enabled !== undefined ? options.enabled : true;
 
         var Logger = function Logger () {
+            var callback;
+            var callbackReturn = null;
             if (globallyEnabled && enabled) {
-                var callback;
                 var args = Array.prototype.slice.call(arguments);
                 var last = args.length - 1;
 
@@ -24,9 +25,9 @@ module.exports = {
                     args[0] = prefix + args[0];
 
                 console.log.apply(console, args);
-
-                if (callback) callback(util.format.apply(util, args));
+                callbackReturn = util.format.apply(util, args);
             }
+            if (callback) callback(callbackReturn);
         };
 
         Logger.setEnabled = function (value) {
