@@ -1,7 +1,7 @@
 'use strict';
 
 var debug = require('../debug');
-var log = debug.getLogger({ prefix: '[middleware.auth]-  ' });
+var log = debug.getLogger({ prefix: '[middleware.wlauth]-  ' });
 
 var redirectPath = '/signin';
 
