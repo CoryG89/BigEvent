@@ -1,5 +1,5 @@
 p {
-    margin-bottom: 12px;
+    margin: 0px 0px 15px;
 }
 
 textarea {
@@ -8,6 +8,22 @@ textarea {
 
 label {
     font-weight: bold;
+}
+
+h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
+  margin: 0px 0px 10px;
+}
+
+.clip-bottom {
+    margin-bottom: 0px;
+}
+
+.clip-top {
+    margin-top: 0px;
+}
+
+.full-width {
+  width: 100%;
 }
 
 div.radio-group {
@@ -24,22 +40,6 @@ div.radio-group div {
     display: inline-block;
 }
 
-.clip-bottom {
-    margin-bottom: 0px;
-}
-
-.clip-top {
-    margin-top: 0px;
-}
-
-hr.thin {
-    margin: 0px 0px 7px;
-}
-
-a#edit-button, a#cancel-button {
-    margin-top: 10px;
-}
-
 ul.pager li.previous {
     margin-right: 10px;
 }
@@ -48,6 +48,7 @@ ul.thumbnails {
     vertical-align: central;
     text-align: center;
 }
+
 ul.thumbnails li {
     max-width: 200px;
     height: auto;
@@ -56,6 +57,7 @@ ul.thumbnails li {
     zoom: 1;
     margin: 7px;
 }
+
 ul.thumbnails img {
     border: 1px solid #000;
 }
