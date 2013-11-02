@@ -12,8 +12,7 @@ module.exports = function (req, res) {
                     firstName: '$firstName',
                     lastName: '$lastName',
                     email: '$email',
-                    phone: '$phone',
-                    formattedAddress: '$formattedAddress'
+                    gender: '$gender'
                 }
             }
         }

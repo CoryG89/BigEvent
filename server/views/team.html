@@ -2,51 +2,33 @@
   <div class="span8 offset2">
     <h3>Volunteer Team</h3>
     <hr />
-    <p>You may choose to volunteer with Big Event as an individual or join a team and join together with others in order to make a difference in your community. Teams of volunteers are matched to work together on the day of the event. You may only be part of a single team and teams may have a maximum of <%= maxTeamSize %> members.</p>
-    <h4>Team Info</h4>
-    <hr />
-    <div class="well">
-      <ul>
-        <li><strong>Volunteer Name:</strong> <%= volunteer.firstName %> <%= volunteer.lastName %></li>
-        <li><strong>Team ID:</strong> <%= team._id %></li>
-      </ul>
-    </div>
-    <% if (team.members.length > 1) { %>
-      <a href="#leave-team" class="btn btn-small btn-danger pull-right" data-toggle="modal">Leave Team</a>
-      <div id="leave-team" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="leave-team-label" aria-hidden="true">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-          <h3 id="leave-team-label">Leave Team</h3>
-        </div>
-        <div class="modal-body">
-          <p>Do you want to leave your current team? Teams can only have a maximum of <%= maxTeamSize %> members. If you leave this team you will not be able to join again without the invite link. If you leave the team, you will still be registered to volunteer and you can still invite other volunteers to join you or you may join a different team.</p>
-          <p><strong>Are you absolutely sure you want to leave this team?</strong></p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <a href="<%= site.url + 'volunteer/team/leave?id=' + team._id %>" class="btn btn-danger" type="submit">Leave Team</a>
-        </div>
-      </div>
+    <% if (!isStaff) { %>
+      <p>Thank you <%= volunteer.firstName %> for volunteering with Auburn's Big Event! You may choose to volunteer with us either as an individual or you may join together with others as part of a team in order to make a difference in the community. Teams of volunteers are assigned to volunteer together at the same location on the day of the event. You may only be part of a single team and teams may have a maximum of <%= maxTeamSize %> members.</p>
+      <hr />
     <% } %>
-    <h4>Team Members <small><%= team.members.length %> of <%= maxTeamSize %></small></h4>
-    <hr />
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr><th>Name</th><th>Email</th><th>Gender</th></tr>
-      </thead>
-      <tbody>
-        <% team.members.forEach(function (member) { %>
-          <tr>
-            <td><%= member.lastName + ", " + member.firstName  %></td>
-            <td><a href="<%= member.email %>"><%= member.email %></a></td>
-            <td><%= member.gender %></td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
+    <% include team-table.html %>
+    <% if (team.members.length > 1) { %>
+        <a href="#leave-team" class="btn btn-small btn-danger pull-right" data-toggle="modal">Leave Team</a>
+        <div id="leave-team" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="leave-team-label" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="leave-team-label">Leave Team</h3>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to leave your current team? Teams can only have a maximum of <%= maxTeamSize %> members. If you leave this team you will not be able to join again without the invite link. If you leave the team, you will still be registered to volunteer and you can still invite other volunteers to join you or you may join a different team.</p>
+            <p><strong>Are you absolutely sure you want to leave this team?</strong></p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="<%= site.url + 'volunteer/team/leave?id=' + team._id %>" class="btn btn-danger" type="submit">Leave Team</a>
+          </div>
+        </div>
+      <% } %>
     <h4>Invite Link</h4>
     <hr />
-    <p>You can invite other students to volunteer as part of your team by giving out the following link. You can only have a maximum of 10 team members and cannot remove volunteers from your team. Even after other volunteers join your team, you can still leave and start a new team or join a different team by invite.</p>
+    <% if (!isStaff) { %>
+    <p>You can invite other students to volunteer as part of your team by giving out the following link. You cannot remove volunteers from your team after you invite them. However even after other volunteers join your team, you can still leave and start a new team or join a different team by invite.</p>
+    <% } %>
     <div class="text-center">
       <input type="text" class="span6" onclick="select()" value="<%= site.url %>volunteer/team/invite?id=<%= team._id %>" editable />
     </div>

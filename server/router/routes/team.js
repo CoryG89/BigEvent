@@ -8,10 +8,11 @@ var log = debug.getLogger({ prefix: '[route.team]-  '});
 
 var volunteers = dbman.getCollection('volunteers');
 
-function validateVolunteerReq (req) {
-    return typeof req.session.user !== 'undefined' &&
-        req.session.user.role === 'volunteer' &&
-        typeof req.session.volunteer !== 'undefined';
+function validateUserSession(req) {
+    return !(
+        typeof req.session.user === 'undefined' ||
+        typeof req.session.user.role === 'undefined'
+    );
 }
 
 var projection = {
@@ -24,11 +25,30 @@ var projection = {
 module.exports = {
 
     get: function (req, res) {
-        if (!validateVolunteerReq(req)) {
+        var teamId;
+        var query = { team: null };
+
+        if (!validateUserSession(req)) {
+            log('Could not validate user session, access denied');
+            res.redirect('/access-denied');
+        } else if (!res.locals.isStaff && !req.session.volunteer) {
+            log('No staff or volunteer session detected');
             res.redirect('/access-denied');
         } else {
-            var teamId = req.session.volunteer.team;
-            var query = { team: teamId };
+            if (!res.locals.isStaff) {
+                if (!req.params.id) {
+                    teamId = req.session.volunteer.team;
+                    res.redirect(req.path + '/' + teamId);
+                } else if (req.params.id !== req.session.volunteer.team) {
+                    res.redirect('/access-denied');
+                } else {
+                    teamId = req.params.id;
+                }
+            }
+            else {
+                teamId = req.params.id;
+            }
+            query = { team: teamId };
 
             volunteers.find(query, projection).toArray(function (err, docs) {
                 if (err) {
@@ -50,7 +70,7 @@ module.exports = {
     },
 
     invite: function (req, res) {
-        if (!validateVolunteerReq(req)) {
+        if (!validateUserSession(req) || !req.session.volunteer) {
             log('INVITE: Invalid volunteer session');
             res.cookie('invite_redirect', 'true', {
                 maxAge: 90000,
@@ -86,7 +106,7 @@ module.exports = {
     join: function (req, res) {
         var teamId = req.query.id;
 
-        if (!validateVolunteerReq(req)) {
+        if (!validateUserSession(req) || !req.session.volunteer) {
             log('JOIN: Invalid volunteer session');
             res.cookie('invite_redirect', true, {
                 maxAge: 90000,
@@ -138,7 +158,7 @@ module.exports = {
     leave: function (req, res) {
         var teamId = req.query.id;
 
-        if (!validateVolunteerReq(req)) {
+        if (!validateUserSession(req) || !req.session.volunteer) {
             log('LEAVE: Invalid volunteer session');
             res.cookie('invite_redirect', true, {
                 maxAge: 90000,
