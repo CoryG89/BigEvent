@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="offset2 span8">
+    <h3>Volunteer Team List
+      <small class="pull-right"><%= teams.length %> teams total</small>
+    </h3>
+    <hr />
+    <% if (teams.length === 0) { %>
+      <div class="text-center">
+        <span class="muted">There are currently no teams registered for Big Event.</span>
+      </div>
+    <% } else { %>
+      <% teams.forEach(function (team) { %>
+         <% include team-table.html %>
+      <% }); %>
+    <% } %>
+  </div>
+</div>

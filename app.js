@@ -6,11 +6,15 @@ var engine = require('ejs-locals');
 
 var server = require('./server');
 var packageData = require('./package');
-
 var debug = require('./server/debug');
+
+/** Initialize Express app object */
+var app = express();
+
+/** Initialize the debugging module and get a logger */
+debug.setEnabled(app.get('env') === 'development');
 var log = debug.getLogger({ prefix: '[app]-  ' });
 
-var app = express();
 log('Express framework initialized');
 
 /** Default Express App Configuration */
@@ -29,12 +33,13 @@ app.use(express.session({ secret: 'SuperAppSpecificSecretGoesHere' }));
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.use(server.middleware.wlauth());
-app.use(server.middleware.staffauth());
+app.use('/staff', server.middleware.staffauth());
+app.use(server.middleware.isStaff());
 app.use(server.middleware.reslocals());
 app.use(app.router);
 
 /** Development configuration */
-if (app.get('env') === 'developement') {
+if (app.get('env') === 'development') {
     app.use(express.errorHandler());
 }
 
@@ -46,7 +51,8 @@ app.locals({
         author: 'Auburn University SGA, Big Event',
         description: 'Web application for the Auburn University SGA student volunteer program Big Event',
         url: 'http://bigevent.com/'
-    }
+    },
+    maxTeamSize: 10
 });
 
 log('Express app, %s, has been properly configured', packageData.name);

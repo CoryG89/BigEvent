@@ -1,7 +1,7 @@
 'use strict';
 
 var debug = require('../debug');
-var log = debug.getLogger({ prefix: '[middleware.auth]-  ' });
+var log = debug.getLogger({ prefix: '[middleware.wlauth]-  ' });
 
 var redirectPath = '/signin';
 
@@ -11,6 +11,7 @@ var isOpenPath = (function () {
         '/home': true,
         '/signin': true,
         '/jobsite/request': true,
+        '/volunteer/team/invite': true,
         '/contact': true,
         '/about': true
     };

@@ -1,5 +1,5 @@
 p {
-    margin-bottom: 12px;
+    margin: 0px 0px 15px;
 }
 
 textarea {
@@ -8,6 +8,22 @@ textarea {
 
 label {
     font-weight: bold;
+}
+
+h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
+  margin: 0px 0px 10px;
+}
+
+.clip-bottom {
+    margin-bottom: 0px;
+}
+
+.clip-top {
+    margin-top: 0px;
+}
+
+.full-width {
+  width: 100%;
 }
 
 div.radio-group {
@@ -24,22 +40,43 @@ div.radio-group div {
     display: inline-block;
 }
 
-.clip-bottom {
-    margin-bottom: 0px;
-}
-
-.clip-top {
-    margin-top: 0px;
-}
-
-hr.thin {
-    margin: 0px 0px 7px;
-}
-
-a#edit-button, a#cancel-button {
-    margin-top: 10px;
-}
-
 ul.pager li.previous {
     margin-right: 10px;
+}
+
+ul.thumbnails {
+    vertical-align: central;
+    text-align: center;
+}
+
+ul.thumbnails li {
+    max-width: 200px;
+    height: auto;
+    display: inline-block;
+    float: none;
+    zoom: 1;
+    margin: 7px;
+}
+
+ul.thumbnails img {
+    border: 1px solid #000;
+}
+
+
+div.navbar a {
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+div.nav-collapse a {
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
+}
+
+div.navbar a.brand {
+    font-weight: bold;
 }

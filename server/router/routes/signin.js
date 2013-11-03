@@ -8,7 +8,7 @@ var users = dbman.getCollection('users');
 
 var usersCollections = {
     volunteer: dbman.getCollection('volunteers'),
-    projectCoordinators: dbman.getCollection('projectCoordinators'),
+    projectCoordinators: dbman.getCollection('projectcoordinators'),
     executive: dbman.getCollection('executive'),
     committee: dbman.getCollection('committee'),
     leadership: dbman.getCollection('leadership')

@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="span8 offset2">
+    <h3>Team Invite</h3>
+    <p>You have been invited to join the following team on the day of Big Event. You can either volunteer as a individual or join a team and you will be assigned to the same jobsite as your team members on the day of the Big Event.</p>
+    <hr />
+    <h4>Team <a href="<%= site.url + 'volunteer/team/' + team._id %>"><small class="text-info"><%= team._id %></small></a>
+      <small class="pull-right"><%= team.members.length %> of <%= maxTeamSize %> members</small>
+    </h4>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Gender</th></tr>
+      </thead>
+      <tbody>
+        <% team.members.forEach(function (member) { %>
+          <tr>
+            <td><%= member.lastName + ", " + member.firstName  %></td>
+            <td><a href="<%= member.email %>"><%= member.email %></a></td>
+            <td><%= member.gender %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <p class="text-right">
+      <a href="<%= site.url %>volunteer" role="button" class="btn">Back to Account</a>
+      <a href="#join-team" role="button" class="btn btn-success" data-toggle="modal">Join Team</a>
+    </p>
+    <div id="join-team" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="join-team-label" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+        <h3 id="join-team-label">Join Team</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to join this team? You can only be part of one team. If you join this team, you will be removed from the team you are currently a member of.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="<%= site.url + 'volunteer/team/join?id=' + team._id %>" class="btn btn-primary" type="submit">Confirm</a>
+      </div>
+    </div>
+  </div>
+</div>

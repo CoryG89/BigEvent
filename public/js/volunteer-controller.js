@@ -6,7 +6,13 @@
         success: function (data, status) {
             if (status === 'success'){
                 if(data === 'ok') {
-                    window.location.replace('/volunteer/success');
+                    var inviteRedirect = $.cookie('invite_redirect');
+                    if (inviteRedirect) {
+                        $.removeCookie('invite_redirect');
+                        window.location.replace('/volunteer/team/invite');
+                    } else {
+                        window.location.replace('/volunteer/success');
+                    }
                 }
                 else {
                     window.location.replace('/staff/volunteer/account/' + data.id);
