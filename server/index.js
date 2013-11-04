@@ -7,6 +7,7 @@ var router = require('./router');
 var dbman = require('./dbman');
 var emailer = require('./emailer');
 var middleware = require('./middleware');
+var pdfgen = require('./pdfgen');
 
 var httpServer;
 var log = debug.getLogger({ prefix: '[server]-  ' });
@@ -17,6 +18,7 @@ module.exports = {
         dbman.init(function () {
             router.init(app);
         });
+        pdfgen.init();
         httpServer = http.createServer(app);
         if (httpServer) {
             log('Sucessfully created HTTP server');
