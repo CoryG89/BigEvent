@@ -29,7 +29,7 @@ describe('geocoder', function () {
         geocoder.send('Auburn University', function (res, err) {
             var expectedLatitude = 32.5940794;
             var expectedLongitude = -85.5004189;
-            var expectedAddress = 'Auburn University, Auburn, AL 36849, USA';
+            var expectedAddress = 'Auburn University, 107 samford hall, Auburn, AL 36849, USA';
 
             should.not.exist(err);
             should.exist(res);
