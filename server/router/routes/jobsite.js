@@ -8,6 +8,7 @@ var emailer = require('../../emailer');
 
 var log = debug.getLogger({ prefix: '[route.jobsite]-  ' });
 var jobsites = dbman.getCollection('jobsites');
+var zipsCollection = dbman.getCollection('zips');
 
 var ObjectId = dbman.getObjectId();
 
@@ -22,25 +23,56 @@ module.exports = {
 
         post: function (req, res) {
             var record = req.body;
-            var options = { w: 1 };
-            
-            record.formattedAddress = util.format('%s %s, %s %s',
-                record.address, record.city, record.state, record.zip);
+            var query = { _id: '1z2i3p4s5'};
+            var options = { };
+            zipsCollection.findOne(query, options, function(err, zipDoc) {
+                if(err || !zipDoc){
+                    log('Could not get Zip Codes');
+                    res.send('Error', 400);
+                }
+                else{
+                    //verify the zip code
+                    var zipArray = zipDoc.zips;
+                    var found = false;
+                    for(var i=0; i<zipArray.length; i++)
+                    {
+                        if(zipArray[i] === record.zip)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found)
+                    {
+                        var zipString = zipArray.join(', ');
+                        res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
+                    }
+                    else
+                    {
+                        log('POST: saveing job site.');
+                        //insert record
+                        options = { w: 1 };
+                        
+                        record.formattedAddress = util.format('%s %s, %s %s',
+                            record.address, record.city, record.state, record.zip);
 
-            jobsites.insert(record, options, function (err) {
-                if (err) {
-                    log('POST: Error inserting record:\n\n%s\n\n', err);
-                    res.send(400);
-                } else {
-                    emailer.send({
-                        to: record.email,
-                        subject: 'Job Request Confirmation',
-                        template: 'jobsite-request',
-                        locals: { user: record }
-                    }, function (err) {
-                        if (err) res.send(400);
-                        else res.send('ok', 200);
-                    });
+                        jobsites.insert(record, options, function (err) {
+                            if (err) {
+                                log('POST: Error inserting record:\n\n%s\n\n', err);
+                                res.send('Error', 400);
+                            } else {
+                                emailer.send({
+                                    to: record.email,
+                                    subject: 'Job Request Confirmation',
+                                    template: 'jobsite-request',
+                                    locals: { user: record }
+                                }, function (err) {
+                                    if (err) res.send('Error', 400);
+                                    else res.send('ok', 200);
+                                });
+                            }
+                        });
+                    }
                 }
             });
         },
@@ -48,25 +80,55 @@ module.exports = {
         staff : {
             post: function(req, res){
                 var record = req.body;
-                var options = { w: 1 };
-            
-                record.formattedAddress = util.format('%s %s, %s %s',
-                    record.address, record.city, record.state, record.zip);
+                var query = { _id: '1z2i3p4s5'};
+                var options = { };
+                zipsCollection.findOne(query, options, function(err, zipDoc) {
+                    if(err || !zipDoc){
+                        log('Could not get Zip Codes');
+                        res.send('Staff', 400);
+                    }
+                    else{
+                        //verify the zip code
+                        var zipArray = zipDoc.zips;
+                        var found = false;
+                        for(var i=0; i<zipArray.length; i++)
+                        {
+                            if(zipArray[i] === record.zip)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found)
+                        {
+                            var zipString = zipArray.join(', ');
+                            res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
+                        }
+                        else
+                        {
+                            //insert record
+                            options = { w: 1 };
+                            
+                            record.formattedAddress = util.format('%s %s, %s %s',
+                                record.address, record.city, record.state, record.zip);
 
-                jobsites.insert(record, options, function (err, records) {
-                    if (err) {
-                        log('POST: Error inserting record:\n\n%s\n\n', err);
-                        res.send(400, 'staff');
-                    } else {
-                        emailer.send({
-                            to: record.email,
-                            subject: 'Job Request Confirmation',
-                            template: 'jobsite-request',
-                            locals: { user: record }
-                        }, function (err) {
-                            if (err) res.send(400, 'staff');
-                            else res.send(200, {id: records[0]._id});
-                        });
+                            jobsites.insert(record, options, function (err, records) {
+                                if (err) {
+                                    log('POST: Error inserting record:\n\n%s\n\n', err);
+                                    res.send('Staff', 400);
+                                } else {
+                                    emailer.send({
+                                        to: record.email,
+                                        subject: 'Job Request Confirmation',
+                                        template: 'jobsite-request',
+                                        locals: { user: record }
+                                    }, function (err) {
+                                        if (err) res.send('Staff', 400);
+                                        else res.send({id: records[0]._id}, 200);
+                                    });
+                                }
+                            });
+                        }
                     }
                 });
             }
