@@ -8,34 +8,23 @@ var zips = dbman.getCollection('zips');
 
 module.exports = {
     get: function (req, res) {
-        zips.find().toArray(function(err, zipDocs){
-            if(err || !zipDocs){
+        var query = { _id: '1z2i3p4s5'};
+        var options = { };
+        zips.findOne(query, options, function(err, zipDoc) {
+            if(err || !zipDoc){
                 log('GET: Could not get Zip Codes');
-            }
-            else{
-                var zipMap = zipDocs[0];
-                var counties = ['Lee', 'Chambers', 'Russell', 'Macon', 'Tallapoosa', 'Harris', 'Muscogee'];
-                var zipValues = {
-                    Lee: zipMap['lee-county-zips'],
-                    Chambers: zipMap['chambers-county-zips'],
-                    Russell: zipMap['russell-county-zips'],
-                    Macon: zipMap['macon-county-zips'],
-                    Tallapoosa: zipMap['tallapoosa-county-zips'],
-                    Harris: zipMap['harris-county-zips'],
-                    Muscogee: zipMap['muscogee-county-zips']
-                };
-                var zips = [];
-                for(var i=0; i<counties.length; i++)
-                {
-                    var currentValue = zipValues[counties[i]];
-                    if(currentValue !== undefined)
-                    {
-                        zips.push.apply(zips, currentValue.toString().split(','));
-                    }
-                }
                 res.render('zip-codes', {
                     title: 'Update Zip Codes',
-                    zipCodes: zips,
+                    zips: zipDoc,
+                    _layoutFile: 'default'
+                });
+            }
+            else{
+                log('GET: Found Zips %s:', zipDoc.zips);
+                log('GET: Found Zips %s:', zipDoc.zips.join(','));
+                res.render('zip-codes', {
+                    title: 'Update Zip Codes',
+                    zips: zipDoc.zips.join(', '),
                     _layoutFile: 'default'
                 });
             }
@@ -46,12 +35,32 @@ module.exports = {
         var record = req.body;
         record._id = '1z2i3p4s5';
 
+        //verify zips
+        var zipsString = record.zips;
+        var zipArray = zipsString.split(' ').join('').split(',');
+        log('zipArray: %s', zipArray);
+        for(var i=0; i<zipArray.length; i++)
+        {
+            var currentZip = zipArray[i];
+            if(currentZip.length !== 5)
+            {
+                res.send('There is an error in the ' + (i+1) + ' entry. This is not a valid zip code. It should have a length of 5 digits.', 400);
+            }
+            for(var j=0; j<currentZip.length; j++)
+            {
+                if(!(/^\d+$/.test(currentZip.charAt(j))))
+                {
+                    res.send('There is an error in the ' + (i+1) + 'entry and the ' + (j+1) + 'character. This character is not an integer.', 400);
+                }
+            }
+        }
+        record.zips = zipArray;
         var query = {_id: '1z2i3p4s5'};
         var options = { w: 1, upsert:true};
         zips.update(query, record, options, function(err, result) {
             if (err || !result) {
                 log('POST: Error updating zip codes:\n\n%s\n\n', err);
-                res.send(400);
+                res.send('Error', 400);
             } else {
                 log('POST: Zips Updated');
                 res.send('ok', 200);
