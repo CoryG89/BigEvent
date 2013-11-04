@@ -1,0 +1,17 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/zips-controller.js') -%>
+
+<div class="row">
+<div class="offset3 span5">
+    <div class="well">
+        <form id="zips-form" method="post">
+            <label for="zip-input">Zip Codes</label>
+            <textarea name="zips" id="zip-input" pattern="(\d{5},)+"><%= zips %></textarea>
+            <p>Please enter the desired zip codes above seperated by a comma. Ex: 55555,66666,77777</p>
+            <hr />
+            <input class="btn" type="reset" value="Clear" />
+            <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+</div>

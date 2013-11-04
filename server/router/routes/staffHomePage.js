@@ -10,6 +10,7 @@ var jobSites = dbman.getCollection('jobsites');
 var committeeMembers = dbman.getCollection('committee');
 var leadershipTeamMembers = dbman.getCollection('leadership');
 var projectCoordinators = dbman.getCollection('projectcoordinators');
+var zipsCollection = dbman.getCollection('zips');
 
 //set vars to control paginations.
 var itemsPerPage = 10;
@@ -157,50 +158,6 @@ module.exports = {
                     _layoutFile: 'default'
                 });
             });
-        });
-    },
-
-    post: function (req, res) {
-        var newRecord = req.body;
-
-        //set the name to all lower case for checking purposes. Saw and saw are the same thing
-        newRecord.name = newRecord.name.toLowerCase();
-
-        //check to see if the checkbox was checked. If it was not checked there will be no field for it in the record. Add one
-        if(!newRecord.maxRequest)
-        {
-            newRecord.maxRequest = 'off';
-        }
-
-        //check to see if we already have a tool by this name
-        log('POST: Checking for name -- %s', newRecord.name);
-        tools.findOne({name: newRecord.name}, function(error, oldRecord){
-            if(error)
-            {
-                log('POST: Error checking database for tool', error);
-                res.send(400, 'Error');
-            }
-            else if(!oldRecord)
-            {
-                log('POST: Tool not found -> adding new entry to database');
-                //calculate the number reamining in storage
-                newRecord.numberRemaining = newRecord.totalAvailable - newRecord.numberInUse;
-                //insert new entry
-                tools.insert(newRecord, { w: 1 }, function (err, records) {
-                    if (err || !records) {
-                        log('POST: Error adding new record:\n\n%s\n\n', err);
-                        res.send(400);
-                    } else {
-                        log('POST: New record successfully added to database');
-                        res.send(200, {id: records[0]._id});
-                    }
-                });
-            }
-            else
-            {
-                log('POST: Found an entry -> notifying user');
-                res.send(400, 'Entry Found');
-            }
         });
     },
 
@@ -374,15 +331,6 @@ module.exports = {
             title: 'Implement Me',
             header: 'Implement Me',
             message: 'Updating the Waiver is not yet implemented.',
-            _layoutFile: 'default'
-        });
-    },
-
-    updateZipCodes: function(req, res) {
-        res.render('hero-unit', {
-            title: 'Implement Me',
-            header: 'Implement Me',
-            message: 'Updating of Zip Codes is not yet implemented.',
             _layoutFile: 'default'
         });
     },

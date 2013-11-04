@@ -22,7 +22,8 @@ var cl = { };
 
 var collectionNames = [
     'users', 'volunteers', 'jobsites', 'tools', 'teams',
-    'executive', 'committee', 'leadership', 'projectcoordinators'
+    'executive', 'committee', 'leadership', 'projectcoordinators',
+    'zips'
 ];
 
 var createCollections = function (db, names, callback) {
