@@ -8,7 +8,7 @@ var debug = require('../debug');
 var serverConnection = new mongodb.Server(auth.host, auth.port);
 var mongoClient = new mongodb.MongoClient(serverConnection);
 
-var formattedUri = util.format('mongodb://%s:xxxxx@%s:%d/%s\n',
+var formattedUri = util.format('mongodb://%s:xxxxx@%s:%d/%s',
     auth.user, auth.host, auth.port, auth.name);
 
 var log = debug.getLogger({ prefix: '[dbman]-  ' });

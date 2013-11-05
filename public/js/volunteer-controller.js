@@ -20,8 +20,8 @@
             }
         },
 
-        error: function (data) {
-            if (data === 'staff') {
+        error: function (xhr) {
+            if (xhr.responseText === 'staff') {
                 window.location.replace('/staff/volunteer/failure');
             } else {
                 window.location.replace('/volunteer/failure');

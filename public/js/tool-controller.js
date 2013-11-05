@@ -3,9 +3,9 @@
 
     var $maxReqCheckbox = $('#maxRequest');
     var $maxReqValue = $('input#maxRequestValue');
-    var $maxReqLable = $('#maxRequestLable');
+    var $maxReqLabel = $('#maxRequestLabel');
     $maxReqValue.addClass('hidden');
-    $maxReqLable.addClass('hidden');
+    $maxReqLabel.addClass('hidden');
     var $numberRequested = $('input#numberRequested');
 
     $('form#tool-form').ajaxForm({
@@ -34,9 +34,9 @@
             }
         },
 
-        error: function (data, status)
+        error: function (xhr)
         {
-            if(data.responseText === 'Entry Found')
+            if(xhr.responseText === 'Entry Found')
             {
                 alert('A Tool by this name already exists. Please go edit this Tool or create a new Tool by giving it a new name.');
             }
@@ -50,13 +50,13 @@
     $maxReqCheckbox.on('click', function(){
         if(this.checked)
         {
-            $maxReqLable.removeClass('hidden');
+            $maxReqLabel.removeClass('hidden');
             $maxReqValue.removeClass('hidden');
             $maxReqValue.prop('required', true);
         }
         else
         {
-            $maxReqLable.addClass('hidden');
+            $maxReqLabel.addClass('hidden');
             $maxReqValue.addClass('hidden');
             $maxReqValue.prop('required', false);
         }

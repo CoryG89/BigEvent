@@ -34,7 +34,7 @@
         <input class="tool-review-input input-block-level" type="number" id="numberInUse" name="numberInUse" min="0" value="<%= record.numberInUse %>" required disabled/>
         <label for="numberRequested">Number Requested</label>
         <input class="tool-review-input input-block-level" type="number" id="numberRequested" name="numberRequested" value="<%= record.numberRequested %>" min="0" required disabled/>
-        <label for="numberReamaining">Number Remaining</label>
+        <label for="numberRemaining">Number Remaining</label>
         <input class="input-block-level" type="number" id="numberRemaining" name="numberRemaining" value="<%= record.numberRemaining %>" min="0" disabled/>
         <% if(record.maxRequest === 'on') { %>
           <input class="tool-review-input " type="checkbox" id="maxRequest" name="maxRequest" checked disabled/> 
@@ -42,7 +42,7 @@
           <input class="tool-review-input" type="checkbox" id="maxRequest" name="maxRequest" disabled/> 
         <% } %>
         <label for="maxRequest">Set Maximum Request Amount</label>
-        <label for="maxRequestValue" id="maxRequestLable">Maximum Request Amount</label>
+        <label for="maxRequestValue" id="maxRequestLabel">Maximum Request Amount</label>
         <input class="tool-review-input input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" value="<%= record.maxRequestValue %>" min="0" disabled/>
         <hr />
         <a id="delete-button" class="btn">Delete</a>

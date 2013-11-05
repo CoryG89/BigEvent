@@ -15,10 +15,10 @@
             }
         },
 
-        error: function (data) {
-            if(data !== 'Error')
+        error: function (xhr) {
+            if(xhr.responseText !== 'Error')
             {
-                alert(data.responseText);
+                alert(xhr.responseText);
             }
             else
             {
