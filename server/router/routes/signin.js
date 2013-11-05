@@ -19,7 +19,7 @@ function validatePost (data) {
         typeof data.id === 'string' &&
         typeof data.emails === 'object' &&
         typeof data.emails.account === 'string' &&
-        (data.emails.account.search(/^.+@tigermail.auburn.edu$/) !== '-1' ||
+        (data.emails.account.search(/^.+@tigermail.auburn.edu$/) !== -1 ||
         data.emails.account.search(/^.+@auburn.edu$/) !== -1);
 }
 
@@ -49,7 +49,6 @@ module.exports = {
                     log('POST: Record does not exist');
 
                     user.role = 'user';
-
                     users.insert(user, { w: 1 }, function (err, result) {
                         if (err || !result) {
                             log('POST: Error writing to user collection -- %s', err);
