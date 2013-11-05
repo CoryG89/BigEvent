@@ -3,11 +3,11 @@
 
     var $maxReqCheckbox = $('#maxRequest');
     var $maxReqValue = $('input#maxRequestValue');
-    var $maxReqLable = $('#maxRequestLable');
+    var $maxReqLabel = $('#maxRequestLabel');
     if(!$maxReqCheckbox.prop('checked'))
     {
         $maxReqValue.addClass('hidden');
-        $maxReqLable.addClass('hidden');
+        $maxReqLabel.addClass('hidden');
         $maxReqValue.prop('required', false);
         $maxReqValue.prop('disabled', true);
     }
@@ -88,13 +88,13 @@
     $maxReqCheckbox.on('click', function(){
         if(this.checked)
         {
-            $maxReqLable.removeClass('hidden');
+            $maxReqLabel.removeClass('hidden');
             $maxReqValue.removeClass('hidden');
             $maxReqValue.prop('required', true);
         }
         else
         {
-            $maxReqLable.addClass('hidden');
+            $maxReqLabel.addClass('hidden');
             $maxReqValue.addClass('hidden');
             $maxReqValue.prop('required', false);
         }

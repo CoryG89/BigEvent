@@ -28,21 +28,20 @@
             if (status === 'success') {
                 if(data === 'ok') {
                     window.location.replace('/jobsite/request/success');
-                }
-                else
-                {
+                } else {
                     window.location.replace('/staff/jobsite/evaluation/' + data.id);
                 }
             }
         },
 
-        error: function (data) {
-            if(data === 'Staff'){
+        error: function (xhr) {
+            var res = xhr.responseText;
+            if (res === 'Staff'){
                 window.location.replace('/staff/jobsite/request/failure');
-            } else if(data !== 'Error'){
+            } else if (res !== 'Error'){
                 $zip.popover({
                     title: 'Validate Zip Code',
-                    content: data.responseText,
+                    content: res.responseText,
                     placement: 'left',
                     trigger: 'manual'
                 });
