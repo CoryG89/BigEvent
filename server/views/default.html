@@ -47,7 +47,7 @@
           <a class="brand" href="<%= site.url %>"><%= site.title %></a>
           <div class="nav-collapse">
             <ul class="nav pull-right">
-              <% if( user && (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership') ) { %>
+              <% if (user && (user.role === 'executive' || user.role === 'committee' || user.role === 'leadership')) { %>
                   <li class="<% if (reqdata.path === '/staff/staffHomePage') { %>active<% } %>">
                     <a href="<%= site.url %>staff/staffHomePage">Home</a>
                   </li>
@@ -105,50 +105,27 @@
       <%- body %>
       <hr>
       <footer>
-        <% if( user && (user.role === 'executive' || user.role === 'coordinator' || user.role === 'committee' || user.role === 'leadership') ) { %>
-          <div class="container">    
-            <div class="row-fluid">
-              <div class="span12">
-                <div class="offset1 span3" style="width: 30%;">
-                  <ul class="unstyled">
-                    <li>
-                      <a href="<%= site.url %>staff/clearDatabase">Clear Database</a>
-                    </li>
-                    <li>
-                      <br />
-                    </li>
-                    <li>
-                      <a href="<%= site.url %>staff/updateWaiver">Update Waiver</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="span3" style="width: 32%;">
-                  <ul class="unstyled">
-                    <ul class="nav span4">
-                      <li>
-                        <a href="<%= site.url %>staff/updateZipCodes">Update Zip Codes</a>
-                      </li>
-                    </ul>        
-                  </ul>
-                </div>
-                <div class="span3" style="width: 23%;">
-                  <ul class="unstyled">
-                    <li>
-                      <a href="<%= site.url %>staff/updateReports">Update Reports</a>
-                    </li>             
-                  </ul>
-                </div>         
-              </div>
+        <% if (user && (user.role === 'executive' || user.role === 'committee' || user.role === 'leadership')) { %>  
+          <div class="row">
+            <div class="span4 text-center">
+              <ul class="unstyled">
+                <li><a href="<%= site.url %>staff/clearDatabase">Clear Database</a></li>
+                <br />
+                <li><a href="<%= site.url %>staff/updateWaiver">Update Waiver</a></li>
+              </ul>
             </div>
-            <hr />
-            <div class="row-fluid">
-                <div class="span4">
-                  <p class="muted">&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
-                </div>
+            <div class="span4 text-center">
+              <ul class="unstyled">
+                <li><a href="<%= site.url %>staff/updateZipCodes">Update Zip Codes</a></li>
             </div>
+            <div class="span4 text-center">
+                <li><a href="<%= site.url %>staff/updateReports">Update Reports</a></li>
+            </div>         
           </div>
+          <hr />
+          <p class="muted">&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
         <% } else { %>
-          &copy; <%= reqdata.date.year() %> - <%= site.author %>
+          <p>&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
         <% } %>
       </footer>
     </div>
