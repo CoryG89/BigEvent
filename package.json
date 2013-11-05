@@ -1,23 +1,19 @@
 {
   "name": "BigEvent",
   "version": "0.1.0",
-  "description": "Express application for Auburn University SGA's Big Event",
-  "contributors": [
-    {
-      "name": "Cory Gross",
-      "contact": "cmg0030@tigermail.auburn.edu",
-      "url": "http://coryg89.github.io"
-    },
-    {
-      "name": "Justin Baldwin",
-      "contact": "jdb0024@tigermail.auburn.edu"
-    },
-    {
-      "name": "William Beckler",
-      "contact": "wsb0005@tigermail.auburn.edu"
-    }
-  ],
   "private": true,
+  "description": "Express application for Auburn University SGA's Big Event",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AuburnBigEvent/BigEvent"
+  },
+  "bugs": {
+    "url": "https://github.com/AuburnBigEvent/BigEvent/issues"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/AuburnBigEvent/AuburnBigEvent/blob/master/LICENSE.md"
+  },
   "scripts": {
     "start": "node app",
     "test": "mocha --reporter spec"
@@ -38,5 +34,20 @@
   "devDependencies": {
     "mocha": "1.12.x",
     "chai": "1.8.x"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Cory Gross",
+      "contact": "cmg0030@tigermail.auburn.edu",
+      "url": "http://coryg89.github.io"
+    },
+    {
+      "name": "Justin Baldwin",
+      "contact": "jdb0024@tigermail.auburn.edu"
+    },
+    {
+      "name": "William Beckler",
+      "contact": "wsb0005@tigermail.auburn.edu"
+    }
+  ]
 }
