@@ -21,8 +21,14 @@ var db;
 var cl = { };
 
 var collectionNames = [
-    'users', 'volunteers', 'jobsites', 'tools', 'teams',
-    'executive', 'committee', 'leadership', 'projectcoordinators',
+    'users',
+    'volunteers',
+    'jobsites',
+    'tools',
+    'executive',
+    'committee',
+    'leadership',
+    'projectcoordinators',
     'zips'
 ];
 
@@ -49,7 +55,7 @@ module.exports = {
 
         MongoClient.connect(uri, opt, function (err, database) {
             if (err) {
-                log('Error connecting to datasbase -- %s', err);
+                log('Error connecting to database -- %s', err);
             }
             else {
                 log('Successfully connected to database at:\n\n%s\n', uri);
