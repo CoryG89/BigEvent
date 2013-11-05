@@ -4,8 +4,8 @@
     $('form#volunteer-form').ajaxForm({
 
         success: function (data, status) {
-            if (status === 'success'){
-                if(data === 'ok') {
+            if (status === 'success') {
+                if (data === 'ok') {
                     var inviteRedirect = $.cookie('invite_redirect');
                     if (inviteRedirect) {
                         $.removeCookie('invite_redirect');
