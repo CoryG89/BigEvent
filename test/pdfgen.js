@@ -19,7 +19,7 @@ describe('pdfgen', function () {
         var expectedSuccess = '[pdfgen]-  Successfully initialized';
         pdfgen.init(function (err, success) {
             should.not.exist(err);
-            should.exist(success);
+            success.should.be.a('string');
             success.should.equal(expectedSuccess);
             done();
         });
@@ -30,8 +30,8 @@ describe('pdfgen', function () {
 
     it('should return error when given invalid html parameter', function (done) {
         pdfgen.render(null, 'output.pdf', function (err, success) {
-            should.exist(err);
             should.not.exist(success);
+            err.should.be.a('string');
             err.should.equal(expectedTypeError);
             done();
         });
@@ -39,25 +39,33 @@ describe('pdfgen', function () {
 
     it('should return error when given invalid path parameter', function (done) {
         pdfgen.render(html, null, function (err, success) {
-            should.exist(err);
             should.not.exist(success);
+            err.should.be.a('string');
             err.should.equal(expectedTypeError);
             done();
         });
     });
 
-    it('should render HTML successfully', function (done) {
+    it('should render a PDF given a string of HTML', function (done) {
         var path = 'test/output.pdf';
         var expectedSuccess = util.format(renderMsg, path);
         pdfgen.render(html, path, function (err, success) {
             should.not.exist(err);
-            should.exist(success);
+            success.should.be.a('string');
             success.should.equal(expectedSuccess);
             fs.exists(path, function (exists) {
                 exists.should.equal(true);
-                fs.unlink(path);
+                fs.stat(path, function (err, stats) {
+                    should.not.exist(err);
+                    stats.should.be.an('object');
+                    stats.size.should.be.a('number');
+                    stats.size.should.equal(10397);
+                    fs.unlink(path, function(err) {
+                        should.not.exist(err);
+                        done();
+                    });
+                });
             });
-            done();
         });
     });
 });
