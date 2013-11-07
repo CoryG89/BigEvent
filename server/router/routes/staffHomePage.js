@@ -10,7 +10,6 @@ var jobSites = dbman.getCollection('jobsites');
 var committeeMembers = dbman.getCollection('committee');
 var leadershipTeamMembers = dbman.getCollection('leadership');
 var projectCoordinators = dbman.getCollection('projectcoordinators');
-var zipsCollection = dbman.getCollection('zips');
 
 //set vars to control paginations.
 var itemsPerPage = 10;

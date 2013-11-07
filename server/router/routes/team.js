@@ -6,58 +6,54 @@ var dbman = require('../../dbman');
 var debug = require('../../debug');
 var log = debug.getLogger({ prefix: '[route.team]-  '});
 
-var volunteers = dbman.getCollection('volunteers');
+var users = dbman.getCollection('users');
 
 function validateUserSession(req) {
-    return !(
-        typeof req.session.user === 'undefined' ||
-        typeof req.session.user.role === 'undefined'
-    );
+    return typeof req.session.user === 'object' &&
+        typeof req.session.user.role === 'string';
 }
 
 var projection = {
-    firstName: 1,
-    lastName: 1,
-    email: 1,
-    gender: 1
+    $project: {
+        email: '$email',
+        firstName: '$volunteer.firstName',
+        lastName: '$volunteer.lastName',
+        gender: '$volunteer.gender'
+    }
 };
 
 module.exports = {
 
     get: function (req, res) {
-        var teamId;
-        var query = { team: null };
 
         if (!validateUserSession(req)) {
             log('Could not validate user session, access denied');
             res.redirect('/access-denied');
-        } else if (!res.locals.isStaff && !req.session.volunteer) {
+        } else if (!res.locals.isStaff && !req.session.user.volunteer) {
             log('No staff or volunteer session detected');
             res.redirect('/access-denied');
         } else {
             if (!res.locals.isStaff) {
                 if (!req.params.id) {
-                    teamId = req.session.volunteer.team;
-                    res.redirect(req.path + '/' + teamId);
-                } else if (req.params.id !== req.session.volunteer.team) {
+                    res.redirect(req.path + '/' + req.session.user.volunteer.team);
+                    return;
+                } else if (req.params.id !== req.session.user.volunteer.team) {
                     res.redirect('/access-denied');
-                } else {
-                    teamId = req.params.id;
+                    return;
                 }
             }
-            else {
-                teamId = req.params.id;
-            }
-            query = { team: teamId };
+            var teamId = req.params.id;
+            var currentTeam = { 'volunteer.team': teamId };
+            var query = { $match:  currentTeam };
 
-            volunteers.find(query, projection).toArray(function (err, docs) {
+            users.aggregate(query, projection, function (err, docs) {
                 if (err) {
                     log('Error querying for volunteers:\n\n\t%s\n', err);
                     res.send(400);
                 } else {
                     res.render('team', {
                         title: 'Volunteer Team',
-                        volunteer: req.session.volunteer,
+                        volunteer: req.session.user.volunteer,
                         team: {
                             _id: teamId,
                             members: docs
@@ -70,28 +66,30 @@ module.exports = {
     },
 
     invite: function (req, res) {
-        if (!validateUserSession(req) || !req.session.volunteer) {
+        if (!validateUserSession(req)) {
             log('INVITE: Invalid volunteer session');
-            res.cookie('invite_redirect', 'true', {
-                maxAge: 90000,
-                signed: true
-            });
+            res.cookie('signin_redirect', '/volunteer', { maxAge: 90000 });
+            res.cookie('volunteer_redirect', req.url, { maxAge: 90000 });
+            res.redirect('/signin');
+        } else if (req.session.user.volunteer === 'undefined') {
+            req.cookie('volunteer_redirect', req.url, { maxAge: 90000 });
             res.redirect('/volunteer');
         } else if (typeof req.query.id !== 'string') {
             log('INVITE: No query string id field specified');
             res.send(400);
         } else {
             var teamId = req.query.id;
-            var query = { team: teamId };
+            var inviteTeam = { 'volunteer.team': teamId };
+            var query = { $match: inviteTeam };
 
-            volunteers.find(query, projection).toArray(function (err, docs) {
+            users.aggregate(query, projection, function (err, docs) {
                 if (err) {
                     log('INVITE: Error querying for volunteers:\n\n\t%s\n', err);
                     res.send(400);
                 } else {
                     res.render('team-invite', {
                         title: 'Volunteer Team Invite',
-                        volunteer: req.session.volunteer,
+                        volunteer: req.session.user.volunteer,
                         team: {
                             _id: teamId,
                             members: docs
@@ -104,27 +102,26 @@ module.exports = {
     },
 
     join: function (req, res) {
-        var teamId = req.query.id;
-
-        if (!validateUserSession(req) || !req.session.volunteer) {
+        var newTeamId = req.query.id;
+        
+        if (typeof req.session.user.volunteer === 'undefined') {
             log('JOIN: Invalid volunteer session');
-            res.cookie('invite_redirect', true, {
-                maxAge: 90000,
-                signed: true
-            });
+            res.cookie('volunteer_redirect', true, { maxAge: 90000 });
             res.redirect('/volunteer');
-        } else if (typeof teamId !== 'string') {
+        } else if (typeof newTeamId !== 'string') {
             log('JOIN: Team id field was not specified', function (err) {
                 res.send(400, err);
             });
             res.send(400);
-        } else if (teamId === req.session.volunteer.team) {
-            log('JOIN: Already member of:\n\n\t%s\n', teamId, function (err) {
+        } else if (newTeamId === req.session.user.volunteer.team) {
+            var fmt = 'JOIN: Already a member of the team:\n\n\t%s\n';
+            log(fmt, newTeamId, function (err) {
                 res.send(400, err);
             });
         } else {
+            var newTeamData = { 'volunteer.team': newTeamId };
             /** Make sure there is at least one member of this team. */
-            volunteers.count({ team: teamId }, function (err, count) {
+            users.count(newTeamData, function (err, count) {
                 if (err) {
                     var fmt = 'JOIN: Error getting member count: \n\n\t%s\n';
                     log(fmt, err, function (err) {
@@ -136,17 +133,18 @@ module.exports = {
                     log('JOIN: Invalid team id');
                     res.send(400);
                 } else {
-                    var query = { _id: req.session.volunteer._id };
-                    var cmd = { $set: { team: teamId } };
+                    var query = { _id: req.session.user._id };
+                    var cmd = { $set: newTeamData };
                     var opt = { w: 1 };
 
                     /** Update the volunteer account with the new team id */
-                    volunteers.update(query, cmd, opt, function (err, result) {
+                    users.update(query, cmd, opt, function (err, result) {
                         if (err || !result) {
                             log('JOIN: Error updating team id');
                             res.send(400);
                         } else {
-                            req.session.volunteer.team = teamId;
+                            log('JOIN: Joined new team \'%s\'', newTeamId);
+                            req.session.user.volunteer.team = newTeamId;
                             res.redirect('/volunteer/team');
                         }
                     });
@@ -156,26 +154,22 @@ module.exports = {
     },
 
     leave: function (req, res) {
-        var teamId = req.query.id;
+        var currentTeamId = req.query.id;
 
-        if (!validateUserSession(req) || !req.session.volunteer) {
-            log('LEAVE: Invalid volunteer session');
-            res.cookie('invite_redirect', true, {
-                maxAge: 90000,
-                signed: true
-            });
+        if (typeof req.session.user.volunteer === 'undefined')  {
             res.redirect('/volunteer');
-        } else if (typeof teamId !== 'string') {
+        } else if (typeof currentTeamId !== 'string') {
             log('LEAVE: Team field was not specified', function (err) {
                 res.send(400, err);
             });
-        } else if (teamId !== req.session.volunteer.team) {
+        } else if (currentTeamId !== req.session.user.volunteer.team) {
             var fmt = 'LEAVE: Team id \'%s\' does not match current team id';
-            log(fmt, teamId, function (err) {
+            log(fmt, currentTeamId, function (err) {
                 res.send(400, err);
             });
         } else {
-            volunteers.count({ team: teamId }, function (err, count) {
+            var currentTeamData = { 'volunteer.team': currentTeamId };
+            users.count(currentTeamData, function (err, count) {
                 if (err) {
                     var fmt = 'LEAVE: Error getting member count:\n\n\t%\n';
                     log(fmt, err, function (err) {
@@ -187,14 +181,14 @@ module.exports = {
                         res.send(400, err);
                     });
                 } else {
-                    var volunteerId = req.session.volunteer._id;
+                    var userId = req.session.user._id;
                     var newTeamId = uuid.v4();
-
-                    var query = { _id: volunteerId, team: teamId };
-                    var cmd = { $set: { team: newTeamId } };
+                    var newTeamData = { 'volunteer.team': newTeamId };
+                    var query = { _id: userId };
+                    var cmd = { $set: newTeamData };
                     var opt = { w: 1 };
 
-                    volunteers.update(query, cmd, opt, function (err, result) {
+                    users.update(query, cmd, opt, function (err, result) {
                         var fmt;
                         if (err || !result) {
                             fmt = 'LEAVE: Error updating record:\n\n\t%s\n';
@@ -203,10 +197,9 @@ module.exports = {
                             });
                         } else {
                             fmt = 'LEAVE: Volunteer \'%s\' %s team:\n\n\t%s\n';
-                            log(fmt, volunteerId, 'left', teamId);
-                            log(fmt, volunteerId, 'joined', newTeamId);
-
-                            req.session.volunteer.team = newTeamId;
+                            log(fmt, userId, 'left', currentTeamId);
+                            log(fmt, userId, 'joined', newTeamId);
+                            req.session.user.volunteer.team = newTeamId;
                             res.redirect('/volunteer/team');
                         }
                     });

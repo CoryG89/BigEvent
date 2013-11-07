@@ -9,29 +9,28 @@ var geocoder = require('../../geocoder');
 var debug = require('../../debug');
 
 var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
-
 var users = dbman.getCollection('users');
 
 function updateUserDocument(req, res, updateSession, callback) {
     var data = req.body;
 
-    var address = util.format('%s %s, %s %s',
+    var geoQuery = util.format('%s %s, %s %s',
         data.address, data.city, data.state, data.zip);
 
-    geocoder.send(address, function (response) {
+    geocoder.send(geoQuery, function (response) {
         var result = response.results[0];
+        
+        var volunteerData = {
+            team: uuid.v4(),
+            location: result.geometry.location,
+            formattedAddress: result.formatted_address,
+        };
+        
+        _.merge(volunteerData, data);
 
         var updateData = {
             role: 'volunteer',
-            volunteer: {
-                address: data.address,
-                city: data.city,
-                state: data.state,
-                zip: data.zip,
-                team: uuid.v4(),
-                location: result.geometry.location,
-                formattedAddress: result.formatted_address
-            }
+            volunteer: volunteerData
         };
 
         var query = { _id: req.session.user._id };
@@ -40,12 +39,11 @@ function updateUserDocument(req, res, updateSession, callback) {
 
         users.update(query, cmd, opt, function (err, result) {
             if (err || !result) {
-                log('POST: Error updating user record:\n\n%s\n\n', err);
+                log('POST: Error updating user document:\n\n%s\n\n', err);
                 callback(err);
             } else {
-                log('POST: Successfully updated volunteer data');
+                log('POST: Successfully updated user document');
                 log('POST: Updating user session');
-                
                 if (updateSession)
                     _.merge(req.session.user, updateData);
                 callback(null);
@@ -57,9 +55,10 @@ function updateUserDocument(req, res, updateSession, callback) {
 module.exports = {
 
     get: function (req, res) {
-        if (req.session.volunteer) {
-            log('GET: Volunteer session detected, redirecting to /volunteer/account');
-            res.redirect('/volunteer/account');
+        if (req.session.user.volunteer) {
+            var path = '/volunteer/account';
+            log('GET: Volunteer session detected, redirecting to: %s', path);
+            res.redirect(path);
         } else {
             res.render('volunteer', {
                 title: 'Volunteer Registration',
@@ -79,7 +78,7 @@ module.exports = {
                     template: 'volunteer',
                     locals: { user: req.session.user }
                 });
-                res.send(200);
+                res.send(200, 'ok');
             }
         });
     },
@@ -104,10 +103,12 @@ module.exports = {
 
     account: {
         get: function (req, res) {
+
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                record: req.session.volunteer,
-                _layoutFile: 'default'
+                _layoutFile: 'default',
+                user: req.session.user,
+                volunteer: req.session.user.volunteer
             });
         },
 
@@ -122,7 +123,7 @@ module.exports = {
                         template: 'volunteer-account',
                         locals: { user: req.session.user }
                     });
-                    res.send(200);
+                    res.send(200, 'ok');
                 }
             });
         },

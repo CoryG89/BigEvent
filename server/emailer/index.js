@@ -22,8 +22,7 @@ module.exports = {
         opt.template = templatesPath + opt.template + '.md';
         renderer.render(opt.template, opt.locals, function (error, html) {
             if (error) {
-                log('Error rendering template -- %s', error);
-                callback(error);
+                log('Error rendering template -- %s', error, callback);
             }
             else {
                 transport.sendMail({
@@ -33,12 +32,12 @@ module.exports = {
                     html: html
                 }, function (error, response) {
                     if (error) {
-                        log('Error sending mail -- %s', error);
-                        callback(error);
+                        log('Error sending mail -- %s', error, callback);
                     }
                     else {
                         log ('Message sent successfully');
-                        callback(null, response);
+                        if (typeof callback === 'function')
+                            callback(null, response);
                     }
                 });
             }
