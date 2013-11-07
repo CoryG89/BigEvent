@@ -7,11 +7,11 @@
 <div class="row">
   <div class="offset1 span5 hidden-phone">
     <div>
-      <h4>Thank You <%= record.firstName %>!</h4>
+      <h4>Thank You <%= volunteer.firstName %>!</h4>
       <hr />
       <p>We would like to thank you for volunteering with us to serve your Auburn community. Every year, on the same day, thousands of students make a difference all over the Auburn community. We couldn't do it without the selfless Auburn students such as yourself who are willing to work with others to make Big Event a success.</p>
       <p>As a volunteer you will have the opportunity to serve your community with thousands of other students on the same single day in the spring. You will be assigned a single jobsite at which to work with other students on the day of the event.</p>
-      <p>You will receive email notifications prior to the event with more information such as your jobsite assignment. Again, thank you so much <%= record.firstName %>!</p>
+      <p>You will receive email notifications prior to the event with more information such as your jobsite assignment. Again, thank you so much <%= volunteer.firstName %>!</p>
     </div>
     <div>
       <h4>Your Account</h4>
@@ -34,22 +34,22 @@
       <hr />
       <form id="volunteer-account-form" method="post">
         <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= record.email %>" readonly />
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
         <label for="first-name">First Name</label>
-        <input class="input-block-level account-input" type="text" id="first-name" name="firstName" value="<%= record.firstName %>" disabled />
+        <input class="input-block-level account-input" type="text" id="first-name" name="firstName" value="<%= volunteer.firstName %>" required disabled />
         <label for="last-name">Last Name</label>
-        <input class="input-block-level account-input" type="text" id="last-name" name="lastName" value="<%= record.lastName %>" disabled />
+        <input class="input-block-level account-input" type="text" id="last-name" name="lastName" value="<%= volunteer.lastName %>" required disabled />
         <label for="gender-m">Gender</label>
         <div class="radio-group">
           <div>
-            <% if (record.gender === 'Male') { %>
+            <% if (volunteer.gender === 'Male') { %>
               <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required disabled />Male
             <% } else { %>
               <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" required disabled />Male
             <% } %>
           </div>
           <div>
-            <% if (record.gender === 'Female') { %>
+            <% if (volunteer.gender === 'Female') { %>
               <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" checked required disabled />Female
             <% } else { %>
               <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" required disabled />Female
@@ -57,47 +57,47 @@
           </div>
         </div>
         <label for="address">Address</label>
-        <input class="input-block-level account-input" type="text" id="address" name="address" value="<%= record.address %>" required disabled />
+        <input class="input-block-level account-input" type="text" id="address" name="address" value="<%= volunteer.address %>" required disabled />
         <label for="city">City</label>
-        <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= record.city %>" required disabled />
+        <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= volunteer.city %>" required disabled />
         <label for="state">State</label>
-        <select class="form-control bfh-states input-block-level account-input" name="state" form="volunteer-account-form" data-country="US" data-state="<%= record.state %>" required disabled></select>
+        <select class="form-control bfh-states input-block-level account-input" name="state" form="volunteer-account-form" data-country="US" data-state="<%= volunteer.state %>" required disabled></select>
         <label for="zip">Zip</label>
-        <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= record.zip %>" required disabled />
+        <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= volunteer.zip %>" required disabled />
         <label for="phone">Phone</label>
-        <input class="form-control bfh-phone input-block-level account-input" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= record.phone %>" required disabled />
+        <input class="form-control bfh-phone input-block-level account-input" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= volunteer.phone %>" required disabled />
         <label>Shirt Size</label>
         <div class="radio-group">
           <div>
-            <% if (record.shirtSize === 'S') { %>
+            <% if (volunteer.shirtSize === 'S') { %>
               <input class="account-input" type="radio" name="shirtSize" value="S" checked required disabled />S
             <% } else { %>
               <input class="account-input" type="radio" name="shirtSize" value="S" required disabled />S
             <% } %>
           </div>
           <div>
-            <% if (record.shirtSize === 'M') { %>
+            <% if (volunteer.shirtSize === 'M') { %>
               <input class="account-input" type="radio" name="shirtSize" value="M" checked required disabled />M
             <% } else { %>
               <input class="account-input" type="radio" name="shirtSize" value="M" required disabled />M
             <% } %>
           </div>
           <div>
-            <% if (record.shirtSize === 'L') { %>
+            <% if (volunteer.shirtSize === 'L') { %>
               <input class="account-input" type="radio" name="shirtSize" value="L" checked required disabled />L
             <% } else { %>
               <input class="account-input" type="radio" name="shirtSize" value="L" required disabled />L
             <% } %>
           </div>
           <div>
-            <% if (record.shirtSize === 'XL') { %>
+            <% if (volunteer.shirtSize === 'XL') { %>
               <input class="account-input" type="radio" name="shirtSize" value="XL" checked required disabled />XL
             <% } else { %>
               <input class="account-input" type="radio" name="shirtSize" value="XL" required disabled />XL
             <% } %>
           </div>
           <div>
-            <% if (record.shirtSize === 'XXL') { %>
+            <% if (volunteer.shirtSize === 'XXL') { %>
               <input class="account-input" type="radio" name="shirtSize" value="XXL" checked required disabled />XXL
             <% } else { %>
               <input class="account-input" type="radio" name="shirtSize" value="XXL" required disabled />XXL

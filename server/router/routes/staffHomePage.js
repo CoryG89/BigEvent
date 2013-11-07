@@ -4,13 +4,9 @@ var debug = require('../../debug');
 var dbman = require('../../dbman');
 
 var log = debug.getLogger({ prefix: '[route.staffHomePage]-  ' });
+var users = dbman.getCollection('users');
 var tools = dbman.getCollection('tools');
-var volunteers = dbman.getCollection('volunteers');
 var jobSites = dbman.getCollection('jobsites');
-var committeeMembers = dbman.getCollection('committee');
-var leadershipTeamMembers = dbman.getCollection('leadership');
-var projectCoordinators = dbman.getCollection('projectcoordinators');
-var zipsCollection = dbman.getCollection('zips');
 
 //set vars to control paginations.
 var itemsPerPage = 10;
@@ -26,7 +22,7 @@ function getLists(error, callback) {
             error += 'Error getting Tools.\n';
         }
         //get volunteers
-        volunteers.find().limit(itemsPerPage).toArray(function(verr, volunteerDocs){
+        users.find({ role: 'volunteer' }).limit(itemsPerPage).toArray(function(verr, volunteerDocs){
             if(verr){
                 log('STAFFHOMEPAGE.GETLISTS: Error getting list of volunteers -> err: %s', verr);
                 error += 'Error getting Volunteers.\n';
@@ -43,7 +39,7 @@ function getLists(error, callback) {
                     log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: unknown');
                     error += 'Error getting Job Sites.\n';
                 }
-                committeeMembers.find().limit(itemsPerPage).toArray(function(cerr, committeeMemberDocs){
+                users.find({ role: 'committee' }).limit(itemsPerPage).toArray(function(cerr, committeeMemberDocs){
                     if(cerr){
                         log('STAFFHOMEPAGE.GETLISTS: Error getting list of committee members -> err: %s', cerr);
                         error += 'Error getting Committee Members.\n';
@@ -51,7 +47,7 @@ function getLists(error, callback) {
                         log('STAFFHOMEPAGE.GETLISTS: Error getting list of job sites -> err: unknown');
                         error += 'Error getting Job Sites.\n';
                     }
-                    leadershipTeamMembers.find().limit(itemsPerPage).toArray(function(lerr, leadershipDocs){
+                    users.find({ role: 'leadership' }).limit(itemsPerPage).toArray(function(lerr, leadershipDocs){
                         if(lerr){
                             log('STAFFHOMEPAGE.GETLISTS: Error getting list of leaderhip team members -> err: %s', lerr);
                             error += 'Error getting leaderhip team members.\n';
@@ -59,7 +55,7 @@ function getLists(error, callback) {
                             log('STAFFHOMEPAGE.GETLISTS: Error getting list of leadership team members -> err: unknown');
                             error += 'Error getting leadership team members.\n';
                         }
-                        projectCoordinators.find().limit(itemsPerPage).toArray(function(perr, pcDocs){
+                        users.find({ role: 'coordinator' }).limit(itemsPerPage).toArray(function(perr, pcDocs){
                             if(perr){
                                 log('STAFFHOMEPAGE.GETLISTS: Error getting list of project coordinators -> err: %s', perr);
                                 error += 'Error getting project coordinators.\n';
@@ -86,7 +82,7 @@ function getCounts(callback){
         }
         log('STAFFHOMEPAGE.GETCOUNTS: Tool Count: %s', toolCount);
         //get volunteer count
-        volunteers.count(function(verr, volCount){
+        users.count({ role: 'volunteer' }, function(verr, volCount){
             if(verr){
                 log('STAFFHOMEPAGE.GETCOUNTS: Error getting volunteer count -> err: %s', verr);
                 error += 'Error getting Volunteer Count.\n';
@@ -99,19 +95,19 @@ function getCounts(callback){
                     error += 'Error getting Job Count.\n';
                 }
                 log('STAFFHOMEPAGE.GETCOUNTS: Job Site Count: %s', jobCount);
-                committeeMembers.count(function(cerr, committeeMemberCount){
+                users.count({ role: 'committee' }, function(cerr, committeeMemberCount){
                     if(cerr){
                         log('STAFFHOMEPAGE.GETCOUNTS: Error getting committee member count -> err: %s', cerr);
                         error += 'Error getting committee member count.\n';
                     }
                     log('STAFFHOMEPAGE.GETCOUNTS: Committee Member Count: %s', committeeMemberCount);
-                    leadershipTeamMembers.count(function(lerr, leadershipCount){
+                    users.count({ role: 'leadership' }, function(lerr, leadershipCount){
                         if(lerr){
                             log('STAFFHOMEPAGE.GETCOUNTS: Error getting leadership team member count -> err: %s', lerr);
                             error += 'Error getting leadership team member Count.\n';
                         }
                         log('STAFFHOMEPAGE.GETCOUNTS: Leadership Member Count: %s', leadershipCount);
-                        projectCoordinators.count(function(perr, projectCoordinatorCount){
+                        users.count({ role: 'coordinator' }, function(perr, projectCoordinatorCount){
                             if(perr){
                                 log('STAFFHOMEPAGE.GETCOUNTS: Error getting project coordinator count -> err: %s', perr);
                                 error += 'Error getting project coordinator Count.\n';
@@ -171,18 +167,23 @@ module.exports = {
         var key = req.query.key;
 
         var collection;
-        if(type === 'volunteer') {
-            collection = volunteers;
-        } else if(type === 'tool') {
+        var query;
+        if(type === 'tool') {
             collection = tools;
         } else if(type === 'jobsite') {
             collection = jobSites;
-        } else if(type === 'committee') {
-            collection = committeeMembers;
+        } else if(type === 'volunteer') {
+            collection = users;
+            query = { role: 'volunteer' };
+        } else if(type === 'commiteee') {
+            collection = users;
+            query = { role: 'commitee' };
         } else if(type === 'leadership') {
-            collection = leadershipTeamMembers;
+            collection = users;
+            query = { role: 'leadership' };
         } else if(type === 'projectCoordinator') {
-            collection = projectCoordinators;
+            collection = users;
+            query = { role: 'coordinator' };
         } else {
             //there was an error
             res.send(400, 'Invalid Type');
@@ -191,7 +192,7 @@ module.exports = {
         if(key === '') //this means no sorting is in place.
         {
             //get the entries for the page
-            collection.find().skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
+            collection.find(query).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error updating table -> err: %s', err);
                     res.send(400, 'Error');
@@ -210,7 +211,7 @@ module.exports = {
             //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
             if(key === 'doubleName')
             {
-                collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
+                collection.find(query).sort([['lastName', sortDir], ['firstName', sortDir]]).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                     if(err){
                         log('STAFFHOMEPAGE.GETLISTS: Error updating table -> err: %s', err);
                         res.send(400, 'Error');
@@ -225,7 +226,7 @@ module.exports = {
             }
             else
             {
-                collection.find().sort(key, sortDir).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
+                collection.find(query).sort(key, sortDir).skip(itemsPerPage * (page - 1)).limit(itemsPerPage).toArray(function(err, docs){
                     if(err){
                         log('STAFFHOMEPAGE.GETLISTS: Error updating table -> err: %s', err);
                         res.send(400, 'Error');
@@ -249,18 +250,23 @@ module.exports = {
         var sortDir = parseInt(req.query.dir, 10);
 
         var collection;
-        if(type === 'volunteer') {
-            collection = volunteers;
-        } else if(type === 'tool') {
+        var query;
+        if(type === 'tool') {
             collection = tools;
         } else if(type === 'jobsite') {
             collection = jobSites;
-        } else if(type === 'committee') {
-            collection = committeeMembers;
+        } else if(type === 'volunteer') {
+            collection = users;
+            query = { role: 'volunteer' };
+        } else if(type === 'commiteee') {
+            collection = users;
+            query = { role: 'commitee' };
         } else if(type === 'leadership') {
-            collection = leadershipTeamMembers;
+            collection = users;
+            query = { role: 'leadership' };
         } else if(type === 'projectCoordinator') {
-            collection = projectCoordinators;
+            collection = users;
+            query = { role: 'coordinator' };
         } else {
             //there was an error
             res.send(400, 'Invalid Type');
@@ -269,7 +275,7 @@ module.exports = {
         //we have to sort differently if the key is doubleName which means its lastName, firstName for the column
         if(key === 'doubleName')
         {
-            collection.find().sort([['lastName', sortDir], ['firstName', sortDir]]).limit(itemsPerPage).toArray(function(err, docs){
+            collection.find(query).sort([['lastName', sortDir], ['firstName', sortDir]]).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error updating table -> err: %s', err);
                     res.send(400, 'Error');
@@ -284,7 +290,7 @@ module.exports = {
         }
         else
         {
-            collection.find().sort(key, sortDir).limit(itemsPerPage).toArray(function(err, docs){
+            collection.find(query).sort(key, sortDir).limit(itemsPerPage).toArray(function(err, docs){
                 if(err){
                     log('STAFFHOMEPAGE.GETLISTS: Error updating table -> err: %s', err);
                     res.send(400, 'Error');

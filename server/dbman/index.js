@@ -18,13 +18,8 @@ var cl = { };
 
 var collectionNames = [
     'users',
-    'volunteers',
     'jobsites',
     'tools',
-    'executive',
-    'committee',
-    'leadership',
-    'projectcoordinators',
     'zips'
 ];
 

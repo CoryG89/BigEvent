@@ -29,10 +29,7 @@ module.exports = function () {
             log('User session detected --> calling next()');
             next();
         } else {
-            res.cookie('request_path', req.path, {
-                maxAge: 900000,
-                signed: false
-            });
+            res.cookie('signin_redirect', req.url, { maxAge: 45000 });
             log('No session detected, redirecting to: %s', redirectPath);
             res.redirect(redirectPath);
         }
