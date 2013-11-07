@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+var ejs = require('ejs');
 var phantomjs = require('phantomjs');
 var nodePhantom = require('node-phantom');
 
@@ -19,6 +21,32 @@ var contentErrorMsg = 'Error setting content:\n\n\t%s\n';
 var renderErrorMsg = 'Error rendering PDF \'%s\': %s';
 var renderMsg = 'Successfully rendered PDF \'%s\'';
 var initMsg = 'Successfully initialized';
+
+var templatePath = '/server/views/pdf/';
+
+function generate (html, path, onError, onSuccess) {
+    if (typeof html !== 'string' || typeof path !== 'string') {
+        log(typeErrorMsg, onError);
+        return;
+    }
+    page.set('content', html, function (err) {
+        if (err) {
+            log(contentErrorMsg, err, onError);
+            return;
+        }
+        page.render(path, function (err) {
+            if (err) {
+                log(renderErrorMsg, path, err, onError);
+                return;
+            }
+            log(renderMsg, path, function (renderMsg) {
+                if (typeof onSuccess === 'function') {
+                    onSuccess(renderMsg);
+                }
+            });
+        });
+    });
+}
 
 module.exports = {
     
@@ -55,27 +83,28 @@ module.exports = {
         }
     },
 
-    render: function render (html, path, callback) {
-        if (typeof html !== 'string' || typeof path !== 'string') {
-            log(typeErrorMsg, callback);
-            return;
-        }
-        page.set('content', html, function (err) {
-            if (err) {
-                log(contentErrorMsg, err, callback);
-                return;
-            }
-            page.render(path, function (err) {
+    render: function (options) {
+        var html = options.html;
+        var path = options.path;
+        var template = options.template;
+        var locals = options.locals;
+        var onError = options.onError;
+        var onSuccess = options.onSuccess;
+
+        if (typeof template === 'string' && typeof locals === 'object') {
+            if (!/\.\/.+/.test(template))
+                template = templatePath + template;
+            template += '.html';
+            fs.readFile(template, 'utf-8', function (err, html) {
                 if (err) {
-                    log(renderErrorMsg, path, err, callback);
+                    log('Error reading template file:\n\n\t%s\n', err, onError);
                     return;
                 }
-                log(renderMsg, path, function (renderMsg) {
-                    if (typeof callback === 'function') {
-                        callback(null, renderMsg);
-                    }
-                });
+                html = ejs.render(html, locals);
+                generate(html, path, onError, onSuccess);
             });
-        });
+        } else {
+            generate(html, path, onError, onSuccess);
+        }
     }
 };
