@@ -76,7 +76,10 @@ module.exports = {
                     to: req.session.user.email,
                     subject: 'Volunteer Account Registration',
                     template: 'volunteer',
-                    locals: { user: req.session.user }
+                    locals: {
+                        user: req.session.user,
+                        volunteer: req.session.user.volunteer
+                    }
                 });
                 res.send(200, 'ok');
             }
@@ -121,7 +124,10 @@ module.exports = {
                         to: req.session.user.email,
                         subject: 'Volunteer Account Update',
                         template: 'volunteer-account',
-                        locals: { user: req.session.user }
+                        locals: {
+                            user: req.session.user,
+                            volunteer: req.session.user.volunteer
+                        }
                     });
                     res.send(200, 'ok');
                 }
@@ -159,7 +165,10 @@ module.exports = {
                             to: req.session.user.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
-                            locals: { user: req.session.user }
+                            locals: {
+                                user: req.session.user,
+                                volunteer: req.session.user.volunteer
+                            }
                         });
                         res.send(200);
                     }
