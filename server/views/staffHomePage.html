@@ -44,14 +44,14 @@
             <tr>
                 <td>
                     <a href="<%= site.url %>staff/volunteer/account/<%= volunteerList[i]._id %>">
-                        <%= volunteerList[i].lastName + ", " + volunteerList[i].firstName  %>
+                        <%= volunteerList[i].volunteer.lastName + ", " + volunteerList[i].volunteer.firstName  %>
                     </a>
                 </td>
-                <td><%= volunteerList[i].email             %></td>
-                <td><%= volunteerList[i].phone             %></td>
-                <td><%= volunteerList[i].gender            %></td>
-                <td><%= volunteerList[i].shirtSize         %></td>
-                <td><%= volunteerList[i].formattedAddress  %></td>
+                <td><%= volunteerList[i].email                          %></td>
+                <td><%= volunteerList[i].volunteer.phone                %></td>
+                <td><%= volunteerList[i].volunteer.gender               %></td>
+                <td><%= volunteerList[i].volunteer.shirtSize            %></td>
+                <td><%= volunteerList[i].volunteer.formattedAddress     %></td>
             </tr>
         <% } %>
     </tbody>
@@ -154,12 +154,12 @@
             <tr>
                 <td>
                     <a href="<%= site.url %>staff/committee/review/<%= committeeList[i]._id %>">
-                        <%= committeeList[i].lastName %> + ", " + <%= committeeList[i].firstName %>
+                        <%= committeeList[i].committee.lastName %> + ", " + <%= committeeList[i].committee.firstName %>
                     </a>
                 </td>
-                <td><%= committeeList[i].email             %></td>
-                <td><%= committeeList[i].formattedAddress  %></td>
-                <td><%= committeeList[i].phone             %></td>
+                <td><%= committeeList[i].email                       %></td>
+                <td><%= committeeList[i].committee.formattedAddress  %></td>
+                <td><%= committeeList[i].commiteee.phone             %></td>
             </tr>
         <% } %>
     </tbody>
@@ -188,12 +188,12 @@
             <tr>
                 <td>
                     <a href="<%= site.url %>staff/leadership/review/<%= leadershipList[i]._id %>">
-                        <%= leadershipList[i].lastName %> + ", " + <%= leadershipList[i].firstName %>
+                        <%= leadershipList[i].leadership.lastName %> + ", " + <%= leadershipList[i].leadership.firstName %>
                     </a>
                 </td>
-                <td><%= leadershipList[i].email             %></td>
-                <td><%= leadershipList[i].formattedAddress  %></td>
-                <td><%= leadershipList[i].phone             %></td>
+                <td><%= leadershipList[i].email                         %></td>
+                <td><%= leadershipList[i].leadership.formattedAddress   %></td>
+                <td><%= leadershipList[i].leadership.phone              %></td>
             </tr>
         <% } %>
     </tbody>
@@ -222,12 +222,12 @@
             <tr>
                 <td>
                     <a href="<%= site.url %>staff/leadership/review/<%= projectCoordinatorList[i]._id %>">
-                        <%= projectCoordinatorList[i].lastName %> + ", " + <%= projectCoordinatorList[i].firstName %>
+                        <%= projectCoordinatorList[i].coordinator.lastName %> + ", " + <%= projectCoordinatorList[i].coordinator.firstName %>
                     </a>
                 </td>
-                <td><%= projectCoordinatorList[i].email             %></td>
-                <td><%= projectCoordinatorList[i].formattedAddress  %></td>
-                <td><%= projectCoordinatorList[i].phone             %></td>
+                <td><%= projectCoordinatorList[i].email                         %></td>
+                <td><%= projectCoordinatorList[i].coordinator.formattedAddress  %></td>
+                <td><%= projectCoordinatorList[i].coordinator.phone             %></td>
             </tr>
         <% } %>
     </tbody>

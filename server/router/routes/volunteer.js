@@ -11,7 +11,7 @@ var debug = require('../../debug');
 var log = debug.getLogger({ prefix: '[route.volunteer]-  '});
 var users = dbman.getCollection('users');
 
-function updateUserDocument(req, res, updateSession, callback) {
+function updateUserDocument(req, res, id, callback) {
     var data = req.body;
 
     var geoQuery = util.format('%s %s, %s %s',
@@ -33,7 +33,7 @@ function updateUserDocument(req, res, updateSession, callback) {
             volunteer: volunteerData
         };
 
-        var query = { _id: req.session.user._id };
+        var query = { _id: id };
         var cmd = { $set: updateData };
         var opt = { w: 1 };
 
@@ -44,9 +44,9 @@ function updateUserDocument(req, res, updateSession, callback) {
             } else {
                 log('POST: Successfully updated user document');
                 log('POST: Updating user session');
-                if (updateSession)
+                if (id === req.session.user._id)
                     _.merge(req.session.user, updateData);
-                callback(null);
+                callback(null, updateData);
             }
         });
     });
@@ -68,7 +68,8 @@ module.exports = {
     },
 
     post: function (req, res) {
-        updateUserDocument(req, res, true, function (err) {
+        var userId = req.session.user._id;
+        updateUserDocument(req, res, userId, function (err) {
             if (err) {
                 res.send(400);
             } else {
@@ -116,7 +117,8 @@ module.exports = {
         },
 
         post: function (req, res) {
-            updateUserDocument(req, res, true, function (err) {
+            var userId = req.session.user._id;
+            updateUserDocument(req, res, userId, function (err) {
                 if (err) {
                     res.send(400);
                 } else {
@@ -149,7 +151,8 @@ module.exports = {
                         log('STAFF.GET: Record found');
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
-                            record: record,
+                            user: record,
+                            volunteer: record.volunteer,
                             _layoutFile: 'default'
                         });
                     }
@@ -157,20 +160,22 @@ module.exports = {
             },
 
             post: function (req, res) {
-                updateUserDocument(req, res, false, function (err) {
+                var userId = req.params.id;
+                updateUserDocument(req, res, userId, function (err, updated) {
                     if (err) {
                         res.send(400);
                     } else {
+                        var userData = _.merge(updated, { _id: userId });
                         emailer.send({
                             to: req.session.user.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
                             locals: {
-                                user: req.session.user,
-                                volunteer: req.session.user.volunteer
+                                user: userData,
+                                volunteer: userData.volunteer
                             }
                         });
-                        res.send(200);
+                        res.send(200, 'staff');
                     }
                 });
             },
