@@ -35,7 +35,7 @@ module.exports = {
                         log('Error sending mail -- %s', error, callback);
                     }
                     else {
-                        log ('Message sent successfully');
+                        log('Message sent successfully to \'%s\'', opt.to);
                         if (typeof callback === 'function')
                             callback(null, response);
                     }

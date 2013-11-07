@@ -19,34 +19,29 @@ function updateUserDocument(req, res, id, callback) {
 
     geocoder.send(geoQuery, function (response) {
         var result = response.results[0];
-        
-        var volunteerData = {
-            team: uuid.v4(),
-            location: result.geometry.location,
-            formattedAddress: result.formatted_address,
-        };
-        
-        _.merge(volunteerData, data);
+        data.team = uuid.v4();
+        data.location = result.geometry.location;
+        data.formattedAddress = result.formatted_address;
 
-        var updateData = {
+        var volunteerData = {
             role: 'volunteer',
-            volunteer: volunteerData
+            volunteer: data
         };
 
         var query = { _id: id };
-        var cmd = { $set: updateData };
-        var opt = { w: 1 };
+        var cmd = { $set: volunteerData };
+        var opt = { w: 1, new: true };
 
-        users.update(query, cmd, opt, function (err, result) {
-            if (err || !result) {
+        users.findAndModify(query, null, cmd, opt, function (err, updated) {
+            if (err || !updated) {
                 log('POST: Error updating user document:\n\n%s\n\n', err);
                 callback(err);
             } else {
                 log('POST: Successfully updated user document');
                 log('POST: Updating user session');
                 if (id === req.session.user._id)
-                    _.merge(req.session.user, updateData);
-                callback(null, updateData);
+                    _.merge(req.session.user, updated);
+                callback(null, updated);
             }
         });
     });
@@ -118,7 +113,7 @@ module.exports = {
 
         post: function (req, res) {
             var userId = req.session.user._id;
-            updateUserDocument(req, res, userId, function (err) {
+            updateUserDocument(req, res, userId, function (err, userData) {
                 if (err) {
                     res.send(400);
                 } else {
@@ -127,8 +122,8 @@ module.exports = {
                         subject: 'Volunteer Account Update',
                         template: 'volunteer-account',
                         locals: {
-                            user: req.session.user,
-                            volunteer: req.session.user.volunteer
+                            user: userData,
+                            volunteer: userData.volunteer
                         }
                     });
                     res.send(200, 'ok');
@@ -161,13 +156,13 @@ module.exports = {
 
             post: function (req, res) {
                 var userId = req.params.id;
-                updateUserDocument(req, res, userId, function (err, updated) {
+
+                updateUserDocument(req, res, userId, function (err, userData) {
                     if (err) {
                         res.send(400);
                     } else {
-                        var userData = _.merge(updated, { _id: userId });
                         emailer.send({
-                            to: req.session.user.email,
+                            to: userData.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
                             locals: {

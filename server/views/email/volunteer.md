@@ -1,6 +1,6 @@
 ## Big Event
 
-Hi <%= user.firstName %>, thanks for volunteering with Big Event to serve your
+Hi <%= volunteer.firstName %>, thanks for volunteering with Big Event to serve your
 Auburn community. We have successfully registered you for the day of the event.
 
 Here are your volunteer details that we've received:

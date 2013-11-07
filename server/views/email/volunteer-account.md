@@ -1,6 +1,6 @@
 ## Big Event
 
-Hi <%= user.firstName %>, your account data was recently modified,
+Hi <%= volunteer.firstName %>, your account data was recently modified,
 please review the changes.
 
 Here are your volunteer details that we've received:
