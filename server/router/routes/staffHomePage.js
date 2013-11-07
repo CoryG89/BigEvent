@@ -298,24 +298,6 @@ module.exports = {
         }
     },
 
-    logout: function (req, res) {
-        res.render('hero-unit', {
-            title: 'Implement Me',
-            header: 'Implement Me',
-            message: 'LogOut is not yet implemented.',
-            _layoutFile: 'default'
-        });
-    },
-
-    printHomeDepotReport: function(req, res) {
-        res.render('hero-unit', {
-            title: 'Implement Me',
-            header: 'Implement Me',
-            message: 'Printing the Home Depot Report is not yet implemented.',
-            _layoutFile: 'default'
-        });
-    },
-
     clearDatabase: function(req, res) {
         res.render('hero-unit', {
             title: 'Implement Me',

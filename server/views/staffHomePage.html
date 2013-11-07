@@ -18,241 +18,217 @@
 <input class="hidden" id="leadershipNumPages" type="text" name="leadershipNumPages" value="<%= lpt %>" style="width:3em;"/>
 <input class="hidden" id="projectCoordinatorNumPages" type="text" name="projectCoordinatorNumPages" value="<%= ppt %>" style="width:3em;"/>
 <!-- Data Tables -->
-<div>
-    <h2 class="pull-left">Volunteer Table</h2>
-    <ul id="volunteer-pager" class="pager pull-right">
-    <% if(vpt === 1) { %>
+<h2 class="pull-left">Volunteer Table</h2>
+<ul id="volunteer-pager" class="pager pull-right">
+<% if(vpt === 1) { %>
+    <li class="previous disabled"><a href="#">Previous</a></li>
+    <li class="next disabled"><a href="#">Next</a></li>
+<% } else { %>
+    <li class="previous disabled"><a href="#">Previous</a></li>
+    <li class="next"><a href="#">Next</a></li>
+<% } %>
+</ul>
+<table class="table table-bordered table-striped" id="volunteer-table">
+    <thead>
+        <tr>
+            <th id="doubleName">       Name         </th>
+            <th id="email">            Email        </th>
+            <th id="phone">            Phone Number </th>
+            <th id="gender">           Gender       </th>
+            <th id="shirtSize">        Shirt Size   </th>
+            <th id="formattedAddress"> Address      </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<volunteerList.length; i++) { %>
+            <tr>
+                <td>
+                    <a href="<%= site.url %>staff/volunteer/account/<%= volunteerList[i]._id %>">
+                        <%= volunteerList[i].lastName + ", " + volunteerList[i].firstName  %>
+                    </a>
+                </td>
+                <td><%= volunteerList[i].email             %></td>
+                <td><%= volunteerList[i].phone             %></td>
+                <td><%= volunteerList[i].gender            %></td>
+                <td><%= volunteerList[i].shirtSize         %></td>
+                <td><%= volunteerList[i].formattedAddress  %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+<h2 class="pull-left">Job Site Table</h2>
+<ul id="jobsite-pager" class="pager pull-right">
+    <% if(jpt === 1) { %>
         <li class="previous disabled"><a href="#">Previous</a></li>
         <li class="next disabled"><a href="#">Next</a></li>
     <% } else { %>
         <li class="previous disabled"><a href="#">Previous</a></li>
         <li class="next"><a href="#">Next</a></li>
     <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="volunteer-table">
-        <thead>
+</ul>
+<table class="table table-bordered table-striped" id="jobsite-table">
+    <thead>
+        <tr>
+            <th id="doubleName">       Name                   </th>
+            <th id="email">            Email                  </th>
+            <th id="phone">            Phone Number           </th>
+            <th id="altPhone">         Alternate Phone Number </th>
+            <th id="formattedAddress"> Address                </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<jobSiteList.length; i++) { %>
             <tr>
-                <th id="doubleName">       Name         </th>
-                <th id="email">            Email        </th>
-                <th id="phone">            Phone Number </th>
-                <th id="gender">           Gender       </th>
-                <th id="shirtSize">        Shirt Size   </th>
-                <th id="formattedAddress"> Address      </th>
+                <td>
+                    <a href="<%= site.url %>staff/jobsite/evaluation/<%= jobSiteList[i]._id %>">
+                        <%= jobSiteList[i].lastName + ", " + jobSiteList[i].firstName  %>
+                    </a>
+                </td>
+                <td><%= jobSiteList[i].email             %></td>
+                <td><%= jobSiteList[i].phone             %></td>
+                <td><%= jobSiteList[i].altPhone          %></td>
+                <td><%= jobSiteList[i].formattedAddress  %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<volunteerList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/volunteer/account/<%= volunteerList[i]._id %>">
-                            <%= volunteerList[i].lastName + ", " + volunteerList[i].firstName  %>
-                        </a>
-                    </td>
-                    <td><%= volunteerList[i].email             %></td>
-                    <td><%= volunteerList[i].phone             %></td>
-                    <td><%= volunteerList[i].gender            %></td>
-                    <td><%= volunteerList[i].shirtSize         %></td>
-                    <td><%= volunteerList[i].formattedAddress  %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
-<div>
-<h2 class="pull-left">Job Site Table</h2>
-    <ul id="jobsite-pager" class="pager pull-right">
-        <% if(jpt === 1) { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next disabled"><a href="#">Next</a></li>
-        <% } else { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next"><a href="#">Next</a></li>
         <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="jobsite-table">
-        <thead>
+    </tbody>
+</table>
+<h2 class="pull-left">Tool Table</h2>
+<ul id="tool-pager" class="pager pull-right">
+    <% if(tpt === 1) { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next disabled"><a href="#">Next</a></li>
+    <% } else { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next"><a href="#">Next</a></li>
+    <% } %>
+</ul>
+<table class="table table-bordered table-striped" id="tool-table">
+    <thead>
+        <tr>
+            <th id="name">            Name                       </th>
+            <th id="totalAvailable">  Total Available            </th>
+            <th id="numberInUse">     Number in Use              </th>
+            <th id="numberRemaining"> Number Remaining           </th>
+            <th id="maxRequestValue"> Max Number To be Requested </th>
+            <th id="numberRequested"> Number Requested           </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<toolList.length; i++) { %>
             <tr>
-                <th id="doubleName">       Name                   </th>
-                <th id="email">            Email                  </th>
-                <th id="phone">            Phone Number           </th>
-                <th id="altPhone">         Alternate Phone Number </th>
-                <th id="formattedAddress"> Address                </th>
+                <td>
+                    <a href="<%= site.url %>staff/tool/review/<%= toolList[i]._id %>">
+                        <%= toolList[i].name %>
+                    </a>
+                </td>
+                <td><%= toolList[i].totalAvailable  %></td>
+                <td><%= toolList[i].numberInUse     %></td>
+                <td><%= toolList[i].numberRemaining %></td>
+                <td><%= toolList[i].maxRequestValue %></td>
+                <td><%= toolList[i].numberRequested %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<jobSiteList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/jobsite/evaluation/<%= jobSiteList[i]._id %>">
-                            <%= jobSiteList[i].lastName + ", " + jobSiteList[i].firstName  %>
-                        </a>
-                    </td>
-                    <td><%= jobSiteList[i].email             %></td>
-                    <td><%= jobSiteList[i].phone             %></td>
-                    <td><%= jobSiteList[i].altPhone          %></td>
-                    <td><%= jobSiteList[i].formattedAddress  %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
-<div>
-    <h2 class="pull-left">Tool Table</h2>
-    <ul id="tool-pager" class="pager pull-right">
-        <% if(tpt === 1) { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next disabled"><a href="#">Next</a></li>
-        <% } else { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next"><a href="#">Next</a></li>
         <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="tool-table">
-        <thead>
+    </tbody>
+</table>
+<h2 class="pull-left">Committee Member Table</h2>
+<ul id="committee-pager" class="pager pull-right">
+    <% if(cpt === 1) { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next disabled"><a href="#">Next</a></li>
+    <% } else { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next"><a href="#">Next</a></li>
+    <% } %>
+</ul>
+<table class="table table-bordered table-striped" id="committee-table">
+    <thead>
+        <tr>
+            <th id="doubleName">        Name            </th>
+            <th id="email">             Email           </th>
+            <th id="formattedAddress">  Address         </th>
+            <th id="phone">             Phone Number    </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<committeeList.length; i++) { %>
             <tr>
-                <th id="name">            Name                       </th>
-                <th id="totalAvailable">  Total Available            </th>
-                <th id="numberInUse">     Number in Use              </th>
-                <th id="numberRemaining"> Number Remaining           </th>
-                <th id="maxRequestValue"> Max Number To be Requested </th>
-                <th id="numberRequested"> Number Requested           </th>
+                <td>
+                    <a href="<%= site.url %>staff/committee/review/<%= committeeList[i]._id %>">
+                        <%= committeeList[i].lastName %> + ", " + <%= committeeList[i].firstName %>
+                    </a>
+                </td>
+                <td><%= committeeList[i].email             %></td>
+                <td><%= committeeList[i].formattedAddress  %></td>
+                <td><%= committeeList[i].phone             %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<toolList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/tool/review/<%= toolList[i]._id %>">
-                            <%= toolList[i].name %>
-                        </a>
-                    </td>
-                    <td><%= toolList[i].totalAvailable  %></td>
-                    <td><%= toolList[i].numberInUse     %></td>
-                    <td><%= toolList[i].numberRemaining %></td>
-                    <td><%= toolList[i].maxRequestValue %></td>
-                    <td><%= toolList[i].numberRequested %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
-<div>
-    <h2 class="pull-left">Committee Member Table</h2>
-    <ul id="committee-pager" class="pager pull-right">
-        <% if(cpt === 1) { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next disabled"><a href="#">Next</a></li>
-        <% } else { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next"><a href="#">Next</a></li>
         <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="committee-table">
-        <thead>
+    </tbody>
+</table>
+<h2 class="pull-left">Leadership Team Member Table</h2>
+<ul id="leadership-pager" class="pager pull-right">
+    <% if(lpt === 1) { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next disabled"><a href="#">Next</a></li>
+    <% } else { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next"><a href="#">Next</a></li>
+    <% } %>
+</ul>
+<table class="table table-bordered table-striped" id="leadership-table">
+    <thead>
+        <tr>
+            <th id="doubleName">        Name            </th>
+            <th id="email">             Email           </th>
+            <th id="formattedAddress">  Address         </th>
+            <th id="phone">             Phone Number    </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<leadershipList.length; i++) { %>
             <tr>
-                <th id="doubleName">        Name            </th>
-                <th id="email">             Email           </th>
-                <th id="formattedAddress">  Address         </th>
-                <th id="phone">             Phone Number    </th>
+                <td>
+                    <a href="<%= site.url %>staff/leadership/review/<%= leadershipList[i]._id %>">
+                        <%= leadershipList[i].lastName %> + ", " + <%= leadershipList[i].firstName %>
+                    </a>
+                </td>
+                <td><%= leadershipList[i].email             %></td>
+                <td><%= leadershipList[i].formattedAddress  %></td>
+                <td><%= leadershipList[i].phone             %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<committeeList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/committee/review/<%= committeeList[i]._id %>">
-                            <%= committeeList[i].lastName %> + ", " + <%= committeeList[i].firstName %>
-                        </a>
-                    </td>
-                    <td><%= committeeList[i].email             %></td>
-                    <td><%= committeeList[i].formattedAddress  %></td>
-                    <td><%= committeeList[i].phone             %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
-<div>
-    <h2 class="pull-left">Leadership Team Member Table</h2>
-    <ul id="leadership-pager" class="pager pull-right">
-        <% if(lpt === 1) { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next disabled"><a href="#">Next</a></li>
-        <% } else { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next"><a href="#">Next</a></li>
         <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="leadership-table">
-        <thead>
+    </tbody>
+</table>
+<h2 class="pull-left">Project Coordinator Table</h2>
+<ul id="projectCoordinator-pager" class="pager pull-right">
+    <% if(ppt === 1) { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next disabled"><a href="#">Next</a></li>
+    <% } else { %>
+        <li class="previous disabled"><a href="#">Previous</a></li>
+        <li class="next"><a href="#">Next</a></li>
+    <% } %>
+</ul>
+<table class="table table-bordered table-striped" id="projectCoordinator-table">
+    <thead>
+        <tr>
+            <th id="doubleName">        Name            </th>
+            <th id="email">             Email           </th>
+            <th id="formattedAddress">  Address         </th>
+            <th id="phone">             Phone Number    </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(i=0; i<projectCoordinatorList.length; i++) { %>
             <tr>
-                <th id="doubleName">        Name            </th>
-                <th id="email">             Email           </th>
-                <th id="formattedAddress">  Address         </th>
-                <th id="phone">             Phone Number    </th>
+                <td>
+                    <a href="<%= site.url %>staff/leadership/review/<%= projectCoordinatorList[i]._id %>">
+                        <%= projectCoordinatorList[i].lastName %> + ", " + <%= projectCoordinatorList[i].firstName %>
+                    </a>
+                </td>
+                <td><%= projectCoordinatorList[i].email             %></td>
+                <td><%= projectCoordinatorList[i].formattedAddress  %></td>
+                <td><%= projectCoordinatorList[i].phone             %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<leadershipList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/leadership/review/<%= leadershipList[i]._id %>">
-                            <%= leadershipList[i].lastName %> + ", " + <%= leadershipList[i].firstName %>
-                        </a>
-                    </td>
-                    <td><%= leadershipList[i].email             %></td>
-                    <td><%= leadershipList[i].formattedAddress  %></td>
-                    <td><%= leadershipList[i].phone             %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
-<div>
-    <h2 class="pull-left">Project Coordinator Table</h2>
-    <ul id="projectCoordinator-pager" class="pager pull-right">
-        <% if(ppt === 1) { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next disabled"><a href="#">Next</a></li>
-        <% } else { %>
-            <li class="previous disabled"><a href="#">Previous</a></li>
-            <li class="next"><a href="#">Next</a></li>
         <% } %>
-    </ul>
-</div>
-<div>
-    <table class="table table-bordered table-striped" id="projectCoordinator-table">
-        <thead>
-            <tr>
-                <th id="doubleName">        Name            </th>
-                <th id="email">             Email           </th>
-                <th id="formattedAddress">  Address         </th>
-                <th id="phone">             Phone Number    </th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for(i=0; i<projectCoordinatorList.length; i++) { %>
-                <tr>
-                    <td>
-                        <a href="<%= site.url %>staff/leadership/review/<%= projectCoordinatorList[i]._id %>">
-                            <%= projectCoordinatorList[i].lastName %> + ", " + <%= projectCoordinatorList[i].firstName %>
-                        </a>
-                    </td>
-                    <td><%= projectCoordinatorList[i].email             %></td>
-                    <td><%= projectCoordinatorList[i].formattedAddress  %></td>
-                    <td><%= projectCoordinatorList[i].phone             %></td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+    </tbody>
+</table>
