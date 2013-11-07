@@ -75,15 +75,17 @@ module.exports = {
         app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
         app.get('/staff/staffHomePage/sort', routes.staffHomePage.sort);
 
-        app.get('/staff/logout', routes.staffHomePage.logout);
-        app.get('/staff/printHomeDepotReport', routes.staffHomePage.printHomeDepotReport);
-        app.get('/staff/clearDatabase', routes.staffHomePage.clearDatabase);
-        app.get('/staff/updateWaiver', routes.staffHomePage.updateWaiver);
-        app.get('/staff/updateReports', routes.staffHomePage.updateReports);
+        app.get('/staff/printHomeDepotReport', routes.toolReport.get);
+        app.get('/staff/printHomeDepotReport/failure', routes.toolReport.failure);
 
         app.get('/staff/updateZipCodes', routes.zipcodes.get);
         app.post('/staff/updateZipCodes', routes.zipcodes.post);
         app.get('/staff/updateZipCodes/failure', routes.zipcodes.failure);
+
+        app.get('/staff/logout', routes.signin.get);
+        app.get('/staff/clearDatabase', routes.staffHomePage.clearDatabase);
+        app.get('/staff/updateWaiver', routes.staffHomePage.updateWaiver);
+        app.get('/staff/updateReports', routes.staffHomePage.updateReports);
         
         app.get('*', routes.notfound);
     }
