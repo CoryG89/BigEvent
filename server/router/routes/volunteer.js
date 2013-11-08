@@ -23,13 +23,13 @@ function updateUserDocument(req, res, id, callback) {
         data.location = result.geometry.location;
         data.formattedAddress = result.formatted_address;
 
-        var volunteerData = {
-            role: 'volunteer',
-            volunteer: data
-        };
-
         var query = { _id: id };
-        var cmd = { $set: volunteerData };
+        var cmd = {
+            $set: {
+                role: 'volunteer',
+                volunteer: data
+            }
+        };
         var opt = { w: 1, new: true };
 
         users.findAndModify(query, null, cmd, opt, function (err, updated) {
@@ -39,8 +39,6 @@ function updateUserDocument(req, res, id, callback) {
             } else {
                 log('POST: Successfully updated user document');
                 log('POST: Updating user session');
-                if (id === req.session.user._id)
-                    _.merge(req.session.user, updated);
                 callback(null, updated);
             }
         });
@@ -64,19 +62,20 @@ module.exports = {
 
     post: function (req, res) {
         var userId = req.session.user._id;
-        updateUserDocument(req, res, userId, function (err) {
+        updateUserDocument(req, res, userId, function (err, doc) {
             if (err) {
                 res.send(400);
             } else {
                 emailer.send({
-                    to: req.session.user.email,
+                    to: doc.email,
                     subject: 'Volunteer Account Registration',
                     template: 'volunteer',
                     locals: {
-                        user: req.session.user,
-                        volunteer: req.session.user.volunteer
+                        user: doc,
+                        volunteer: doc.volunteer
                     }
                 });
+                _.merge(req.session.user, doc);
                 res.send(200, 'ok');
             }
         });
@@ -113,19 +112,20 @@ module.exports = {
 
         post: function (req, res) {
             var userId = req.session.user._id;
-            updateUserDocument(req, res, userId, function (err, userData) {
+            updateUserDocument(req, res, userId, function (err, doc) {
                 if (err) {
                     res.send(400);
                 } else {
                     emailer.send({
-                        to: req.session.user.email,
+                        to: doc.email,
                         subject: 'Volunteer Account Update',
                         template: 'volunteer-account',
                         locals: {
-                            user: userData,
-                            volunteer: userData.volunteer
+                            user: doc,
+                            volunteer: doc.volunteer
                         }
                     });
+                    _.merge(req.session.user, doc);
                     res.send(200, 'ok');
                 }
             });
@@ -156,18 +156,17 @@ module.exports = {
 
             post: function (req, res) {
                 var userId = req.params.id;
-
-                updateUserDocument(req, res, userId, function (err, userData) {
+                updateUserDocument(req, res, userId, function (err, doc) {
                     if (err) {
                         res.send(400);
                     } else {
                         emailer.send({
-                            to: userData.email,
+                            to: doc.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
                             locals: {
-                                user: userData,
-                                volunteer: userData.volunteer
+                                user: doc,
+                                volunteer: doc.volunteer
                             }
                         });
                         res.send(200, 'staff');
