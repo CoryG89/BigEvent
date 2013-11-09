@@ -41,7 +41,7 @@
             } else if (res !== 'Error'){
                 $zip.popover({
                     title: 'Validate Zip Code',
-                    content: res.responseText,
+                    content: res,
                     placement: 'left',
                     trigger: 'manual'
                 });
