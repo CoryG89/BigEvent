@@ -126,6 +126,45 @@ module.exports = {
                 }
             });
         },
+
+        success: function (req, res) {
+            res.render('hero-unit', {
+                title: 'Successfully Updated',
+                header: 'Thanks!',
+                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.'
+            });
+        },
+
+        failure: function (req, res) {
+            res.render('hero-unit', {
+                title: 'Registration Failed',
+                header: 'Sorry!',
+                message: 'There was a problem updating your data. Please try again later.'
+            });
+        },
+
+        delete: function (req, res) {
+            var query = { _id: req.session.user._id };
+            var cmd = { $unset: { volunteer: '' } };
+            var opt = { w: 1 };
+
+            users.update(query, cmd, opt, function (err, result) {
+                if (err || !result) {
+                    res.render('hero-unit', {
+                        title: 'Volunteer Account Removal Failed',
+                        header: 'Sorry!',
+                        message: 'There was a problem removing your account data at this time. Please try again later.'
+                    });
+                } else {
+                    res.render('hero-unit', {
+                        title: 'Volunteer Account Removed',
+                        header: 'Volunteer Account Removed',
+                        message: 'Your volunteer account data was successfully deleted and you are no longer registered to volunteer on the day of the event. Thank you for your interest in Big Event and in serving your Auburn community. You can register again '
+                    });
+                    delete req.session.volunteer;
+                }
+            });
+        },
         
         staff: {
             get: function (req, res) {
@@ -168,29 +207,9 @@ module.exports = {
                 });
             },
 
-            delete: function (req, res){
+            delete: function (req, res) {
                 res.send(200);
             },
-        },
-
-        success: function (req, res) {
-            res.render('hero-unit', {
-                title: 'Successfully Updated',
-                header: 'Thanks!',
-                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.'
-            });
-        },
-
-        failure: function (req, res) {
-            res.render('hero-unit', {
-                title: 'Registration Failed',
-                header: 'Sorry!',
-                message: 'There was a problem updating your data. Please try again later.'
-            });
-        },
-
-        delete: function (req, res) {
-            res.send(200);
         }
     }
 };
