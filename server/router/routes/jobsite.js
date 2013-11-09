@@ -32,7 +32,7 @@ module.exports = {
                     var zipArray = zipDoc.zips;
                     if (zipArray.indexOf(record.zip) === -1) {
                         var zipString = zipArray.join(', ');
-                        res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
+                        res.send('Currently accepted zip codes are: ' + zipString, 400);
                     } else {
                         log('POST: saving job site request data');
                         // insert record
@@ -75,7 +75,7 @@ module.exports = {
                         var zipArray = zipDoc.zips;
                         if (zipArray.indexOf(record.zip) === -1) {
                             var zipString = zipArray.join(', ');
-                            res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
+                            res.send('Currently accepted zip codes are: ' + zipString, 400);
                         } else {
                             //insert record
                             var options = { w: 1 };
