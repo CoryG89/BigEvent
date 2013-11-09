@@ -6,14 +6,6 @@ var dbman = require('../../dbman');
 var log = debug.getLogger({ prefix: '[route.signin]-  ' });
 var users = dbman.getCollection('users');
 
-var usersCollections = {
-    volunteer: dbman.getCollection('volunteers'),
-    projectCoordinators: dbman.getCollection('projectcoordinators'),
-    executive: dbman.getCollection('executive'),
-    committee: dbman.getCollection('committee'),
-    leadership: dbman.getCollection('leadership')
-};
-
 function validatePost (data) {
     return typeof data === 'object' &&
         typeof data.id === 'string' &&
@@ -51,7 +43,7 @@ module.exports = {
                     user.role = 'user';
                     users.insert(user, { w: 1 }, function (err, result) {
                         if (err || !result) {
-                            log('POST: Error writing to user collection -- %s', err);
+                            log('POST: Error inserting user document -- %s', err);
                             res.send(400);
                         } else {
                             res.send('ok', 200);
@@ -62,28 +54,7 @@ module.exports = {
                 } else {
                     log('POST: User record found, updating session');
                     req.session.user = record;
-                    var role = record.role;
-                    if (typeof role === 'undefined') {
-                        res.send(400);
-                    } else if (role === 'user') {
-                        res.send('ok', 200);
-                    } else {
-                        usersCollections[role].findOne({ _id: record._id }, function (err, result) {
-                            if (err) {
-                                log('POST: Read Error reading collection %s for id %s', role, record._id);
-                                res.send(400);
-                            }
-                            else if (!result) {
-                                log('POST: Cannot find record %s in collection %s', record._id, role);
-                                res.send('ok', 200);
-                            } else {
-                                log('POST: Successfully read record from collection %s', role);
-                                log('POST: Updating req.session.%s', role);
-                                req.session[role] = result;
-                                res.send('ok', 200);
-                            }
-                        });
-                    }
+                    res.send('ok', 200);
                 }
             });
 

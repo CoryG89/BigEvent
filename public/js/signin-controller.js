@@ -1,16 +1,18 @@
 (function () {
     'use strict';
 
-    function handleRedirect () {
-        var redirectPath = $.cookie('request_path');
-        if (redirectPath) {
-            $.removeCookie('request_path');
+    var redirectCookieName = 'signin_redirect';
+
+    function handlePossibleRedirect() {
+        var redirectPath = $.cookie(redirectCookieName);
+        if (typeof redirectPath === 'string') {
+            $.removeCookie(redirectCookieName);
             var decodedPath = decodeURIComponent(redirectPath);
             window.location.replace(decodedPath);
         }
     }
 
-    function postJSON (data, callback) {
+    function postJSON(data, callback) {
         var req = new XMLHttpRequest();
         req.open('POST', window.location.href, true);
         req.setRequestHeader('Content-type', 'application/json');
@@ -18,7 +20,7 @@
         req.send(data);
     }
 
-    function getData () {
+    function getData() {
         WL.api({
             path: 'me',
             method: 'GET',
@@ -26,7 +28,7 @@
             console.log('WL.api: %o', response);
 
             var data = JSON.stringify(response);
-            postJSON(data, handleRedirect);
+            postJSON(data, handlePossibleRedirect);
 
         }, function (response) {
             console.log('WL.api: %o', response);
@@ -41,13 +43,9 @@
         response_type: 'token',
         status: true
 
-    }).then(function (response) {
-        console.log('WL.init: %o', response);
+    }).then(function () {
 
-        WL.ui({
-            name: 'signin',
-            element: 'wl-ui'
-        });
+        WL.ui({ name: 'signin', element: 'wl-ui' });
 
         WL.getLoginStatus(function (response) {
             if (response.status === 'connected') {

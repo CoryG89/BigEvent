@@ -1,18 +1,18 @@
 'use strict';
 
 var dbman = require('../../dbman');
-var volunteers = dbman.getCollection('volunteers');
+var users = dbman.getCollection('users');
 
 module.exports = function (req, res) {
-    volunteers.aggregate({
+    users.aggregate({
         $group: {
-            _id: '$team',
+            _id: '$volunteer.team',
             members: {
                 $push: {
-                    firstName: '$firstName',
-                    lastName: '$lastName',
-                    email: '$email',
-                    gender: '$gender'
+                    firstName: '$volunteer.firstName',
+                    lastName: '$volunteer.lastName',
+                    email: '$volunteer.email',
+                    gender: '$volunteer.gender'
                 }
             }
         }

@@ -1,15 +1,18 @@
 (function () {
     'use strict';
 
+    var cookieName = 'volunteer_redirect';
+
     $('form#volunteer-form').ajaxForm({
 
         success: function (data, status) {
-            if (status === 'success'){
-                if(data === 'ok') {
-                    var inviteRedirect = $.cookie('invite_redirect');
-                    if (inviteRedirect) {
-                        $.removeCookie('invite_redirect');
-                        window.location.replace('/volunteer/team/invite');
+            if (status === 'success') {
+                if (data === 'ok') {
+                    var redirectPath = $.cookie(cookieName);
+                    if (redirectPath) {
+                        $.removeCookie(cookieName);
+                        var decodedPath = decodeURIComponent(redirectPath);
+                        window.location.replace(decodedPath);
                     } else {
                         window.location.replace('/volunteer/success');
                     }
