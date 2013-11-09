@@ -18,8 +18,7 @@ function validatePost (data) {
 module.exports = {
     get: function (req, res) {
         res.render('signin', {
-            title: 'Sign In',
-            _layoutFile: 'default'
+            title: 'Sign In'
         });
     },
 

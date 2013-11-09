@@ -16,8 +16,7 @@ module.exports = {
     request: {
         get: function (req, res) {
             res.render('jobsite-request', {
-                title: 'Job Site Request',
-                _layoutFile: 'default'
+                title: 'Job Site Request'
             });
         },
 
@@ -138,8 +137,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Jobsite Request Submitted',
                 header: 'Jobsite Request Submitted',
-                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
-                _layoutFile: 'default'
+                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.'
             });
         },
 
@@ -147,8 +145,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Submission Failed',
                 header: 'Sorry!',
-                message: 'There was a problem submitting your jobsite request. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem submitting your jobsite request. Please try again later.'
             });
         }
     },
@@ -162,8 +159,7 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Error',
                         header: 'Sorry!',
-                        message: 'There was a problem retrieving the jobsite from the database. Please try again later.',
-                        _layoutFile: 'default'
+                        message: 'There was a problem retrieving the jobsite from the database. Please try again later.'
                     });
                 }
                 else if(!record){
@@ -171,16 +167,14 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Error',
                         header: 'Sorry!',
-                        message: 'Jobsite not found in the database. Please try again later.',
-                        _layoutFile: 'default'
+                        message: 'Jobsite not found in the database. Please try again later.'
                     });
                 }
                 else{
                     log('JOBSITE.EVALUATION.GET: Jobsite Found.');
                     res.render('jobsite-evaluation', {
                         title: 'Job Site Evaluation',
-                        jobRequest: record,
-                        _layoutFile: 'default'
+                        jobRequest: record
                     });
                 }
             });
@@ -198,8 +192,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Jobsite Evaluation Submitted',
                 header: 'Jobsite Evaluation Submitted',
-                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
-                _layoutFile: 'default'
+                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.'
             });
         },
 
@@ -207,8 +200,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Submission Failed',
                 header: 'Sorry!',
-                message: 'There was a problem submitting your jobsite evaluation. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem submitting your jobsite evaluation. Please try again later.'
             });
         }
     }

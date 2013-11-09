@@ -54,8 +54,7 @@ module.exports = {
             res.redirect(path);
         } else {
             res.render('volunteer', {
-                title: 'Volunteer Registration',
-                _layoutFile: 'default'
+                title: 'Volunteer Registration'
             });
         }
     },
@@ -85,8 +84,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Successful Registration',
             header: 'Thanks!',
-            message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.',
-            _layoutFile: 'default'
+            message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.'
         });
     },
 
@@ -94,8 +92,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Registration Failed',
             header: 'Sorry!',
-            message: 'There was a problem with the registration. Please try again later.',
-            _layoutFile: 'default'
+            message: 'There was a problem with the registration. Please try again later.'
         });
     },
 
@@ -104,7 +101,6 @@ module.exports = {
 
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                _layoutFile: 'default',
                 user: req.session.user,
                 volunteer: req.session.user.volunteer
             });
@@ -139,16 +135,14 @@ module.exports = {
                         res.render('hero-unit', {
                             title: 'Volunteer Not Found',
                             header: 'Volunteer Not Found',
-                            message: 'No volunteer with id ' + req.params.id + ' could be found in the database.',
-                            _layoutFile: 'default'
+                            message: 'No volunteer with id ' + req.params.id + ' could be found in the database.'
                         });
                     } else {
                         log('STAFF.GET: Record found');
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
                             user: record,
-                            volunteer: record.volunteer,
-                            _layoutFile: 'default'
+                            volunteer: record.volunteer
                         });
                     }
                 });
@@ -183,8 +177,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Successfully Updated',
                 header: 'Thanks!',
-                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
-                _layoutFile: 'default'
+                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.'
             });
         },
 
@@ -192,8 +185,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Registration Failed',
                 header: 'Sorry!',
-                message: 'There was a problem updating your data. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem updating your data. Please try again later.'
             });
         },
 

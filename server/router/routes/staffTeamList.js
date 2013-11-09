@@ -22,8 +22,7 @@ module.exports = function (req, res) {
         } else {
             res.render('team-list', {
                 title: 'Volunteer Teams',
-                teams: docs,
-                _layoutFile: 'default'
+                teams: docs
             });
         }
     });

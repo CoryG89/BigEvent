@@ -57,8 +57,7 @@ module.exports = {
                         team: {
                             _id: teamId,
                             members: docs
-                        },
-                        _layoutFile: 'default'
+                        }
                     });
                 }
             });
@@ -93,8 +92,7 @@ module.exports = {
                         team: {
                             _id: teamId,
                             members: docs
-                        },
-                        _layoutFile: 'default'
+                        }
                     });
                 }
             });
