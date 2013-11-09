@@ -22,6 +22,7 @@ module.exports = {
 
         app.get('/volunteer/account', routes.volunteer.account.get);
         app.post('/volunteer/account', routes.volunteer.account.post);
+        app.get('/volunteer/account/delete', routes.volunteer.account.delete);
         app.get('/volunteer/account/success', routes.volunteer.account.success);
         app.get('/volunteer/account/failure', routes.volunteer.account.failure);
 
@@ -45,7 +46,7 @@ module.exports = {
 
         app.get('/staff/volunteer/account/success', routes.volunteer.account.success);
         app.get('/staff/volunteer/account/failure', routes.volunteer.account.failure);
-        app.post('/staff/volunteer/account/delete/:id', routes.volunteer.account.staff.delete);
+        app.get('/staff/volunteer/account/delete/:id', routes.volunteer.account.staff.delete);
         app.get('/staff/volunteer/account/:id', routes.volunteer.account.staff.get);
         app.post('/staff/volunteer/account/:id', routes.volunteer.account.staff.post);
 

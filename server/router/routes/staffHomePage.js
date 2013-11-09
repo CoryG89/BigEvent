@@ -150,8 +150,7 @@ module.exports = {
                     lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
                     projectCoordinatorList: pcDocs,
                     ppt: (projectCoordinatorNumPages === 0) ? 1 : projectCoordinatorNumPages,
-                    error: error,
-                    _layoutFile: 'default'
+                    error: error
                 });
             });
         });
@@ -309,8 +308,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Implement Me',
             header: 'Implement Me',
-            message: 'Clearing the Database is not yet implemented.',
-            _layoutFile: 'default'
+            message: 'Clearing the Database is not yet implemented.'
         });
     },
 
@@ -318,8 +316,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Implement Me',
             header: 'Implement Me',
-            message: 'Updating the Waiver is not yet implemented.',
-            _layoutFile: 'default'
+            message: 'Updating the Waiver is not yet implemented.'
         });
     },
 
@@ -327,8 +324,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Implement Me',
             header: 'Implement Me',
-            message: 'Updating of Reports is not yet implemented.',
-            _layoutFile: 'default'
+            message: 'Updating of Reports is not yet implemented.'
         });
     },
 
@@ -336,8 +332,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Tool Added',
             header: 'Tool Added',
-            message: 'Tool was added successfully.',
-            _layoutFile: 'default'
+            message: 'Tool was added successfully.'
         });
     },
 
@@ -345,8 +340,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Could Not Add Tool',
             header: 'Sorry!',
-            message: 'There was a problem adding your tool. Please try again later.',
-            _layoutFile: 'default'
+            message: 'There was a problem adding your tool. Please try again later.'
         });
     }
 

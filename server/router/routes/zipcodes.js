@@ -17,8 +17,7 @@ module.exports = {
                 log('GET: Could not get Zip Codes');
                 res.render('zip-codes', {
                     title: 'Update Zip Codes',
-                    zips: zipDoc,
-                    _layoutFile: 'default'
+                    zips: zipDoc
                 });
             }
             else{
@@ -26,8 +25,7 @@ module.exports = {
                 log('GET: Found Zips %s:', zipDoc.zips.join(','));
                 res.render('zip-codes', {
                     title: 'Update Zip Codes',
-                    zips: zipDoc.zips.join(', '),
-                    _layoutFile: 'default'
+                    zips: zipDoc.zips.join(', ')
                 });
             }
         });
@@ -69,8 +67,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Zip Codes Updated',
             header: 'Zip Codes Updated',
-            message: 'You successfully updated the Zip Codes that are allowed when registering a job site.',
-            _layoutFile: 'default'
+            message: 'You successfully updated the Zip Codes that are allowed when registering a job site.'
         });
     },
 
@@ -78,8 +75,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Submission Failed',
             header: 'Sorry!',
-            message: 'There was a problem updating the Zip Codes that are allowed when registering a job site.',
-            _layoutFile: 'default'
+            message: 'There was a problem updating the Zip Codes that are allowed when registering a job site.'
         });
     }
 };
