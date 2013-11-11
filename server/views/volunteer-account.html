@@ -16,7 +16,7 @@
     <div>
       <h4>Your Account</h4>
       <hr />
-      <p>Your account is linked with your Auburn account and Auburn's Big Event will only ever use your Auburn email address. Please ensure that your other account information is correct and remains updated. If unfortunately, it happens that you can't volunteer as previously planned, you may need to <a class="text-error" href="#delete-account">delete your account</a> as a volunteer.</p>
+      <p>Your account is linked with your Auburn account and Auburn's Big Event will only ever use your Auburn email address. Please ensure that your other account information is correct and remains updated. If unfortunately, it happens that you can't volunteer as previously planned, you may need to <a class="text-error" href="#delete-account" data-toggle="modal">delete your account</a> as a volunteer.</p>
       <p>As long as jobsite assignments have not happened already you will still be able to register as a volunteer again later should your circumstances change. In either case, we want to thank you for your interest in the Big Event program, and hope you'll consider volunteering again next year.</p>
     </div>
     <div>
@@ -28,11 +28,11 @@
   </div>
   <div class="span5">
     <div class="well">
-      <a id="edit-button" class="pull-right btn btn-small">Edit <span class="icon-edit"></span></a>
-      <a id="cancel-button" class="pull-right btn btn-small hidden">Cancel <span class="icon-remove"></span></a>
-      <h4>Volunteer Account</h4>
-      <hr />
       <form id="volunteer-account-form" method="post">
+        <a id="edit-button" class="pull-right btn btn-small">Edit <span class="icon-edit"></span></a>
+        <a id="cancel-button" class="pull-right btn btn-small hidden">Cancel <span class="icon-remove"></span></a>
+        <h4>Volunteer Account</h4>
+        <hr />
         <label for="email">Email</label>
         <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
         <label for="first-name">First Name</label>
@@ -105,9 +105,22 @@
           </div>
         </div>
         <hr />
-        <a href="#delete-account" id="delete-button" class="btn btn-danger">Delete Account</a>
+        <a href="#delete-account" id="delete-button" class="btn btn-danger disabled" data-toggle="modal">Delete Account</a>
         <input class="account-input btn btn-primary pull-right" type="submit" value="Submit" disabled />
       </form>
+      <div id="delete-account" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-account-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+          <h3 id="delete-account-label">Delete Account</h3>
+        </div>
+        <div class="modal-body">
+          <p><strong>Are you sure you want to delete your volunteer account?</strong> Your data will be deleted so this action cannot be undone, however, you may register again as a volunteer before the cut off date should you change your mind.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <a href="<%= isStaff ? site.url + '/staff/volunteer/account/delete/' + user._id : site.url + 'volunteer/account/delete' %>" class="btn btn-danger">Confirm</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -52,7 +52,8 @@ app.locals({
         description: 'Web application for the Auburn University SGA student volunteer program Big Event',
         url: 'http://bigevent.com/'
     },
-    maxTeamSize: 10
+    maxTeamSize: 10,
+    _layoutFile: 'default'
 });
 
 log('Express app, %s, has been properly configured', packageData.name);

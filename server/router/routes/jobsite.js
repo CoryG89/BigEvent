@@ -16,42 +16,27 @@ module.exports = {
     request: {
         get: function (req, res) {
             res.render('jobsite-request', {
-                title: 'Job Site Request',
-                _layoutFile: 'default'
+                title: 'Job Site Request'
             });
         },
 
         post: function (req, res) {
             var record = req.body;
             var query = { _id: '1z2i3p4s5'};
-            var options = { };
-            zipsCollection.findOne(query, options, function(err, zipDoc) {
+            zipsCollection.findOne(query, function(err, zipDoc) {
                 if(err || !zipDoc){
-                    log('Could not get Zip Codes');
+                    log('POST: Could not get zip codes');
                     res.send('Error', 400);
-                }
-                else{
-                    //verify the zip code
+                } else {
+                    // verify the zip code
                     var zipArray = zipDoc.zips;
-                    var found = false;
-                    for(var i=0; i<zipArray.length; i++)
-                    {
-                        if(zipArray[i] === record.zip)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if(!found)
-                    {
+                    if (zipArray.indexOf(record.zip) === -1) {
                         var zipString = zipArray.join(', ');
-                        res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
-                    }
-                    else
-                    {
-                        log('POST: saveing job site.');
-                        //insert record
-                        options = { w: 1 };
+                        res.send('Currently accepted zip codes are: ' + zipString, 400);
+                    } else {
+                        log('POST: saving job site request data');
+                        // insert record
+                        var options = { w: 1 };
                         
                         record.formattedAddress = util.format('%s %s, %s %s',
                             record.address, record.city, record.state, record.zip);
@@ -81,33 +66,19 @@ module.exports = {
             post: function(req, res){
                 var record = req.body;
                 var query = { _id: '1z2i3p4s5'};
-                var options = { };
-                zipsCollection.findOne(query, options, function(err, zipDoc) {
-                    if(err || !zipDoc){
+                zipsCollection.findOne(query, function(err, zipDoc) {
+                    if (err || !zipDoc) {
                         log('Could not get Zip Codes');
                         res.send('Staff', 400);
-                    }
-                    else{
-                        //verify the zip code
+                    } else {
+                        // verify the zip code
                         var zipArray = zipDoc.zips;
-                        var found = false;
-                        for(var i=0; i<zipArray.length; i++)
-                        {
-                            if(zipArray[i] === record.zip)
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-                        if(!found)
-                        {
+                        if (zipArray.indexOf(record.zip) === -1) {
                             var zipString = zipArray.join(', ');
-                            res.send('Currently accepted zip codes are: ' + zipString.substr(0, zipString.length - 2), 400);
-                        }
-                        else
-                        {
+                            res.send('Currently accepted zip codes are: ' + zipString, 400);
+                        } else {
                             //insert record
-                            options = { w: 1 };
+                            var options = { w: 1 };
                             
                             record.formattedAddress = util.format('%s %s, %s %s',
                                 record.address, record.city, record.state, record.zip);
@@ -138,8 +109,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Jobsite Request Submitted',
                 header: 'Jobsite Request Submitted',
-                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
-                _layoutFile: 'default'
+                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.'
             });
         },
 
@@ -147,8 +117,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Submission Failed',
                 header: 'Sorry!',
-                message: 'There was a problem submitting your jobsite request. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem submitting your jobsite request. Please try again later.'
             });
         }
     },
@@ -162,8 +131,7 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Error',
                         header: 'Sorry!',
-                        message: 'There was a problem retrieving the jobsite from the database. Please try again later.',
-                        _layoutFile: 'default'
+                        message: 'There was a problem retrieving the jobsite from the database. Please try again later.'
                     });
                 }
                 else if(!record){
@@ -171,16 +139,14 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Error',
                         header: 'Sorry!',
-                        message: 'Jobsite not found in the database. Please try again later.',
-                        _layoutFile: 'default'
+                        message: 'Jobsite not found in the database. Please try again later.'
                     });
                 }
                 else{
                     log('JOBSITE.EVALUATION.GET: Jobsite Found.');
                     res.render('jobsite-evaluation', {
                         title: 'Job Site Evaluation',
-                        jobRequest: record,
-                        _layoutFile: 'default'
+                        jobRequest: record
                     });
                 }
             });
@@ -198,8 +164,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Jobsite Evaluation Submitted',
                 header: 'Jobsite Evaluation Submitted',
-                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.',
-                _layoutFile: 'default'
+                message: 'You should receive an e-mail confirmation verifying that your submission was successfully received.'
             });
         },
 
@@ -207,8 +172,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Submission Failed',
                 header: 'Sorry!',
-                message: 'There was a problem submitting your jobsite evaluation. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem submitting your jobsite evaluation. Please try again later.'
             });
         }
     }

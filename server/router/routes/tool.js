@@ -11,8 +11,7 @@ module.exports = {
 
     get: function (req, res) {
         res.render('tool', {
-            title: 'Add Tool',
-            _layoutFile: 'default'
+            title: 'Add Tool'
         });
     },
 
@@ -66,8 +65,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Tool Added',
             header: 'Tool Added',
-            message: 'Tool was added successfully.',
-            _layoutFile: 'default'
+            message: 'Tool was added successfully.'
         });
     },
 
@@ -75,8 +73,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Could Not Add Tool',
             header: 'Sorry!',
-            message: 'There was a problem adding your tool. Please try again later.',
-            _layoutFile: 'default'
+            message: 'There was a problem adding your tool. Please try again later.'
         });
     },
 
@@ -90,8 +87,7 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Error getting tool for review.',
                         header: 'Error',
-                        message: 'There was an unknown error retrieving tool from database.',
-                        _layoutFile: 'default'
+                        message: 'There was an unknown error retrieving tool from database.'
                     });
                 }
                 else if(!record){
@@ -99,8 +95,7 @@ module.exports = {
                     res.render('hero-unit', {
                         title: 'Could not find Tool in datbase.',
                         header: 'Tool Not Found',
-                        message: 'Did not find the tool in the database.',
-                        _layoutFile: 'default'
+                        message: 'Did not find the tool in the database.'
                     });
 
                 }
@@ -108,8 +103,7 @@ module.exports = {
                     log('TOOL.REVIEW.GET: Found record with id: %s', id);
                     res.render('toolReview', {
                         title: 'Edit Tool',
-                        record: record,
-                        _layoutFile: 'default'
+                        record: record
                     });
                 }
             });
@@ -160,8 +154,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Success',
                 header: 'Tool Updated',
-                message: 'You successfully updated the Tool.',
-                _layoutFile: 'default'
+                message: 'You successfully updated the Tool.'
             });
         },
 
@@ -169,8 +162,7 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Could Not Update Tool',
                 header: 'Sorry!',
-                message: 'There was a problem Updating the tool. Please try again later.',
-                _layoutFile: 'default'
+                message: 'There was a problem Updating the tool. Please try again later.'
             });
         }
     }

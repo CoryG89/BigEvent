@@ -23,13 +23,13 @@ function updateUserDocument(req, res, id, callback) {
         data.location = result.geometry.location;
         data.formattedAddress = result.formatted_address;
 
-        var volunteerData = {
-            role: 'volunteer',
-            volunteer: data
-        };
-
         var query = { _id: id };
-        var cmd = { $set: volunteerData };
+        var cmd = {
+            $set: {
+                role: 'volunteer',
+                volunteer: data
+            }
+        };
         var opt = { w: 1, new: true };
 
         users.findAndModify(query, null, cmd, opt, function (err, updated) {
@@ -39,8 +39,6 @@ function updateUserDocument(req, res, id, callback) {
             } else {
                 log('POST: Successfully updated user document');
                 log('POST: Updating user session');
-                if (id === req.session.user._id)
-                    _.merge(req.session.user, updated);
                 callback(null, updated);
             }
         });
@@ -56,27 +54,27 @@ module.exports = {
             res.redirect(path);
         } else {
             res.render('volunteer', {
-                title: 'Volunteer Registration',
-                _layoutFile: 'default'
+                title: 'Volunteer Registration'
             });
         }
     },
 
     post: function (req, res) {
         var userId = req.session.user._id;
-        updateUserDocument(req, res, userId, function (err) {
+        updateUserDocument(req, res, userId, function (err, doc) {
             if (err) {
                 res.send(400);
             } else {
                 emailer.send({
-                    to: req.session.user.email,
+                    to: doc.email,
                     subject: 'Volunteer Account Registration',
                     template: 'volunteer',
                     locals: {
-                        user: req.session.user,
-                        volunteer: req.session.user.volunteer
+                        user: doc,
+                        volunteer: doc.volunteer
                     }
                 });
+                _.merge(req.session.user, doc);
                 res.send(200, 'ok');
             }
         });
@@ -86,8 +84,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Successful Registration',
             header: 'Thanks!',
-            message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.',
-            _layoutFile: 'default'
+            message: 'You should receive an e-mail confirming your registration was successful. Thank you for volunteering to serve your Auburn community through Big Event.'
         });
     },
 
@@ -95,8 +92,7 @@ module.exports = {
         res.render('hero-unit', {
             title: 'Registration Failed',
             header: 'Sorry!',
-            message: 'There was a problem with the registration. Please try again later.',
-            _layoutFile: 'default'
+            message: 'There was a problem with the registration. Please try again later.'
         });
     },
 
@@ -105,7 +101,6 @@ module.exports = {
 
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                _layoutFile: 'default',
                 user: req.session.user,
                 volunteer: req.session.user.volunteer
             });
@@ -113,20 +108,60 @@ module.exports = {
 
         post: function (req, res) {
             var userId = req.session.user._id;
-            updateUserDocument(req, res, userId, function (err, userData) {
+            updateUserDocument(req, res, userId, function (err, doc) {
                 if (err) {
                     res.send(400);
                 } else {
                     emailer.send({
-                        to: req.session.user.email,
+                        to: doc.email,
                         subject: 'Volunteer Account Update',
                         template: 'volunteer-account',
                         locals: {
-                            user: userData,
-                            volunteer: userData.volunteer
+                            user: doc,
+                            volunteer: doc.volunteer
                         }
                     });
+                    _.merge(req.session.user, doc);
                     res.send(200, 'ok');
+                }
+            });
+        },
+
+        success: function (req, res) {
+            res.render('hero-unit', {
+                title: 'Successfully Updated',
+                header: 'Thanks!',
+                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.'
+            });
+        },
+
+        failure: function (req, res) {
+            res.render('hero-unit', {
+                title: 'Registration Failed',
+                header: 'Sorry!',
+                message: 'There was a problem updating your data. Please try again later.'
+            });
+        },
+
+        delete: function (req, res) {
+            var query = { _id: req.session.user._id };
+            var cmd = { $unset: { volunteer: '' } };
+            var opt = { w: 1 };
+
+            users.update(query, cmd, opt, function (err, result) {
+                if (err || !result) {
+                    res.render('hero-unit', {
+                        title: 'Volunteer Account Removal Failed',
+                        header: 'Sorry!',
+                        message: 'There was a problem removing your account data at this time. Please try again later.'
+                    });
+                } else {
+                    res.render('hero-unit', {
+                        title: 'Volunteer Account Removed',
+                        header: 'Volunteer Account Removed',
+                        message: 'Your volunteer account data was successfully deleted and you are no longer registered to volunteer on the day of the event. Thank you for your interest in Big Event and in serving your Auburn community. You can register again '
+                    });
+                    delete req.session.volunteer;
                 }
             });
         },
@@ -139,16 +174,14 @@ module.exports = {
                         res.render('hero-unit', {
                             title: 'Volunteer Not Found',
                             header: 'Volunteer Not Found',
-                            message: 'No volunteer with id ' + req.params.id + ' could be found in the database.',
-                            _layoutFile: 'default'
+                            message: 'No volunteer with id ' + req.params.id + ' could be found in the database.'
                         });
                     } else {
                         log('STAFF.GET: Record found');
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
                             user: record,
-                            volunteer: record.volunteer,
-                            _layoutFile: 'default'
+                            volunteer: record.volunteer
                         });
                     }
                 });
@@ -156,18 +189,17 @@ module.exports = {
 
             post: function (req, res) {
                 var userId = req.params.id;
-
-                updateUserDocument(req, res, userId, function (err, userData) {
+                updateUserDocument(req, res, userId, function (err, doc) {
                     if (err) {
                         res.send(400);
                     } else {
                         emailer.send({
-                            to: userData.email,
+                            to: doc.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
                             locals: {
-                                user: userData,
-                                volunteer: userData.volunteer
+                                user: doc,
+                                volunteer: doc.volunteer
                             }
                         });
                         res.send(200, 'staff');
@@ -175,31 +207,9 @@ module.exports = {
                 });
             },
 
-            delete: function (req, res){
+            delete: function (req, res) {
                 res.send(200);
             },
-        },
-
-        success: function (req, res) {
-            res.render('hero-unit', {
-                title: 'Successfully Updated',
-                header: 'Thanks!',
-                message: 'You have successfully updated your data. You should receive an e-mail confirmation as well. Thank you for volunteering to serve your Auburn community through Big Event.',
-                _layoutFile: 'default'
-            });
-        },
-
-        failure: function (req, res) {
-            res.render('hero-unit', {
-                title: 'Registration Failed',
-                header: 'Sorry!',
-                message: 'There was a problem updating your data. Please try again later.',
-                _layoutFile: 'default'
-            });
-        },
-
-        delete: function (req, res) {
-            res.send(200);
         }
     }
 };
