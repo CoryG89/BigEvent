@@ -76,8 +76,8 @@ module.exports = {
         app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
         app.get('/staff/staffHomePage/sort', routes.staffHomePage.sort);
 
-        app.get('/staff/printHomeDepotReport', routes.toolReport.get);
-        app.get('/staff/printHomeDepotReport/failure', routes.toolReport.failure);
+        app.get('/staff/toolReport', routes.toolReport.get);
+        app.get('/staff/toolReport/failure', routes.toolReport.failure);
 
         app.get('/staff/updateZipCodes', routes.zipcodes.get);
         app.post('/staff/updateZipCodes', routes.zipcodes.post);
