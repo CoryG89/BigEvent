@@ -56,35 +56,46 @@ module.exports = {
                         }
                     }
                 }
-                log('GET: number of tools with requests: %s', toolsRequestArray.length);
-                var options = {locals: {tools: toolsRequestArray}, template: 'toolReport', path: '/staff/toolReport.pdf', onSuccess: function(message){
-                    log('GET: Success: %s', message);
-                    res.sendfile('/staff/toolReport.pdf', function(sendErr){
-                        if(sendErr)
-                        {
-                            log('GET: Unable to send file. Error: %s', sendErr);
-                            res.render('hero-unit', {
-                                title: 'Could Not Generate Tool Report',
-                                header: 'Sorry!',
-                                message: 'There was a problem generating the tool report. Please try again later.',
-                                _layoutFile: 'default'
-                            });
-                        }
-                        else
-                        {
-                            log('GET: Transfer Complete.');
-                        }
-                        fs.unlink('toolReport.pdf', function(unlinkErr){
-                            if(unlinkErr)
+                //get logo image
+                fs.readFile(__dirname + '/../../../public/img/logo-sm.jpg', 'base64', function (logoErr,data) {
+                    if (logoErr)
+                    {
+                        log('GET: Unable to get logo. Error: %s', logoErr);
+                    }
+                    else
+                    {
+                        log('GET: Gotlogo.');
+                    }
+                    log('GET: number of tools with requests: %s', toolsRequestArray.length);
+                    var options = {locals: {tools: toolsRequestArray, logo: data}, template: 'toolReport', path: '/staff/toolReport.pdf', onSuccess: function(message){
+                        log('GET: Success: %s', message);
+                        res.sendfile('/staff/toolReport.pdf', function(sendErr){
+                            if(sendErr)
                             {
-                                log('GET: Unlink Error: %s', unlinkErr);
+                                log('GET: Unable to send file. Error: %s', sendErr);
+                                res.render('hero-unit', {
+                                    title: 'Could Not Generate Tool Report',
+                                    header: 'Sorry!',
+                                    message: 'There was a problem generating the tool report. Please try again later.',
+                                    _layoutFile: 'default'
+                                });
                             }
+                            else
+                            {
+                                log('GET: Transfer Complete.');
+                            }
+                            fs.unlink('toolReport.pdf', function(unlinkErr){
+                                if(unlinkErr)
+                                {
+                                    log('GET: Unlink Error: %s', unlinkErr);
+                                }
+                            });
                         });
-                    });
-                }, onError: function() {
-                    log('GET: Error rendering file');
-                }};
-                pdfgen.render(options);
+                    }, onError: function() {
+                        log('GET: Error rendering file');
+                    }};
+                    pdfgen.render(options);
+                });
             }
         });
     },
