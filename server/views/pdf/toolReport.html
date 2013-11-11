@@ -1,34 +1,11 @@
+<p>Home Depot Staff,</p>
+<p>Here are the tools needed by Big Event:</p>
 <ul class='unstyled'>
-    <li>
-        <p>Home Depot Staff,</p>
-    </li>
-    <li>
-        </br>
-    </li>
-    <li>
-        <p>Here are the tools needed by Big Event:</p>
-    </li>
-    <li>
-        </br>
-    </li>
     <% for(var i=0; i<tools.length; i++) { var currTool = tools[i]; %>
         <li>
-            <div class='row'>
-                <label for='<%= currTool.name %>-amount'><%= currTool.name %>:</label>
-                <input class="tool-review-input input-block-level" id='<%= currTool.name %>-amount' name='<%= currTool.name %>-amount' type='text' value="<%= currTool.requestAmount %>" disabled/>
-            </div>
+            <p><%= currTool.name %>: <%= currTool.requestAmount %></p>
         </li>
     <% } %>
-    <li>
-        </br>
-    </li>
-    <li>
-        <p>Thank you for your generous support of Auburn Big Event.</p>
-    </li>
-    <li>
-        </br>
-    </li>
-    <li>
-        <p>                                 Auburn Big Event Staff</p>
-    </li>
 </ul>
+<p>Thank you for your generous support of Auburn Big Event.</p>
+<p>Auburn Big Event Staff</p>

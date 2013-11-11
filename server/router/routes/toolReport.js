@@ -35,20 +35,28 @@ module.exports = {
                 log('GET: %s tools found.', toolsArray.length);
                 //determin which tools need to be sent
                 var toolsRequestArray = [];
-                for(var i=0; i<toolsArray; i++)
+                for(var i=0; i<toolsArray.length; i++)
                 {
                     var currTool = toolsArray[i];
-                    var requestAmount = currTool.numberRequested - currTool.totalAvailable;
-                    if(currTool.maxRequest === 'on')
+                    log('GET: currTool: %s', currTool.name);
+                    log('GET: currTool.maxRequest: %s', currTool.maxRequest);
+                    var requestAmount = currTool.numberRequested;
+                    if(requestAmount > currTool.totalAvailable) //if this is false then there is enough tools in the tool shed to cover the request
                     {
-                        requestAmount = (requestAmount < currTool.maxrequestValue) ? requestAmount: currTool.maxrequestValue;
-                    }
-                    if(requestAmount !== 0)
-                    {
-                        currTool.requestAmount = requestAmount;
-                        toolsRequestArray.add(currTool);
+                        requestAmount -= currTool.totalAvailable;
+                        log('GET: requestAmount: %s', requestAmount);
+                        if(currTool.maxRequest === 'on')
+                        {
+                            requestAmount = (requestAmount < currTool.maxRequestValue) ? requestAmount: currTool.maxRequestValue;
+                        }
+                        if(requestAmount !== 0)
+                        {
+                            currTool.requestAmount = requestAmount;
+                            toolsRequestArray.push(currTool);
+                        }
                     }
                 }
+                log('GET: number of tools with requests: %s', toolsRequestArray.length);
                 var options = {locals: {tools: toolsRequestArray}, template: 'toolReport', path: '/staff/toolReport.pdf', onSuccess: function(message){
                     log('GET: Success: %s', message);
                     res.sendfile('/staff/toolReport.pdf', function(sendErr){
