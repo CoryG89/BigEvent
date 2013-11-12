@@ -2,7 +2,7 @@
 
 var ejs = { renderFile: require('ejs-locals') };
 var phantomjs = require('phantomjs');
-var nodePhantom = require('node-phantom');
+var nodePhantom = require('node-phantom-simple');
 
 var phantom;
 
@@ -12,53 +12,41 @@ var log = debug.getLogger({ prefix: '[pdfgen]-  ' });
 var paperSize = { format: 'Letter', orientation: 'portrait', margin: '1cm' };
 
 var phantomErrorMsg = 'Error creating PhantomJS instance:\n\n\t%s\n';
-var pageErrorMsg = 'Error creating page:\n\n\t%s\n';
-var typeErrorMsg = 'Error: expects parameters (html, path, callback)';
-var paperSizeErrorMsg = 'Error setting paper size:\n\n\t%s\n';
-var contentErrorMsg = 'Error setting content:\n\n\t%s\n';
-var renderErrorMsg = 'Error rendering PDF \'%s\': %s';
 var renderMsg = 'Successfully rendered PDF \'%s\'';
 var initMsg = 'Successfully initialized';
 
 var templatePath = 'server/views/pdf/';
 
 function generate (html, path, onError, onSuccess) {
-
+    if (typeof html !== 'string' || typeof path !== 'string') {
+        log('Error: expects parameters (html, path, callback)', onError);
+        return;
+    }
     phantom.createPage(function (err, page) {
         if (err) {
-            log(pageErrorMsg, err, onError);
+            log('Error creating page:\n\n\t%s\n', err, onError);
             return;
         }
-        page.set('paperSize', paperSize, function (err) {
-            if (err) {
-                log(paperSizeErrorMsg, err, onError);
+        page.onLoadFinished = function (status) {
+            if (status !== 'success') {
+                log('Error rendering PDF \'%s\': %s', path, status, onError);
                 return;
             }
-            if (typeof html !== 'string' || typeof path !== 'string') {
-                log(typeErrorMsg, onError);
-                return;
-            }
-            page.set('content', html, function (err) {
+            page.render(path, function (err) {
                 if (err) {
-                    log(contentErrorMsg, err, onError);
+                    log('Error rendering PDF \'%s\': %s', path, err, onError);
                     return;
                 }
-                page.onLoadFinished = function () {
-                    page.render(path, function (err) {
-                        if (err) {
-                            log(renderErrorMsg, path, err, onError);
-                            return;
-                        }
-                        log(renderMsg, path, function (renderMsg) {
-                            if (typeof onSuccess === 'function') {
-                                onSuccess(renderMsg);
-                            }
-                        });
-                        page.close();
-                    });
-                };
+                log(renderMsg, path, function (renderMsg) {
+                    if (typeof onSuccess === 'function') {
+                        onSuccess(renderMsg);
+                    }
+                });
+                page.close();
             });
-        });
+        };
+        page.set('paperSize', paperSize);
+        page.set('content', html);
     });
 }
 
