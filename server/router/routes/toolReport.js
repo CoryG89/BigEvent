@@ -63,7 +63,7 @@ module.exports = {
 
                 pdfgen.render({
                     locals: {
-                        site: { url: req.protocol + '://' + req.host },
+                        site: { url: req.protocol + '://' + req.host + '/' },
                         tools: toolsRequestArray,
                     },
                     template: 'toolReport',
