@@ -145,7 +145,14 @@ module.exports = {
 
         delete: function (req, res) {
             var query = { _id: req.session.user._id };
-            var cmd = { $unset: { volunteer: '' } };
+            var cmd = {
+                $unset: {
+                    volunteer: ''
+                },
+                $set: {
+                    role: 'user'
+                }
+            };
             var opt = { w: 1 };
 
             users.update(query, cmd, opt, function (err, result) {
@@ -161,7 +168,8 @@ module.exports = {
                         header: 'Volunteer Account Removed',
                         message: 'Your volunteer account data was successfully deleted and you are no longer registered to volunteer on the day of the event. Thank you for your interest in Big Event and in serving your Auburn community. You can register again '
                     });
-                    delete req.session.volunteer;
+                    req.session.role = 'user';
+                    delete req.session.user.volunteer;
                 }
             });
         },
