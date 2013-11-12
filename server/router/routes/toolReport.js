@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var moment = require('moment');
+var uuid = require('node-uuid');
 var dbman = require('../../dbman');
 var pdfgen = require('../../pdfgen');
 var debug = require('../../debug');
@@ -59,33 +59,33 @@ module.exports = {
                 }
                 log('GET: number of tools with requests: %s', toolsRequestArray.length);
 
+                var tempFilename = uuid.v1() + '.pdf';
+
                 pdfgen.render({
                     locals: {
                         site: { url: req.protocol + '://' + req.host },
                         tools: toolsRequestArray,
                     },
                     template: 'toolReport',
-                    path: 'toolReport.pdf',
+                    path: tempFilename,
                     onSuccess: function () {
-                        res.sendfile('toolReport.pdf', function (sendErr) {
+                        res.sendfile(tempFilename, function (sendErr) {
                             if(sendErr)
                             {
-                                log('GET: Unable to send file. Error: %s', sendErr);
-                                res.render('hero-unit', {
-                                    title: 'Could Not Generate Tool Report',
-                                    header: 'Sorry!',
-                                    message: 'There was a problem generating the tool report. Please try again later.',
-                                    _layoutFile: 'default'
-                                });
+                                log('GET: Error sending response: %s', sendErr);
                             }
                             else
                             {
                                 log('GET: Transfer Complete.');
                             }
-                            fs.unlink('toolReport.pdf', function(unlinkErr){
-                                if(unlinkErr)
-                                {
-                                    log('GET: Unlink Error: %s', unlinkErr);
+                            fs.exists(tempFilename, function (exists) {
+                                if (exists) {
+                                    fs.unlink(tempFilename, function(unlinkErr) {
+                                        if(unlinkErr)
+                                        {
+                                            log('GET: Unlink Error: %s', unlinkErr);
+                                        }
+                                    });
                                 }
                             });
                         });
