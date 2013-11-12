@@ -1,4 +1,3 @@
 node_modules/*
-server/dbman/auth.json
-server/emailer/auth.json
+auth.json
 npm-debug.log

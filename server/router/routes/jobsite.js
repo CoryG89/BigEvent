@@ -7,6 +7,7 @@ var dbman = require('../../dbman');
 var emailer = require('../../emailer');
 var geocoder = require('../../geocoder');
 
+var config = require('../../../config');
 var log = debug.getLogger({ prefix: '[route.jobsite]-  ' });
 var jobsites = dbman.getCollection('jobsites');
 var zipsCollection = dbman.getCollection('zips');
@@ -18,37 +19,35 @@ function addJobsite (req, res, callback) {
     var query = { _id: '1z2i3p4s5'};
     zipsCollection.findOne(query, function(err, zipDoc) {
         if(err || !zipDoc){
-            log('POST: Could not get zip codes');
-            res.send('Error', 400);
+            zipDoc = { zips: config.defaultAllowedZipCodes };
+        }
+        // verify the zip code
+        var zipArray = zipDoc.zips;
+        if (zipArray.indexOf(record.zip) === -1) {
+            var zipString = zipArray.join(', ');
+            res.send('Currently accepted zip codes are: ' + zipString, 400);
         } else {
-            // verify the zip code
-            var zipArray = zipDoc.zips;
-            if (zipArray.indexOf(record.zip) === -1) {
-                var zipString = zipArray.join(', ');
-                res.send('Currently accepted zip codes are: ' + zipString, 400);
-            } else {
-                log('POST: saving job site request data');
-                // insert record
-                var options = { w: 1 };
-                
-                var query = util.format('%s %s, %s %s',
-                    record.address, record.city, record.state, record.zip);
+            log('POST: saving job site request data');
+            // insert record
+            var options = { w: 1 };
+            
+            var query = util.format('%s %s, %s %s',
+                record.address, record.city, record.state, record.zip);
 
-                geocoder.send(query, function (response) {
-                    var result = response.results[0];
-                    record.location = result.geometry.location;
-                    record.formattedAddress = result.formatted_address;
+            geocoder.send(query, function (response) {
+                var result = response.results[0];
+                record.location = result.geometry.location;
+                record.formattedAddress = result.formatted_address;
 
-                    jobsites.insert(record, options, function (err, records) {
-                        if (err) {
-                            log('POST: Error inserting record:\n\n%s\n\n', err);
-                            res.send('Error', 400);
-                        } else {
-                            if (typeof callback === 'function') callback(records[0]);
-                        }
-                    });
+                jobsites.insert(record, options, function (err, records) {
+                    if (err) {
+                        log('POST: Error inserting record:\n\n%s\n\n', err);
+                        res.send('Error', 400);
+                    } else {
+                        if (typeof callback === 'function') callback(records[0]);
+                    }
                 });
-            }
+            });
         }
     });
 }

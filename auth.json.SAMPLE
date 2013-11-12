@@ -1,0 +1,16 @@
+{
+  "database": {
+    "user": "databaseUser",
+    "pass": "databasePass",
+    "host": "ds01337.mongolab.com",
+    "port": 01337,
+    "name": "databaseName"
+  },
+  "email": {
+    "service": "Gmail",
+    "user": "yourusername@gmail.com",
+    "pass": "yourpass"
+  },
+  "cookieClientSecret": "SomeSecretKeyToEncryptSignedCookiesWith",
+  "sessionClientSecret": "SomeSecretKeyToEncryptTheSessionCookieWith"
+}
