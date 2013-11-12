@@ -29,7 +29,7 @@
     "export-dir": "0.1.x",
     "node-uuid": "1.4.x",
     "phantomjs": "1.9.x",
-    "node-phantom": "0.2.x",
+    "node-phantom-simple": "1.0.x",
     "lodash": "2.2.x"
   },
   "devDependencies": {
