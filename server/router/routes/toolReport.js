@@ -59,7 +59,7 @@ module.exports = {
                 }
                 log('GET: number of tools with requests: %s', toolsRequestArray.length);
 
-                var tempFilename = uuid.v1() + '.pdf';
+                var tempFilename = uuid.v4() + '.pdf';
 
                 pdfgen.render({
                     locals: {
