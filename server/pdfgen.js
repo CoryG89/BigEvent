@@ -22,7 +22,7 @@ var renderErrorMsg = 'Error rendering PDF \'%s\': %s';
 var renderMsg = 'Successfully rendered PDF \'%s\'';
 var initMsg = 'Successfully initialized';
 
-var templatePath = '/server/views/pdf/';
+var templatePath = __dirname + '/views/pdf/';
 
 function generate (html, path, onError, onSuccess) {
     if (typeof html !== 'string' || typeof path !== 'string') {

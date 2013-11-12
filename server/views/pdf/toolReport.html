@@ -1,0 +1,12 @@
+<img src='data:image/gif;base64,<%= logo %>' style='top=20000px;left=200000px'/>
+<p>Home Depot Staff,</p>
+<p>Here are the tools needed by Big Event:</p>
+<ul class='unstyled'>
+    <% for(var i=0; i<tools.length; i++) { var currTool = tools[i]; %>
+        <li>
+            <p><b><%= currTool.name %>:</b> <%= currTool.requestAmount %></p>
+        </li>
+    <% } %>
+</ul>
+<p>Thank you for your generous support of Auburn Big Event.</p>
+<p style='top=20000em;left=200000em'>Auburn Big Event Staff</p>
