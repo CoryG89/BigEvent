@@ -1,12 +1,29 @@
-<img src='data:image/gif;base64,<%= logo %>' style='top=20000px;left=200000px'/>
-<p>Home Depot Staff,</p>
-<p>Here are the tools needed by Big Event:</p>
-<ul class='unstyled'>
-    <% for(var i=0; i<tools.length; i++) { var currTool = tools[i]; %>
-        <li>
-            <p><b><%= currTool.name %>:</b> <%= currTool.requestAmount %></p>
-        </li>
-    <% } %>
-</ul>
-<p>Thank you for your generous support of Auburn Big Event.</p>
-<p style='top=20000em;left=200000em'>Auburn Big Event Staff</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="<%= site.url %>vendor/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<%= site.url %>css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <img class="offset2 span2" src="<%= site.url %>img/logo.jpg" />
+        <h1 class="span6"><br/>Big Event Tool Report</h1>
+      </div>
+      <br />
+      <p>Here are the tools needed by Big Event:</p>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr><th>Name</th><th>Request Amount</th></tr>
+        </thead>
+        <tbody>
+          <% tools.forEach(function (currTool) {%>
+            <tr><td><%= currTool.name %></td><td><%= currTool.requestAmount %></td></tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <p>Thank you for your generous support of Auburn Big Event.</p>
+      <p>Auburn Big Event Staff</p>
+    </div>
+  </body>
+</html>

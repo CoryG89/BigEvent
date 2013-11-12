@@ -1,10 +1,10 @@
 'use strict';
 
 var nodemailer = require('nodemailer');
-var auth = require('./auth');
 var renderer = require('./renderer');
-
 var debug = require('../debug');
+var auth = require('../../auth').email;
+
 var log = debug.getLogger({ prefix: '[emailer]-  ' });
 
 var transport = nodemailer.createTransport('SMTP', {

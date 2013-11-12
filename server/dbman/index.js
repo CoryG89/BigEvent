@@ -2,8 +2,8 @@
 
 var util = require('util');
 var mongodb = require('mongodb');
-var auth = require('./auth');
 var debug = require('../debug');
+var auth = require('../../auth').database;
 
 var serverConnection = new mongodb.Server(auth.host, auth.port);
 var mongoClient = new mongodb.MongoClient(serverConnection);

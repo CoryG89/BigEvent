@@ -1,12 +1,10 @@
 'use strict';
 
-var fs = require('fs');
-var ejs = require('ejs');
+var ejs = { renderFile: require('ejs-locals') };
 var phantomjs = require('phantomjs');
 var nodePhantom = require('node-phantom');
 
 var phantom;
-var page;
 
 var debug = require('./debug');
 var log = debug.getLogger({ prefix: '[pdfgen]-  ' });
@@ -22,27 +20,43 @@ var renderErrorMsg = 'Error rendering PDF \'%s\': %s';
 var renderMsg = 'Successfully rendered PDF \'%s\'';
 var initMsg = 'Successfully initialized';
 
-var templatePath = __dirname + '/views/pdf/';
+var templatePath = 'server/views/pdf/';
 
 function generate (html, path, onError, onSuccess) {
-    if (typeof html !== 'string' || typeof path !== 'string') {
-        log(typeErrorMsg, onError);
-        return;
-    }
-    page.set('content', html, function (err) {
+
+    phantom.createPage(function (err, page) {
         if (err) {
-            log(contentErrorMsg, err, onError);
+            log(pageErrorMsg, err, onError);
             return;
         }
-        page.render(path, function (err) {
+        page.set('paperSize', paperSize, function (err) {
             if (err) {
-                log(renderErrorMsg, path, err, onError);
+                log(paperSizeErrorMsg, err, onError);
                 return;
             }
-            log(renderMsg, path, function (renderMsg) {
-                if (typeof onSuccess === 'function') {
-                    onSuccess(renderMsg);
+            if (typeof html !== 'string' || typeof path !== 'string') {
+                log(typeErrorMsg, onError);
+                return;
+            }
+            page.set('content', html, function (err) {
+                if (err) {
+                    log(contentErrorMsg, err, onError);
+                    return;
                 }
+                page.onLoadFinished = function () {
+                    page.render(path, function (err) {
+                        if (err) {
+                            log(renderErrorMsg, path, err, onError);
+                            return;
+                        }
+                        log(renderMsg, path, function (renderMsg) {
+                            if (typeof onSuccess === 'function') {
+                                onSuccess(renderMsg);
+                            }
+                        });
+                        page.close();
+                    });
+                };
             });
         });
     });
@@ -62,23 +76,10 @@ module.exports = {
                 return;
             }
             phantom = ph;
-            phantom.createPage(function (err, pg) {
-                if (err) {
-                    log(pageErrorMsg, err, callback);
-                    return;
+            log(initMsg, function (initMsg) {
+                if (typeof callback === 'function') {
+                    callback(null, initMsg);
                 }
-                page = pg;
-                page.set('paperSize', paperSize, function (err) {
-                    if (err) {
-                        log(paperSizeErrorMsg, err, callback);
-                        return;
-                    }
-                    log(initMsg, function (initMsg) {
-                        if (typeof callback === 'function') {
-                            callback(null, initMsg);
-                        }
-                    });
-                });
             });
         }
     },
@@ -95,15 +96,15 @@ module.exports = {
             if (!/\.\/.+/.test(template))
                 template = templatePath + template;
             template += '.html';
-            fs.readFile(template, 'utf-8', function (err, html) {
+            ejs.renderFile(template, locals, function (err, html) {
                 if (err) {
                     log('Error reading template file:\n\n\t%s\n', err, onError);
                     return;
                 }
-                html = ejs.render(html, locals);
                 generate(html, path, onError, onSuccess);
             });
         } else {
+
             generate(html, path, onError, onSuccess);
         }
     }

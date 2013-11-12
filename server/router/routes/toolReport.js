@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var uuid = require('node-uuid');
 var dbman = require('../../dbman');
 var pdfgen = require('../../pdfgen');
 var debug = require('../../debug');
@@ -33,7 +34,7 @@ module.exports = {
             else
             {
                 log('GET: %s tools found.', toolsArray.length);
-                //determin which tools need to be sent
+                //determine which tools need to be sent
                 var toolsRequestArray = [];
                 for(var i=0; i<toolsArray.length; i++)
                 {
@@ -47,7 +48,7 @@ module.exports = {
                         log('GET: requestAmount: %s', requestAmount);
                         if(currTool.maxRequest === 'on')
                         {
-                            requestAmount = (requestAmount < currTool.maxRequestValue) ? requestAmount: currTool.maxRequestValue;
+                            requestAmount = (requestAmount < currTool.maxRequestValue) ? requestAmount : currTool.maxRequestValue;
                         }
                         if(requestAmount !== 0)
                         {
@@ -56,46 +57,44 @@ module.exports = {
                         }
                     }
                 }
-                //get logo image
-                fs.readFile(__dirname + '/../../../public/img/logo-sm.jpg', 'base64', function (logoErr,data) {
-                    if (logoErr)
-                    {
-                        log('GET: Unable to get logo. Error: %s', logoErr);
-                    }
-                    else
-                    {
-                        log('GET: Gotlogo.');
-                    }
-                    log('GET: number of tools with requests: %s', toolsRequestArray.length);
-                    var options = {locals: {tools: toolsRequestArray, logo: data}, template: 'toolReport', path: '/staff/toolReport.pdf', onSuccess: function(message){
-                        log('GET: Success: %s', message);
-                        res.sendfile('/staff/toolReport.pdf', function(sendErr){
+                log('GET: number of tools with requests: %s', toolsRequestArray.length);
+
+                var tempFilename = uuid.v4() + '.pdf';
+
+                pdfgen.render({
+                    locals: {
+                        site: { url: req.protocol + '://' + req.host + '/' },
+                        tools: toolsRequestArray,
+                    },
+                    template: 'toolReport',
+                    path: tempFilename,
+                    onSuccess: function () {
+                        res.sendfile(tempFilename, function (sendErr) {
                             if(sendErr)
                             {
-                                log('GET: Unable to send file. Error: %s', sendErr);
-                                res.render('hero-unit', {
-                                    title: 'Could Not Generate Tool Report',
-                                    header: 'Sorry!',
-                                    message: 'There was a problem generating the tool report. Please try again later.',
-                                    _layoutFile: 'default'
-                                });
+                                log('GET: Error sending response: %s', sendErr);
                             }
                             else
                             {
                                 log('GET: Transfer Complete.');
                             }
-                            fs.unlink('toolReport.pdf', function(unlinkErr){
-                                if(unlinkErr)
-                                {
-                                    log('GET: Unlink Error: %s', unlinkErr);
+                            fs.exists(tempFilename, function (exists) {
+                                if (exists) {
+                                    fs.unlink(tempFilename, function(unlinkErr) {
+                                        if(unlinkErr)
+                                        {
+                                            log('GET: Unlink Error: %s', unlinkErr);
+                                        }
+                                    });
                                 }
                             });
                         });
-                    }, onError: function() {
+                    },
+                    onError: function () {
                         log('GET: Error rendering file');
-                    }};
-                    pdfgen.render(options);
+                    }
                 });
+
             }
         });
     },
