@@ -5,15 +5,10 @@ var log = debug.getLogger({ prefix: '[middleware.staffauth]-  ' });
 
 var redirectPath = '/access-denied';
 
-function isStaffRole(role) {
-    return role === 'executive' || role === 'coordinator' ||
-        role === 'committee' || role === 'leadership';
-}
-
 module.exports = function () {
     return function (req, res, next) {
         var user = req.session.user;
-        if (user && isStaffRole(user.role)) {
+        if (res.locals.isStaff) {
             log('Staff role \'%s\' detected --> calling next()', user.role);
             next();
         } else {
