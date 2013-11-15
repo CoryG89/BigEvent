@@ -16,7 +16,7 @@
 <input class="hidden" id="toolNumPages" type="text" name="toolNumPages" value="<%= tpt %>" style="width:3em;"/>
 <input class="hidden" id="committeeNumPages" type="text" name="committeeNumPages" value="<%= cpt %>" style="width:3em;"/>
 <input class="hidden" id="leadershipNumPages" type="text" name="leadershipNumPages" value="<%= lpt %>" style="width:3em;"/>
-<input class="hidden" id="projectCoordinatorNumPages" type="text" name="projectCoordinatorNumPages" value="<%= ppt %>" style="width:3em;"/>
+<input class="hidden" id="coordinatorNumPages" type="text" name="coordinatorNumPages" value="<%= ppt %>" style="width:3em;"/>
 <!-- Data Tables -->
 <h2 class="pull-left">Volunteer Table</h2>
 <ul id="volunteer-pager" class="pager pull-right">
@@ -199,7 +199,7 @@
     </tbody>
 </table>
 <h2 class="pull-left">Project Coordinator Table</h2>
-<ul id="projectCoordinator-pager" class="pager pull-right">
+<ul id="coordinator-pager" class="pager pull-right">
     <% if(ppt === 1) { %>
         <li class="previous disabled"><a href="#">Previous</a></li>
         <li class="next disabled"><a href="#">Next</a></li>
@@ -208,7 +208,7 @@
         <li class="next"><a href="#">Next</a></li>
     <% } %>
 </ul>
-<table class="table table-bordered table-striped" id="projectCoordinator-table">
+<table class="table table-bordered table-striped" id="coordinator-table">
     <thead>
         <tr>
             <th id="doubleName">        Name            </th>
@@ -218,16 +218,16 @@
         </tr>
     </thead>
     <tbody>
-        <% for(i=0; i<projectCoordinatorList.length; i++) { %>
+        <% for(i=0; i<coordinatorList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/leadership/review/<%= projectCoordinatorList[i]._id %>">
-                        <%= projectCoordinatorList[i].coordinator.lastName %> + ", " + <%= projectCoordinatorList[i].coordinator.firstName %>
+                    <a href="<%= site.url %>staff/leadership/review/<%= coordinatorList[i]._id %>">
+                        <%= coordinatorList[i].coordinator.lastName %> + ", " + <%= coordinatorList[i].coordinator.firstName %>
                     </a>
                 </td>
-                <td><%= projectCoordinatorList[i].email                         %></td>
-                <td><%= projectCoordinatorList[i].coordinator.formattedAddress  %></td>
-                <td><%= projectCoordinatorList[i].coordinator.phone             %></td>
+                <td><%= coordinatorList[i].email                         %></td>
+                <td><%= coordinatorList[i].coordinator.formattedAddress  %></td>
+                <td><%= coordinatorList[i].coordinator.phone             %></td>
             </tr>
         <% } %>
     </tbody>
