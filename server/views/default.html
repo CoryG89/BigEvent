@@ -2,8 +2,6 @@
 <html lang="en">
   <head>
     <title><%= site.title %> -- <%= title %></title>
-
-    <!-- Include meta-data for the web crawlerz -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="<%= site.description %>" />
@@ -16,11 +14,14 @@
       padding-bottom: 40px;
     } </style>
     <link href="<%= site.url %>vendor/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <!-- Include Font Awesome Icon CSS -->
+    <link href="<%= site.url %>vendor/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Include custom app-specific styles last to overide all others -->
     <link href="<%= site.url %>css/styles.css" rel="stylesheet" />
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- HTML5 shim must be in HEAD section, IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -32,80 +33,14 @@
     <link rel="apple-touch-icon" href="<%= site.url %>img/apple-touch-icon.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="<%= site.url %>img/apple-touch-icon-72x72.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="<%= site.url %>img/apple-touch-icon-114x114.png">
-
   </head>
-
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="<%= site.url %>"><%= site.title %></a>
-          <div class="nav-collapse">
-            <ul class="nav pull-right">
-              <% if (user && (user.role === 'executive' || user.role === 'committee' || user.role === 'leadership')) { %>
-                  <li class="<% if (reqdata.path === '/staff/staffHomePage') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/staffHomePage">Home</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/jobsite/request') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/jobsite/request">Add Job Site</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/tool') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/tool">Add Tool</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/printHomeDepotReport') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/toolReport">Tool Report</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/contact') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/contact">Contact</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/about') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/about">About</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/staff/logout') { %>active<% } %>">
-                    <a href="<%= site.url %>staff/logout">Logout</a>
-                  </li>
-              <% } else { %>
-                  <li class="<% if (reqdata.path === '/' || reqdata.path === '/home') { %> active <% } %>">
-                    <a href="<%= site.url %>home">Home</a>
-                  </li>
-                  <li class="<% if (reqdata.path !== '/volunteer/team' && reqdata.path.search(/^\/volunteer.*$/) !== -1) { %>active<% } %>">
-                    <a href="<%= site.url %>volunteer">Volunteers</a>
-                  </li>
-                  <% if (user && user.role === 'volunteer') { %>
-                    <li class="<%= reqdata.path === '/volunteer/team' ? 'active' : '' %>">
-                      <a href="<%= site.url %>volunteer/team">Team</a>
-                    </li>
-                  <% } %>
-                  <li class="<% if (reqdata.path === '/jobsite/request') { %>active<% } %>">
-                    <a href="<%= site.url %>jobsite/request">Job Requests</a>
-                  </li>
-                  <% if (!user || user.role !== 'volunteer') { %>
-            	      <li class="<% if (reqdata.path === '/staffHomePage') { %>active<% } %>">
-            		      <a href="<%= site.url %>staff/staffHomePage">Staff</a>
-            	      </li>
-                  <% } %>
-                  <li class="<% if (reqdata.path === '/contact') { %>active<% } %>">
-                    <a href="<%= site.url %>contact">Contact</a>
-                  </li>
-                  <li class="<% if (reqdata.path === '/about') { %>active<% } %>">
-                    <a href="<%= site.url %>about">About</a>
-                  </li>
-              <% } %>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <% include navbar.html %>
     <div class="container">
       <%- body %>
-      <hr>
       <footer>
-        <% if (user && (user.role === 'executive' || user.role === 'committee' || user.role === 'leadership')) { %>  
+        <% if (isStaff) { %>
+          <hr />
           <div class="row">
             <div class="span4 text-center">
               <ul class="unstyled">
@@ -125,15 +60,13 @@
               </ul>
             </div>         
           </div>
-          <hr />
-          <p class="muted">&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
-        <% } else { %>
-          <p>&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
         <% } %>
+        <hr />
+        <p>&copy; <%= reqdata.date.year() %> - <%= site.author %></p>
       </footer>
     </div>
 
-    <!-- Some JavaScript, placed at the end of the document so the pages load faster -->
+    <!-- All scripts at the end of the document so the DOM loads faster -->
 
     <!-- Google CDN jQuery, fallback if unavailable -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -141,16 +74,13 @@
 
     <script src="<%= site.url %>vendor/js/jquery.form.min.js"></script>
 
-    <!-- Include Windows Live Connect JavaScript API -->
-    <script src="//js.live.net/v5.0/wl.js"></script>
-
     <!-- Include Bootstrap javascript after its jQuery dependency -->
     <script src="<%= site.url %>vendor/js/bootstrap.min.js"></script>
 
     <%- scripts %>
 
     <% if (typeof site.analytics !== 'undefined') { %>
-      <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID. -->
+      <!-- Asynchronously load Google Analytics -->
       <script>
         var _gaq=[['_setAccount','<%= site.analytics %>'],['_trackPageview'],['_trackPageLoadTime']];
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -159,9 +89,7 @@
       </script>
     <% } %>
 
-    <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-         chromium.org/developers/how-tos/chrome-frame-getting-started -->
-
+    <!-- Prompt IE 6 users to install Chrome Frame -->
     <!--[if lt IE 7 ]>
       <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
       <script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>

@@ -26,16 +26,52 @@ h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
   width: 100%;
 }
 
+.inline {
+    display: inline;
+}
+
+/** 
+ * Basic absolute centering 
+**/
+.absolute-container {
+    position: relative;
+}
+.absolute-center {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.absolute-center-vertical {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}
+.absolute-center-horizontal {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+.btn.pull-right + .btn.pull-right {
+    margin-right: 10px;
+}
+
+/**
+ * Inline radio button list
+**/
 div.radio-group {
     text-align: center;
     margin-bottom: 7px;
 }
-
 div.radio-group input {
     margin-left: 15px;
     margin-right: 5px;
 }
-
 div.radio-group div {
     display: inline-block;
 }
@@ -44,11 +80,13 @@ ul.pager li.previous {
     margin-right: 10px;
 }
 
+/**
+ * Inline thumbnails list
+**/
 ul.thumbnails {
     vertical-align: central;
     text-align: center;
 }
-
 ul.thumbnails li {
     max-width: 200px;
     height: auto;
@@ -57,26 +95,58 @@ ul.thumbnails li {
     zoom: 1;
     margin: 7px;
 }
-
 ul.thumbnails img {
     border: 1px solid #000;
 }
 
-
+/** 
+ * Custom bootstrap navbar
+**/
+div.navbar a.brand {
+    font-weight: bold;
+}
 div.navbar a {
     text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
     -webkit-transition: all .2s linear;
     -moz-transition: all .2s linear;
     transition: all .2s linear;
 }
-
-div.nav-collapse a {
+div.navbar div.nav-collapse.in ul.nav li a {
     text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
     -webkit-transition: none;
     -moz-transition: none;
     transition: none;
 }
+div.navbar div.nav-collapse ul.nav li.divider-vertical {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+div.navbar div.nav-collapse ul.nav li a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div.navbar div.nav-collapse ul.nav a [class^="icon-"], 
+div.navbar div.nav-collapse ul.nav a [class*=" icon-"], 
+div.navbar div.nav-collapse ul.nav a i.fa {
+    margin-right: 5px;
+}
+div.navbar div.nav-collapse.in ul.nav a [class^="icon-"],
+div.navbar div.nav-collapse.in ul.nav a [class*=" icon-"],
+div.navbar div.nav-collapse.in ul.nav a i.fa {
+    margin-right: 15px;
+}
 
-div.navbar a.brand {
-    font-weight: bold;
+div.navbar div.nav-collapse ul.nav a
+
+div.navbar div.nav-collapse ul.nav li.divider-vertical.active {
+    border-left: #222;
+    border-right: #111;
+}
+
+/** 
+ * Custom bootstrap icon styles 
+**/
+h4 [class^="icon-"], h4 [class*=" icon-"] {
+    margin-left: 5px;
+    margin-right: 5px;
 }
