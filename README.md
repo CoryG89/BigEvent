@@ -98,7 +98,7 @@ specified in the `package.json` file.
  * [**`phantomjs`**][phantomjs]
   - Headless webkit browser, used for generating PDF, installed via 
     [npm module][phantomjs-repo].
- * [**`node-phantom-simple`][node-phantom-simple]
+ * [**`node-phantom-simple`**][node-phantom-simple]
   - Bridge to allow network communication between a Node.JS server and local
     PhantomJS process.
  * [**`lodash`**][lodash]
@@ -144,6 +144,8 @@ Documentation
 [phantomjs-repo]: https://github.com/ariya/phantomjs
 [lodash]: http://lodash.com
 [lodash-repo]: https://github.com/lodash/lodash
+[node-phantom-simple]: https://github.com/baudehlo/node-phantom-simple
+
 
 [doc-architecture]: docs/architecture.md
 [doc-javascript]: docs/javascript.md
