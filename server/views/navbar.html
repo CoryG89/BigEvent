@@ -1,0 +1,70 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="<%= site.url %>"><%= site.title %></a>
+      <div class="nav-collapse">
+        <ul class="nav pull-right">
+          <li class="divider-vertical <%= reqdata.path === '/' || reqdata.path === '/home' || reqdata.path === '/staff/staffHomePage' ? 'active' : '' %>"></li>
+          <li class="<%= reqdata.path === '/' || reqdata.path === '/home' || reqdata.path === '/staff/staffHomePage' ? 'active' : '' %>">
+            <a href="<%= site.url %>home"><i class="icon-home icon-white"></i> Home</a>
+          </li>
+          <% if (isStaff) { %>
+            <li class="divider-vertical <%= reqdata.path === '/staff/jobsite/request' ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path === '/staff/jobsite/request' ? 'active' : '' %>">
+              <a href="<%= site.url %>staff/jobsite/request"><i class="icon-map-marker icon-white"></i> Add Job Site</a>
+            </li>
+            <li class="divider-vertical <%= reqdata.path === '/staff/tool' ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path === '/staff/tool' ? 'active' : '' %>">
+              <a href="<%= site.url %>staff/tool"><i class="icon-wrench icon-white"></i> Add Tool</a>
+            </li>
+            <li class="divider-vertical <%= reqdata.path === '/staff/jobsite/request' ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path === '/staff/printHomeDepotReport' ? 'active' : '' %>">
+              <a href="<%= site.url %>staff/toolReport"><i class="icon-list-alt icon-white"></i> Tool Report</a>
+            </li>
+          <% } else { %>
+            <li class="divider-vertical <%= reqdata.path !== '/volunteer/team' && reqdata.path.search(/^\/volunteer.*$/) !== -1 ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path !== '/volunteer/team' && reqdata.path.search(/^\/volunteer.*$/) !== -1 ? 'active' : '' %>">
+              <a href="<%= site.url %>volunteer"><i class="fa fa-gear fa-inverse"></i> Volunteers</a>
+            </li>
+            <% if (user && user.role === 'volunteer') { %>
+              <li class="divider-vertical <%= reqdata.path === '/volunteer/team' ? 'active' : '' %>"></li>
+              <li class="<%= reqdata.path === '/volunteer/team' ? 'active' : '' %>">
+                <a href="<%= site.url %>volunteer/team"><i class="fa fa-gears fa-inverse"></i> Team</a>
+              </li>
+            <% } %>
+            <li class="divider-vertical <%= reqdata.path === '/jobsite/request' ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path === '/jobsite/request' ? 'active' : '' %>">
+              <a href="<%= site.url %>jobsite/request"><i class="icon-map-marker icon-white"></i> Job Requests</a>
+            </li>
+            <% if (!user) { %>
+              <li class="divider-vertical <%= reqdata.path === '/staffHomePage' ? 'active' : '' %>"></li>
+              <li class="<%= reqdata.path === '/staffHomePage' ? 'active' : '' %>">
+                  <a href="<%= site.url %>staff/staffHomePage"><i class="fa fa-users fa-inverse"></i> Staff</a>
+              </li>
+            <% } %>
+          <% } %>
+          <li class="divider-vertical <%= reqdata.path === '/contact' ? 'active' : '' %>"></li>
+          <li class="<%= reqdata.path === '/contact' ? 'active' : '' %>">
+            <a href="<%= site.url %>contact"><i class="icon-envelope icon-white"></i> Contact</a>
+          </li>
+          <li class="divider-vertical <%= reqdata.path === '/about' ? 'active' : '' %>"></li>
+          <li class="<%= reqdata.path === '/about' ? 'active' : '' %>">
+            <a href="<%= site.url %>about"><i class="icon-info-sign icon-white"></i> About</a>
+          </li>
+          <li class="divider-vertical"></li>
+          <% if (user) { %>
+            <li><a href="<%= site.url %>signout"><i class="icon-user icon-white"></i> Sign Out</a></li>
+          <% } else { %>
+            <li><a href="<%= site.url %>signin"><i class="icon-user icon-white"></i> Sign In</a></li>
+          <% } %>
+          <li class="divider-vertical"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

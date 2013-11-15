@@ -9,7 +9,10 @@ module.exports = {
         app.get('/home', routes.home);
 
         app.get('/signin', routes.signin.get);
-        app.post('/signin', routes.signin.post);
+        app.get('/signin/authenticate', routes.signin.authenticate);
+        app.get('/signin/success', routes.signin.success);
+
+        app.get('/signout', routes.signout);
 
         app.get('/waiver', routes.waiver.get);
 

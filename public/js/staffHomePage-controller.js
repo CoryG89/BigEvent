@@ -8,7 +8,7 @@
         tool: 1,
         committee: 1,
         leadership: 1,
-        projectCoordinator: 1
+        coordinator: 1
     };
 
     var totalPages = {
@@ -17,7 +17,7 @@
         jobsite: parseInt($('#jobsiteNumPages').val(), 10),
         committee: parseInt($('#committeeNumPages').val(), 10),
         leadership: parseInt($('#leadershipNumPages').val(), 10),
-        projectCoordinator: parseInt($('#projectCoordinatorNumPages').val(), 10)
+        coordinator: parseInt($('#coordinatorNumPages').val(), 10)
     };
 
     //this stores the current sorting state for each table. 1 is asc order and
@@ -43,7 +43,7 @@
             column: '',
             direction: 1
         },
-        projectCoordinator: {
+        coordinator: {
             column: '',
             direction: 1
         }
@@ -56,7 +56,14 @@
         var cell = evt.target;
         var tableId = cell.offsetParent.id;
         var type = tableId.split('-')[0];
-        sort(type, cell.id);
+        var key;
+
+        if (cell.id !== 'email' && type === 'volunteer' || type === 'coordinator' || type === 'committee' || type === 'leadership')
+            key = type + '.' + cell.id;
+        else
+            key = cell.id;
+
+        sort(type, key);
     });
 
     $tableHeaders.on('mouseover', function (evt) {
@@ -272,28 +279,68 @@
         //the first cell should have a hyperlink to the item represented by the row
         var cell = row.cells[0];
         var header = headers[0];
-        if(header === 'doubleName')
+        var j;
+        if (type === 'volunteer' || type === 'coordinator' || type === 'committee'  || type === 'leadership')
         {
-            cell.innerHTML = '<a href="' + route + record._id + '">' +
-                    record.lastName + ', ' + record.firstName + '</a>';
-        }
-        else
-        {
-            cell.innerHTML = '<a href="' + route + record._id + '">' + record[header] + '</a>';
-        }
-
-        //loop through the rest of the cells
-        for(var j=1; j<row.cells.length; j++)
-        {
-            cell = row.cells[j];
-            header = headers[j];
-            if(header === 'doubleName')
+            if (header === 'doubleName')
             {
-                cell.innerText = record.lastName + ', ' + record.firstName;
+                cell.innerHTML = '<a href="' + route + record._id + '">' +
+                        record[type].lastName + ', ' + record[type].firstName + '</a>';
+            }
+            else if (header === 'email')
+            {
+                cell.innerHTML = record.email;
             }
             else
             {
-                cell.innerText = record[header];
+                cell.innerHTML = '<a href="' + route + record._id + '">' + record[type][header] + '</a>';
+            }
+
+            //loop through the rest of the cells
+            for (j=1; j<row.cells.length; j++)
+            {
+                cell = row.cells[j];
+                header = headers[j];
+                if (header === 'doubleName')
+                {
+                    cell.innerHTML = record[type].lastName + ', ' + record[type].firstName;
+                }
+                else if (header === 'email')
+                {
+                    cell.innerHTML = record.email;
+                }
+                else
+                {
+                    cell.innerHTML = record[type][header];
+                }
+            }
+
+        }
+        else
+        {
+            if (header === 'doubleName')
+            {
+                cell.innerHTML = '<a href="' + route + record._id + '">' +
+                        record.lastName + ', ' + record.firstName + '</a>';
+            }
+            else
+            {
+                cell.innerHTML = '<a href="' + route + record._id + '">' + record[header] + '</a>';
+            }
+
+            //loop through the rest of the cells
+            for (j=1; j<row.cells.length; j++)
+            {
+                cell = row.cells[j];
+                header = headers[j];
+                if (header === 'doubleName')
+                {
+                    cell.innerText = record.lastName + ', ' + record.firstName;
+                }
+                else
+                {
+                    cell.innerText = record[header];
+                }
             }
         }
     }
@@ -376,7 +423,7 @@
         {
             route += 'review/';
         }
-        else if(type === 'projectCoordinator')
+        else if(type === 'coordinator')
         {
             route += 'review/';
         }

@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = function (req, res) {
-    res.render('home', {
-        title: 'Home'
-    });
+    if (res.locals.isStaff && req.path === '/home')
+        res.redirect('/staff/staffHomePage');
+    else
+        res.render('home', { title: 'Home' });
 };

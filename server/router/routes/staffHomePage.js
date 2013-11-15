@@ -107,13 +107,13 @@ function getCounts(callback){
                             error += 'Error getting leadership team member Count.\n';
                         }
                         log('STAFFHOMEPAGE.GETCOUNTS: Leadership Member Count: %s', leadershipCount);
-                        users.count({ role: 'coordinator' }, function(perr, projectCoordinatorCount){
+                        users.count({ role: 'coordinator' }, function(perr, coordinatorCount){
                             if(perr){
                                 log('STAFFHOMEPAGE.GETCOUNTS: Error getting project coordinator count -> err: %s', perr);
                                 error += 'Error getting project coordinator Count.\n';
                             }
-                            log('STAFFHOMEPAGE.GETCOUNTS: Project Coordnator Count: %s', projectCoordinatorCount);
-                            callback(error, toolCount, volCount, jobCount, committeeMemberCount, projectCoordinatorCount, leadershipCount);
+                            log('STAFFHOMEPAGE.GETCOUNTS: Project Coordnator Count: %s', coordinatorCount);
+                            callback(error, toolCount, volCount, jobCount, committeeMemberCount, coordinatorCount, leadershipCount);
                         });
                     });
                 });
@@ -125,14 +125,14 @@ function getCounts(callback){
 module.exports = {
 
     get: function (req, res) {
-        getCounts(function(error, toolCount, volCount, jobCount, committeeMemberCount, projectCoordinatorCount, leadershipCount) {
+        getCounts(function(error, toolCount, volCount, jobCount, committeeMemberCount, coordinatorCount, leadershipCount) {
             //get number of pages for each table
             var toolNumPages = Math.ceil(toolCount / itemsPerPage);
             var volNumPages = Math.ceil(volCount / itemsPerPage);
             var jobSiteNumPages = Math.ceil(jobCount / itemsPerPage);
             var committeeNumPages = Math.ceil(committeeMemberCount / itemsPerPage);
             var leadershipNumPages = Math.ceil(leadershipCount / itemsPerPage);
-            var projectCoordinatorNumPages = Math.ceil(projectCoordinatorCount / itemsPerPage);
+            var coordinatorNumPages = Math.ceil(coordinatorCount / itemsPerPage);
             //get lists to populate each table
             getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs, committeeMemberDocs, leadershipDocs, pcDocs) {
                 //we need to loop through jobsites to determine how many of each tool
@@ -171,9 +171,9 @@ module.exports = {
                     cpt: (committeeNumPages === 0) ? 1 : committeeNumPages,
                     leadershipList: leadershipDocs,
                     lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
-                    projectCoordinatorList: pcDocs,
-                    ppt: (projectCoordinatorNumPages === 0) ? 1 : projectCoordinatorNumPages,
                     toolsNeeded: toolsNeeded,
+                    coordinatorList: pcDocs,
+                    ppt: (coordinatorNumPages === 0) ? 1 : coordinatorNumPages,
                     error: error
                 });
             });
@@ -204,7 +204,7 @@ module.exports = {
         } else if(type === 'leadership') {
             collection = users;
             query = { role: 'leadership' };
-        } else if(type === 'projectCoordinator') {
+        } else if(type === 'coordinator') {
             collection = users;
             query = { role: 'coordinator' };
         } else {
@@ -287,7 +287,7 @@ module.exports = {
         } else if(type === 'leadership') {
             collection = users;
             query = { role: 'leadership' };
-        } else if(type === 'projectCoordinator') {
+        } else if(type === 'coordinator') {
             collection = users;
             query = { role: 'coordinator' };
         } else {
