@@ -7,6 +7,7 @@ var pdfgen = require('../../pdfgen');
 var debug = require('../../debug');
 var log = debug.getLogger({ prefix: '[route.toolReport]-  '});
 var tools = dbman.getCollection('tools');
+var jobsites = dbman.getCollection('jobsites');
 
 module.exports = {
     get: function (req, res) {
@@ -34,64 +35,114 @@ module.exports = {
             else
             {
                 log('GET: %s tools found.', toolsArray.length);
-                //determine which tools need to be sent
-                var toolsRequestArray = [];
-                for(var i=0; i<toolsArray.length; i++)
-                {
-                    var currTool = toolsArray[i];
-                    log('GET: currTool: %s', currTool.name);
-                    log('GET: currTool.maxRequest: %s', currTool.maxRequest);
-                    var requestAmount = currTool.numberRequested;
-                    if(requestAmount > currTool.totalAvailable) //if this is false then there is enough tools in the tool shed to cover the request
+                jobsites.find().toArray(function(jerr, jobSiteArray){
+                    if(jerr)
                     {
-                        requestAmount -= currTool.totalAvailable;
-                        log('GET: requestAmount: %s', requestAmount);
-                        if(currTool.maxRequest === 'on')
-                        {
-                            requestAmount = (requestAmount < currTool.maxRequestValue) ? requestAmount : currTool.maxRequestValue;
-                        }
-                        if(requestAmount !== 0)
-                        {
-                            currTool.requestAmount = requestAmount;
-                            toolsRequestArray.push(currTool);
-                        }
+                        log('GET: Error getting jobsites. Err: %s', jerr);
+                        res.render('hero-unit', {
+                            title: 'Error',
+                            header: 'Error generating Report.',
+                            message: 'There was an error generating the report.'
+                        });
                     }
-                }
-                log('GET: number of tools with requests: %s', toolsRequestArray.length);
-
-                var tempFilename = uuid.v4() + '.pdf';
-
-                pdfgen.render({
-                    locals: {
-                        site: { url: req.protocol + '://' + req.host + '/' },
-                        tools: toolsRequestArray,
-                    },
-                    template: 'toolReport',
-                    path: tempFilename,
-                    onSuccess: function () {
-                        res.sendfile(tempFilename, function (sendErr) {
-                            if(sendErr)
+                    else if(!jobSiteArray)
+                    {
+                        log('GET: Uable to get jobsites.');
+                        res.render('hero-unit', {
+                            title: 'Error',
+                            header: 'Error generating Report.',
+                            message: 'There was an error generating the report.'
+                        });
+                    }
+                    else
+                    {
+                        //determine which tools need to be sent
+                        var toolsRequestArray = [];
+                        for(var i=0; i<toolsArray.length; i++)
+                        {
+                            var currTool = toolsArray[i];
+                            log('GET: currTool: %s', currTool.name);
+                            log('GET: currTool.maxRequest: %s', currTool.maxRequest);
+                            //we need to loop through jobsites to determine how many of each tool
+                            //is needed
+                            var toolsNeeded = {};
+                            for(var j=0; j<jobSiteArray.length; j++)
                             {
-                                log('GET: Error sending response: %s', sendErr);
-                            }
-                            else
-                            {
-                                log('GET: Transfer Complete.');
-                            }
-                            fs.exists(tempFilename, function (exists) {
-                                if (exists) {
-                                    fs.unlink(tempFilename, function(unlinkErr) {
-                                        if(unlinkErr)
+                                if(jobSiteArray[i].evaluation)
+                                {
+                                    var evalTools = jobSiteArray[i].evaluation.tools;
+                                    for(var k=0; k<evalTools.length; k++)
+                                    {
+                                        var currEvalTool = evalTools[j];
+                                        if(toolsNeeded[currEvalTool.name])
                                         {
-                                            log('GET: Unlink Error: %s', unlinkErr);
+                                            toolsNeeded[currEvalTool.name] += currEvalTool.quantity;
+                                        }
+                                        else
+                                        {
+                                            toolsNeeded[currEvalTool.name] = currEvalTool.quantity;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            //detrmine how many are to be requested
+                            if(toolsNeeded[currTool.name] !== 'undefined' || toolsNeeded[currTool.name] > currTool.inventory) //determine if we need to request any of this tool
+                            {
+                                var numNeeded = toolsNeeded[currTool.name];
+                                numNeeded -= currTool.inventory;
+                                log('GET: numNeeded: %s', numNeeded);
+                                if(currTool.maxRequest === 'on')
+                                {
+                                    numNeeded = (numNeeded < currTool.maxRequestValue) ? numNeeded : currTool.maxRequestValue;
+                                }
+                                if(numNeeded !== 0)
+                                {
+                                    toolsRequestArray.push({name: currTool.name, value: numNeeded});
+                                }
+                            }
+                        }
+                        log('GET: number of tools with requests: %s', toolsRequestArray.length);
+
+                        var tempFilename = uuid.v4() + '.pdf';
+
+                        pdfgen.render({
+                            locals: {
+                                site: { url: req.protocol + '://' + req.host + '/' },
+                                tools: toolsRequestArray,
+                            },
+                            template: 'toolReport',
+                            path: tempFilename,
+                            onSuccess: function () {
+                                res.sendfile(tempFilename, function (sendErr) {
+                                    if(sendErr)
+                                    {
+                                        log('GET: Error sending response: %s', sendErr);
+                                    }
+                                    else
+                                    {
+                                        log('GET: Transfer Complete.');
+                                    }
+                                    fs.exists(tempFilename, function (exists) {
+                                        if (exists) {
+                                            fs.unlink(tempFilename, function(unlinkErr) {
+                                                if(unlinkErr)
+                                                {
+                                                    log('GET: Unlink Error: %s', unlinkErr);
+                                                }
+                                                else
+                                                {
+                                                    log('GET: File Successufully Unlinked.');
+                                                }
+                                            });
                                         }
                                     });
-                                }
-                            });
+                                });
+                            },
+                            onError: function () {
+                                log('GET: Error rendering file');
+                            }
                         });
-                    },
-                    onError: function () {
-                        log('GET: Error rendering file');
                     }
                 });
 
