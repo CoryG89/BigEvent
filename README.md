@@ -73,10 +73,9 @@ specified in the `package.json` file.
     Express includes the `Connect` library and it's notion of middleware.
  * [**`ejs`**][ejs]
   - JavaScript template engine written by [TJ Holowaychuk][tj-holowaychuk]. 
-    Tj Holowaychuk is the author of the Express as well as the Mocha
-    test-running framework we're using. EJS stands for Embedded JavaScript, and
-    supports template logic by executing JavaScript embedded within
-    micro-template style tags. `<% %>`.
+    Tj is the author of the Express as well as the Mocha test-running framework
+    we're using. EJS stands for Embedded JavaScript, and supports template
+    logic by executing JavaScript embedded within micro-template style tags.
  * [**`ejs-locals`**][ejs-locals]
   - Wrapps the `ejs` module adding support for view partials, layouts, and
     block include functions within EJS templates.
