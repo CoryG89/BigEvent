@@ -56,65 +56,58 @@ Browse to the development domain, `bigevent.com` and if you set everything up
 correctly the home page should be rendered.
 
 
-Dependencies
-------------
+Server Dependencies
+-------------------
 Our server is written with Node which comes packaged with a number of
 [native modules][node-api]. The [HTTP module][node-api-http] runs at the heart
-of our server. Our server also has the following module dependencies which are
-installed via the [npm repository][npm] by running `npm install`. These
-dependencies are specified in the `package.json` file.
+of our server. Other than the native node modules included with Node.JS our
+server also depends on the following modules which are installed from the
+[npm repository][npm] by running `npm install`. These dependencies are
+specified in the `package.json` file.
 
  * [**`express`**][express]
-  - Express is a popular, [open-source][express-repo], web-framework for node.
-    It wraps the HTTP server module. Provides features like dynamic routing,
-    session support, view rendering/templating, etc. Express also has support
-    for what is called middleware. A server's middleware is a stack of functions
-    through which requests are passed before a response is generated from the
-    server. A particular middleware function in the server's middleware stack
-    may decide either to handle the request or pass it on to the next middleware 
-    function.
-
+  - The most popular, [open-source][express-repo], web framework for node. 
+    Inspired by Sinatra for Ruby on Rails. An express ap is just a request
+    handler for the native node `http` server module. Provides features like
+    dynamic routing, view rendering/templating support, session support etc.
+    Express includes the `Connect` library and it's notion of middleware.
  * [**`ejs`**][ejs]
-  - EJS is template engine written by the creator of Express, 
-    [TJ Holowaychuk][tj-holowaychuk], who is also the author of Express and the
-    Mocha test-running framework we're using. EJS supports both client-side and
-    server-side templating. We're using EJS server-side by depending on the
-    `ejs` npm. EJS stands for Embedded JavaScript, which is fitting because
+  - JavaScript template engine written by [TJ Holowaychuk][tj-holowaychuk]. 
+    Tj Holowaychuk is the author of the Express as well as the Mocha
+    test-running framework we're using. EJS stands for Embedded JavaScript, and
     supports template logic by executing JavaScript embedded within
     micro-template style tags. `<% %>`.
-
  * [**`ejs-locals`**][ejs-locals]
-  - [ejs-locals][ejs-locals] is a library wrapping the `ejs` module which adds
-    support for view partials, layouts, and block include functions within EJS
-    templates.
-
+  - Wrapps the `ejs` module adding support for view partials, layouts, and
+    block include functions within EJS templates.
  * [**`nodemailer`**][nodemailer]
-  - Allows e-mails to be sent by a Node server using various transport methods,
-    the most common being an SMTP server. Nodemailer supports these
+  - Allows e-mails to be sent by the Node.JS server using various transport
+    methods, the most common being an SMTP server. Nodemailer supports these
     [well known services][nodemailer-wpks] in order to make configuration easy.
-
  * [**`mongodb`**][mongodb]
-  - MongoDB is the leading NoSQL database management system, meaning it is 
+  - MongoDB is the leading NoSQL database management system, meaning it does 
     *not* work with relational databases like more common SQL-based database
-    management systems. MongoDB does not work with tables and rows and those
-    words are not part of the terminology used. MongoDB stores and queries data
-    from **collections** of JSON-style **documents**
-  - The MongoDB system itself is written in C++ for performance, but it's
-    native driver is actually written in JavaScript as a Node.JS module. MongoDB
-    offers   is itself written for  a Node module so we're using it as it was
-    meant to be used. There are some other alternatives to using this module
-    two of which I have considered are `Mongoose` and `mongoskin`
-
+    management systems. Instead, MongoDB is a document-database. Storing and
+    querying *documents* from *collections*.
  * [**`moment`**][moment]
   - Parsing and creating timestamps using the JavaScript Date object.
-
  * [**`marked`**][marked]
   - Markdown parser and compiler written in JavaScript. Built for speed.
-
+ * [**`node-uuid`**][node-uuid]
+  - Generates version 1 and version 4 UUIDs based on RFC4122.
+ * [**`phantomjs`**][phantomjs]
+  - Headless webkit browser, used for generating PDF, installed via 
+    [npm module][phantomjs-repo].
+ * [**`node-phantom-simple`][node-phantom-simple]
+  - Bridge to allow network communication between a Node.JS server and local
+    PhantomJS process.
+ * [**`lodash`**][lodash]
+  - General utility library available as a [npm module][lodash-repo], used for
+    deep merging and cloning objects.
  * [**`export-dir`**][export-dir]
-  - This is an example of a Node module that I wrote myself. It's purpose is
-    to allow you to export an entire directory of files as an object. It is
-    used in the routes
+  - Example of a Node module that I wrote myself. Allows you to export an entire
+    directory of files as an object. It is used in the routes.
+
 
 Documentation
 -------------
@@ -135,6 +128,8 @@ Documentation
 [npm]: https://npmjs.org
 [express]: http://expressjs.com
 [express-repo]: https://github.com/visionmedia/express
+[connect]: http://www.senchalabs.org/connect/
+[connect-repo]: https://github.com/senchalabs/connect
 [ejs]: http://embeddedjs.com
 [ejs-locals]: https://github.com/randometc/ejs-locals
 [mongodb]: http://mongodb.org
@@ -144,6 +139,11 @@ Documentation
 [moment]: https://github.com/moment/moment
 [marked]: https://github.com/chjj/marked
 [export-dir]: https://github.com/CoryG89/export-dir
+[node-uuid]: https://github.com/broofa/node-uuid
+[phantomjs]: http://phantomjs.org
+[phantomjs-repo]: https://github.com/ariya/phantomjs
+[lodash]: http://lodash.com
+[lodash-repo]: https://github.com/lodash/lodash
 
 [doc-architecture]: docs/architecture.md
 [doc-javascript]: docs/javascript.md
