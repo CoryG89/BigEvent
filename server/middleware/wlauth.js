@@ -10,6 +10,8 @@ var isOpenPath = (function () {
         '/': true,
         '/home': true,
         '/signin': true,
+        '/signin/authenticate': true,
+        '/signin/success': true,
         '/jobsite/request': true,
         '/jobsite/request/failure': true,
         '/jobsite/request/success': true,

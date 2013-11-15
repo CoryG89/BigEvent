@@ -1,9 +1,11 @@
-<% script(site.url + 'vendor/js/jquery.cookie-1.3.1.min.js') -%>
-<% script(site.url + 'js/signin-controller.js') -%>
 <div class="row">
-  <div class="offset2 span8 hero-unit">
-    <h3>Please sign in to continue</h3>
-    <p><small>You need to login with your Microsoft Account to continue. Your Auburn account (email address and password) is also a valid Microsoft Account. You may need to use your fully qualified <code>@tigermail.auburn.edu</code> email address in order to sign in. Your password will be the same password that is used to login to AU Access.</small></p>
-    <div id="wl-ui"></div>
+  <div class="offset3 span6 well">
+    <h3><%= header %></h3>
+    <hr />
+    <p>Auburn <em>student</em> accounts are also valid Microsoft Accounts. Students can sign-in with their full Auburn email address (e.g. <code>user0001@tigermail.auburn.edu</code>) and password.</p>
+    <p>Auburn <em>residents</em> or <em>property owners</em> who are interested in <a href="<%= site.url %>jobsite/request"><strong>submitting a job request</strong></a> for volunteer work on the day of the event <strong>do not</strong> need to sign in to do so.</p>
+    <hr />
+    <a href="<%= site.url %>signin/authenticate" class="btn btn-primary pull-right">Sign In <i class="icon-user icon-white"></i></a>
+    <button onclick="window.history.back()" class="btn pull-right">Go Back</button>
   </div>
 </div>
