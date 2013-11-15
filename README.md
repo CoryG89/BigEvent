@@ -145,7 +145,7 @@ Documentation
 [lodash]: http://lodash.com
 [lodash-repo]: https://github.com/lodash/lodash
 [node-phantom-simple]: https://github.com/baudehlo/node-phantom-simple
-
+[tj-holowaychuk]: http://tjholowaychuk.com/
 
 [doc-architecture]: docs/architecture.md
 [doc-javascript]: docs/javascript.md
