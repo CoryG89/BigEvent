@@ -15,8 +15,15 @@
             }
         },
 
-        error: function () {
-            window.location.replace('/staff/updateWaiver/failure');
+        error: function (xhr) {
+            if(xhr.responseText === 'ext')
+            {
+                alert('Invalid file extention. File must have a .txt extention.');
+            }
+            else
+            {
+                window.location.replace('/staff/updateWaiver/failure');
+            }
         }
     });
 
