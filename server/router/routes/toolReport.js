@@ -87,7 +87,7 @@ module.exports = {
                             }
                             
                             //detrmine how many are to be requested
-                            if(toolsNeeded[currTool.name] !== 'undefined' || toolsNeeded[currTool.name] > currTool.inventory) //determine if we need to request any of this tool
+                            if(toolsNeeded[currTool.name] || toolsNeeded[currTool.name] > currTool.inventory) //determine if we need to request any of this tool
                             {
                                 var numNeeded = toolsNeeded[currTool.name];
                                 numNeeded -= currTool.inventory;
