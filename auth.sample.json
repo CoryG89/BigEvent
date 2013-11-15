@@ -11,6 +11,10 @@
     "user": "yourusername@gmail.com",
     "pass": "yourpass"
   },
+  "windowsLive": {
+    "clientId": "000000006914ABCD",
+    "clientSecret": "F90c45GF8r1a76mBpUeBbfVEXlXOz7rU"
+  },
   "cookieClientSecret": "SomeSecretKeyToEncryptSignedCookiesWith",
   "sessionClientSecret": "SomeSecretKeyToEncryptTheSessionCookieWith"
 }
