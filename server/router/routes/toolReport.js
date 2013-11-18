@@ -114,7 +114,7 @@ module.exports = {
                             template: 'toolReport',
                             path: tempFilename,
                             onSuccess: function () {
-                                res.send(tempFilename, function (sendErr) {
+                                res.sendfile(tempFilename, function (sendErr) {
                                     if(sendErr)
                                     {
                                         log('GET: Error sending response: %s', sendErr);
