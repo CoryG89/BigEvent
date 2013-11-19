@@ -35,6 +35,8 @@ module.exports = {
         app.get('/volunteer/team/leave', routes.team.leave);
         app.get('/volunteer/team/:id', routes.team.get);
         
+        app.get('/staffHome', routes.staffHome.get);
+
         app.get('/staff/volunteer/team/list', routes.staffTeamList);
         app.get('/staff/volunteer/team/:id', routes.team.get);
 
