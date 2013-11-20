@@ -9,12 +9,11 @@ var jobsites = dbman.getCollection('jobsites');
 var tools = dbman.getCollection('tools');
 
 var userHeaders = [
-    'Last Name', 'First Name', 'Email', 'Phone', 'Gender', 'Shirt Size',
-    'Address'
+    'Name', 'Email', 'Phone', 'Gender', 'Shirt Size', 'Address'
 ];
 
 var jobsiteHeaders = [
-    'Last Name', 'First Name', 'Email', 'Phone', 'Alt. Phone', 'Address'
+    'Name', 'Email', 'Phone', 'Alt. Phone', 'Address'
 ];
 
 var toolHeaders = [
@@ -23,15 +22,16 @@ var toolHeaders = [
 
 function getUserRow(role, doc) {
     return [
-        doc[role].lastName, doc[role].firstName, doc.email, doc[role].phone,
-        doc[role].gender, doc[role].shirtSize, doc[role].formattedAddress
+        doc[role].lastName + ', ' + doc[role].firstName, doc.email,
+        doc[role].phone, doc[role].gender, doc[role].shirtSize,
+        doc[role].formattedAddress
     ];
 }
 
 function getJobsiteRow(doc) {
     return [
-        doc.lastName, doc.firstName, doc.email, doc.phone, doc.altPhone,
-        doc.formattedAddress
+        doc.lastName + ', ' + doc.firstName, doc.email, doc.phone,
+        doc.altPhone, doc.formattedAddress
     ];
 }
 
