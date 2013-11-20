@@ -1,13 +1,6 @@
 (function () {
     'use strict';
 
-    $.extend($.tablesorter.themes.bootstrap, {
-        table: 'table table-bordered',
-        sortNone: 'bootstrap-icon-unsorted',
-        sortAsc: 'icon-chevron-up',
-        sortDesc: 'icon-chevron-down'
-    });
-
     $('table.tablesorter').each(function () {
         $(this).tablesorter({
             theme: 'bootstrap',
@@ -16,7 +9,7 @@
             widgets: ['uitheme', 'filter', 'zebra'],
             widgetOptions: {
                 zebra: ['even', 'odd'],
-                filter_reset: '.reset'
+                filter_reset: ''
             }
         });
         
@@ -25,5 +18,5 @@
             output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
         });
     });
-
+    
 })();

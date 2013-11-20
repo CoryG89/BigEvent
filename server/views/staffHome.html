@@ -1,3 +1,10 @@
+<% stylesheet(site.url + 'vendor/tablesorter/css/theme.bootstrap.css') -%>
+<% stylesheet(site.url + 'vendor/tablesorter/addons/pager/jquery.tablesorter.pager.css') -%>
+<% script(site.url + 'vendor/tablesorter/js/jquery.tablesorter.min.js') -%>
+<% script(site.url + 'vendor/tablesorter/js/jquery.tablesorter.widgets.min.js') -%>
+<% script(site.url + 'vendor/tablesorter/addons/pager/jquery.tablesorter.pager.js') -%>
+<% script(site.url + 'js/table-controller.js') -%>
+
 <%- partial('table', { table: tableData.volunteer }) %>
 <%- partial('table', { table: tableData.jobsite }) %>
 <%- partial('table', { table: tableData.tool }) %>

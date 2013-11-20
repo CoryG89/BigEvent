@@ -1,10 +1,3 @@
-<% stylesheet(site.url + 'vendor/tablesorter/css/theme.bootstrap.css') -%>
-<% stylesheet(site.url + 'vendor/tablesorter/addons/pager/jquery.tablesorter.pager.css') -%>
-<% script(site.url + 'vendor/tablesorter/js/jquery.tablesorter.min.js') -%>
-<% script(site.url + 'vendor/tablesorter/js/jquery.tablesorter.widgets.min.js') -%>
-<% script(site.url + 'vendor/tablesorter/addons/pager/jquery.tablesorter.pager.js') -%>
-<% script(site.url + 'js/table-controller.js') -%>
-
 <div class="table-container">
   <% if (typeof table.title === 'string') { %>
     <h3><%= table.title %></h3>
