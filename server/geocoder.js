@@ -21,11 +21,11 @@ module.exports = {
             });
             res.on('end', function () {
                 log('Got response from geocoding server');
-                callback(JSON.parse(data));
+                callback(null, JSON.parse(data));
             });
         }).on('error', function (err) {
             log('Error sending geocoding request:\n\n\t%s\n', err);
-            callback(null, err);
+            callback(err);
         });
     }
 };
