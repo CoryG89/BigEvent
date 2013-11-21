@@ -1,0 +1,66 @@
+<div class="table-container">
+  <% if (typeof table.title === 'string') { %>
+    <h3><%= table.title %></h3>
+    <hr />
+  <% } %>
+  <table id="<%= table.id %>" class="tablesorter">
+    <thead>
+      <tr>
+        <% table.headers.forEach(function (header) { %>
+          <th><%= header %></th>
+        <% }) %>
+      </tr>
+    </thead>
+    <tbody>
+      <% table.rows.forEach(function (row) { %>
+        <tr>
+        <% row.data.forEach(function (e, i) { %>
+          <td>
+            <% if (typeof table.linkField === 'number' && typeof table.linkPath === 'string' && i === table.linkField) { %>
+              <a href="<%= site.url + table.linkPath + '/' + row._id %>"><%= e %></a>
+            <% } else { %>
+              <%= e %>
+            <% } %>
+          </td>
+        <% }); %>
+        </tr>
+      <% }); %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th id="<%= table.id %>-pager" colspan="64">
+          <div class="row-fluid">
+            <div class="table-inputs span6 text-center">
+              <ul class="inline">
+                <li>
+                  <label for="pagesize-select" class="inline-block"><strong>Page Size &nbsp; <i class="fa fa-list-ul"></i></strong></label>
+                  <select id="pagesize-select" class="pagesize input-mini" title="Page Size">
+                    <option value="5">5</option>
+                    <option selected="selected" value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="80">80</option>
+                  </select>
+                </li>
+                <li>
+                  <label for="pagenum-select" class="inline-block"><strong>&nbsp; Go To &nbsp; <i class="fa fa-file-text"></i></strong></label>
+                  <select id="pagenum-select" class="gotoPage input-mini" title="Page Number"></select>
+                </li>
+              </ul>
+            </div>
+            <div class="table-inputs span6 text-center">
+              <ul class="inline">
+                <li><button type="button" class="btn first"><i class="fa fa-fast-backward"></i> <span class="visible-desktop">First</span></button></li>
+                <li><button type="button" class="btn prev"><i class="fa fa-backward"></i> <span class="visible-desktop">Prev</span></button></li>
+                <li><span class="pagedisplay"></span></li>
+                <li><button type="button" class="btn next"><span class="visible-desktop">Next</span> <i class="fa fa-forward"></i></button></li>
+                <li><button type="button" class="btn last"><span class="visible-desktop">Last</span> <i class="fa fa-fast-forward"></i></button></li>
+              </ul>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

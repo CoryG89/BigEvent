@@ -14,6 +14,11 @@ h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
   margin: 0px 0px 10px;
 }
 
+button:focus, select:focus {
+    outline: none;
+    border-color: #74B9EF;
+}
+
 .clip-bottom {
     margin-bottom: 0px;
 }
@@ -28,6 +33,27 @@ h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
 
 .inline {
     display: inline;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-bolder {
+    font-weight: bolder;
+}
+
+.text-normal {
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.text-underline {
+    text-decoration: underline;
 }
 
 /** 
@@ -135,9 +161,7 @@ div.navbar div.nav-collapse.in ul.nav a [class*=" icon-"],
 div.navbar div.nav-collapse.in ul.nav a i.fa {
     margin-right: 15px;
 }
-
 div.navbar div.nav-collapse ul.nav a
-
 div.navbar div.nav-collapse ul.nav li.divider-vertical.active {
     border-left: #222;
     border-right: #111;
@@ -149,4 +173,8 @@ div.navbar div.nav-collapse ul.nav li.divider-vertical.active {
 h4 [class^="icon-"], h4 [class*=" icon-"] {
     margin-left: 5px;
     margin-right: 5px;
+}
+
+div.table-container table div.table-inputs {
+    margin: 10px 0px 10px 0px;
 }
