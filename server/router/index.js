@@ -38,10 +38,10 @@ module.exports = {
         app.get('/staff/volunteer/team/list', routes.staffTeamList);
         app.get('/staff/volunteer/team/:id', routes.team.get);
 
-        app.get('/jobsite/request', routes.jobsite.request.get);
-        app.post('/jobsite/request', routes.jobsite.request.post);
-        app.get('/jobsite/request/success', routes.jobsite.request.success);
-        app.get('/jobsite/request/failure', routes.jobsite.request.failure);
+        app.get('/jobsite/request', routes.jobsiteRequest.get);
+        app.post('/jobsite/request', routes.jobsiteRequest.post);
+        app.get('/jobsite/request/success', routes.jobsiteRequest.success);
+        app.get('/jobsite/request/failure', routes.jobsiteRequest.failure);
 
         //staff side routes
         app.get('/staff/volunteer/success', routes.volunteer.success);
@@ -53,16 +53,16 @@ module.exports = {
         app.get('/staff/volunteer/account/:id', routes.volunteer.account.staff.get);
         app.post('/staff/volunteer/account/:id', routes.volunteer.account.staff.post);
 
-        app.get('/staff/jobsite/request', routes.jobsite.request.get);
-        app.post('/staff/jobsite/request', routes.jobsite.request.staff.post);
-        app.get('/staff/jobsite/request/success', routes.jobsite.request.success);
-        app.get('/staff/jobsite/request/failure', routes.jobsite.request.failure);
+        app.get('/staff/jobsite/request', routes.jobsiteRequest.get);
+        app.post('/staff/jobsite/request', routes.jobsiteRequest.staff.post);
+        app.get('/staff/jobsite/request/success', routes.jobsiteRequest.success);
+        app.get('/staff/jobsite/request/failure', routes.jobsiteRequest.failure);
 
-        app.get('/staff/jobsite/evaluation/success', routes.jobsite.evaluation.success);
-        app.get('/staff/jobsite/evaluation/failure', routes.jobsite.evaluation.failure);
-        app.post('/staff/jobsite/evaluation/delete/:id', routes.jobsite.evaluation.delete);
-        app.get('/staff/jobsite/evaluation/:id', routes.jobsite.evaluation.get);
-        app.post('/staff/jobsite/evaluation/:id', routes.jobsite.evaluation.post);
+        app.get('/staff/jobsite/evaluation/success', routes.jobsiteEvaluation.success);
+        app.get('/staff/jobsite/evaluation/failure', routes.jobsiteEvaluation.failure);
+        app.post('/staff/jobsite/evaluation/delete/:id', routes.jobsiteEvaluation.delete);
+        app.get('/staff/jobsite/evaluation/:id', routes.jobsiteEvaluation.get);
+        app.post('/staff/jobsite/evaluation/:id', routes.jobsiteEvaluation.post);
 	
         app.get('/staff/tool', routes.tool.get);
         app.post('/staff/tool', routes.tool.post);
