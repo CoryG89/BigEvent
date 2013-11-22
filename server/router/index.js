@@ -14,7 +14,7 @@ module.exports = {
 
         app.get('/signout', routes.signout);
 
-        app.get('/waiver', routes.waiver);
+        app.get('/waiver', routes.waiver.get);
 
         app.get('/access-denied', routes.accessDenied);
 
@@ -86,9 +86,12 @@ module.exports = {
         app.post('/staff/updateZipCodes', routes.zipcodes.post);
         app.get('/staff/updateZipCodes/failure', routes.zipcodes.failure);
 
+        app.get('/staff/updateWaiver', routes.waiver.getUpdateForm);
+        app.post('/staff/updateWaiver', routes.waiver.update);
+        app.get('/staff/updateWaiver/failure', routes.waiver.failure);
+
         app.get('/staff/logout', routes.signin.get);
         app.get('/staff/clearDatabase', routes.staffHomePage.clearDatabase);
-        app.get('/staff/updateWaiver', routes.staffHomePage.updateWaiver);
         app.get('/staff/updateReports', routes.staffHomePage.updateReports);
         
         app.get('*', routes.notfound);

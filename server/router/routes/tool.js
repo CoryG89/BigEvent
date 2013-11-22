@@ -5,6 +5,7 @@ var dbman = require('../../dbman');
 
 var log = debug.getLogger({ prefix: '[route.tool]-  ' });
 var tools = dbman.getCollection('tools');
+var jobsites = dbman.getCollection('jobsites');
 var ObjectId = dbman.getObjectId();
 
 module.exports = {
@@ -38,9 +39,6 @@ module.exports = {
             else if(!oldRecord)
             {
                 log('POST: Tool not found -> adding new entry to database');
-                
-                //calculate the number reamining in storage
-                newRecord.numberRemaining = newRecord.totalAvailable - newRecord.numberInUse;
 
                 //insert new entry
                 tools.insert(newRecord, { w: 1 }, function (err, records) {
@@ -101,9 +99,32 @@ module.exports = {
                 }
                 else{
                     log('TOOL.REVIEW.GET: Found record with id: %s', id);
+                    //we need to loop through jobsites to determine how many of each tool
+                    //is needed
+                    var numNeeded = 0;
+                    jobsites.find().toArray(function(jerr, jobSiteArray){
+                        for(var i=0; i<jobSiteArray.length; i++)
+                        {
+                            if(jobSiteArray[i].evaluation)
+                            {
+                                var evalToolList = jobSiteArray[i].evaluation.tools;
+                                for(var j=0; j<evalToolList.length; j++)
+                                {
+                                    var evalTool = evalToolList[j];
+                                    if(evalTool.name === record.name)
+                                    {
+                                        numNeeded += evalTool.quantity;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    //add the number needed to the record
+                    record.numberNeeded = numNeeded;
                     res.render('toolReview', {
                         title: 'Edit Tool',
-                        record: record
+                        record: record,
+                        numNeeded: numNeeded
                     });
                 }
             });
@@ -113,7 +134,7 @@ module.exports = {
             var newRecord = req.body;
             var id = req.params.id;
 
-            log('TOOL.REVIEW.POST Trying to bet tool with _id: %s', id);
+            log('TOOL.REVIEW.POST Trying to update tool with _id: %s', id);
 
              //check to see if the checkbox was checked. If it was not checked there will be no field for it in the record. Add one
             if(!newRecord.maxRequest)
@@ -123,8 +144,6 @@ module.exports = {
                 newRecord.maxRequestValue = 0;
             }
 
-            //calcualte number remaining
-            newRecord.numberRemaining = newRecord.totalAvailable - newRecord.numberInUse;
             var query = { _id: new ObjectId(id) };
             var cmd = { $set: newRecord };
             var opt = { w: 1 };

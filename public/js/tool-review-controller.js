@@ -15,7 +15,6 @@
     var $editButton = $('a#edit-button');
     var $cancelButton = $('a#cancel-button');
     var $accountInputs = $('.tool-review-input');
-    var $numberRequested = $('input#numberRequested');
 
     var $deleteButton = $('a#delete-button');
     $deleteButton.addClass('disabled');
@@ -56,21 +55,6 @@
     $('form#toolReview-form').ajaxForm({
         beforeSubmit: function () {
 
-            //check to see if the inputed numbers are correct
-            if(parseInt($('#totalAvailable').val(), 10) < parseInt($('#numberInUse').val(), 10))
-            {
-                alert('Number In Use cannot be greater than Total Available.');
-                return false;
-            }
-            if($maxReqCheckbox.prop('checked'))
-            {
-                if(parseInt($numberRequested.val(), 10) > parseInt($maxReqValue.val(), 10))
-                {
-                    alert('You cannot request more than the Max Request Limit');
-                    return false;
-                }
-            }
-            return true;
         },
 
         success: function (data, status) {

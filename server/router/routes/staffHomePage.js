@@ -135,6 +135,29 @@ module.exports = {
             var coordinatorNumPages = Math.ceil(coordinatorCount / itemsPerPage);
             //get lists to populate each table
             getLists(error, function(error, toolDocs, volunteerDocs, jobSiteDocs, committeeMemberDocs, leadershipDocs, pcDocs) {
+                //we need to loop through jobsites to determine how many of each tool
+                //is needed
+                var toolsNeeded = {};
+                for(var i=0; i<jobSiteDocs.length; i++)
+                {
+                    if(jobSiteDocs[i].evaluation)
+                    {
+                        var evalToolsList = jobSiteDocs[i].evaluation.tools;
+                        for(var j=0; j<evalToolsList.length; j++)
+                        {
+                            var evalTool = evalToolsList[j];
+                            if(toolsNeeded[evalTool.name])
+                            {
+                                toolsNeeded[evalTool.name] += evalTool.quantity;
+                            }
+                            else
+                            {
+                                toolsNeeded[evalTool.name] = evalTool.quantity;
+                            }
+                        }
+                    }
+                }
+                
                 //render page
                 res.render('staffHomePage', {
                     title: 'Staff Home Page',
@@ -148,6 +171,7 @@ module.exports = {
                     cpt: (committeeNumPages === 0) ? 1 : committeeNumPages,
                     leadershipList: leadershipDocs,
                     lpt: (leadershipNumPages === 0) ? 1 : leadershipNumPages,
+                    toolsNeeded: toolsNeeded,
                     coordinatorList: pcDocs,
                     ppt: (coordinatorNumPages === 0) ? 1 : coordinatorNumPages,
                     error: error
