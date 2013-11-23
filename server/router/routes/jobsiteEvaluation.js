@@ -103,8 +103,10 @@ module.exports = {
                         id: 'eval-listing-table',
                         headers: evalListingHeaders,
                         rows: rows,
-                        linkField: 0,
-                        linkPath: 'staff/jobsite/evaluation'
+                        linkField: {
+                            column: 0,
+                            path: 'staff/jobsite/evaluation'
+                        }
                     }
                 });
             }

@@ -3,9 +3,7 @@
 
     var $maxReqCheckbox = $('#maxRequest');
     var $maxReqValue = $('input#maxRequestValue');
-    var $maxReqLabel = $('#maxRequestLabel');
     $maxReqValue.addClass('hidden');
-    $maxReqLabel.addClass('hidden');
 
     $('form#tool-form').ajaxForm({
         beforeSubmit: function () {
@@ -34,13 +32,11 @@
     $maxReqCheckbox.on('click', function(){
         if(this.checked)
         {
-            $maxReqLabel.removeClass('hidden');
             $maxReqValue.removeClass('hidden');
             $maxReqValue.prop('required', true);
         }
         else
         {
-            $maxReqLabel.addClass('hidden');
             $maxReqValue.addClass('hidden');
             $maxReqValue.prop('required', false);
         }

@@ -1,25 +1,33 @@
 'use strict';
 
+var util = require('util');
+var path = require('path');
 var nodemailer = require('nodemailer');
+
 var renderer = require('./renderer');
 var debug = require('../debug');
-var auth = require('../../auth').email;
+var config = require('../../config');
+var auth = require('../../auth');
 
 var log = debug.getLogger({ prefix: '[emailer]-  ' });
 
 var transport = nodemailer.createTransport('SMTP', {
-    service: auth.service,
-    auth: { user: auth.user, pass: auth.pass }
+    service: auth.email.service,
+    auth: { user: auth.email.user, pass: auth.email.pass }
 });
 
-var fromLabel = 'Big Event <bigeventdemo@gmail.com>';
-var templatesPath = 'server/views/email/';
-
+var enabled = config.emailNotifications.enabled;
+var fromLabel = config.emailNotifications.fromLabel;
+var templatesPath = 'server/views/email';
 
 module.exports = {
-
     send: function (opt, callback) {
-        opt.template = templatesPath + opt.template + '.md';
+        if (!enabled) {
+            log('Email notifications disabled, simulating success behavior', function (msg) {
+                callback(null, msg);
+            });
+        }
+        opt.template = util.format('%s.md', path.join(templatesPath, opt.template));
         renderer.render(opt.template, opt.locals, function (error, html) {
             if (error) {
                 log('Error rendering template -- %s', error, callback);

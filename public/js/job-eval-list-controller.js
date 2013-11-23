@@ -2,11 +2,13 @@
     'use strict';
 
     var map;
-    var mapMarkers = [];
     var infoWindow;
-    var $evalListingTable = $('table#eval-listing-table');
-
+    var mapMarkers = [];
     var evalListingHeaders = [];
+
+    var $evalListingTable = $('table#eval-listing-table');
+    var $listingMapContainer = $('div#listing-map-container');
+
     $evalListingTable.find('thead > tr > th > div').each(function(i, e) {
         evalListingHeaders.push(e.innerText);
     });
@@ -20,13 +22,13 @@
         mapMarkers.forEach(function (marker) { marker.setMap(null); });
         mapMarkers = [];
         $evalListingRows.not('.filtered').each(function () {
-            var id = $(this).data('id');
+            var addr = $(this).data('addr');
             var lat = $(this).data('lat');
             var lng = $(this).data('lng');
             var mapLatLng = new google.maps.LatLng(lat, lng);
             var marker = new google.maps.Marker({
                 position: mapLatLng,
-                title: id
+                title: addr
             });
             var infoWindowContent = '<ul>';
             
@@ -53,7 +55,7 @@
     }
 
     $(window).on('load', function () {
-        var container = document.getElementById('map-container');
+        var container = $listingMapContainer[0];
         map = new google.maps.Map(container, {
             zoom: 13
         });

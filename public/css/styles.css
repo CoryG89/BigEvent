@@ -3,6 +3,7 @@ p {
 }
 
 textarea {
+    height: 100px;
     resize: none;
 }
 
@@ -19,41 +20,45 @@ button:focus, select:focus {
     border-color: #74B9EF;
 }
 
-.clip-bottom {
-    margin-bottom: 0px;
+input[type="checkbox"] {
+    vertical-align: text-bottom;
 }
 
-.clip-top {
-    margin-top: 0px;
+input[type="radio"] {
+    vertical-align: text-bottom;
 }
 
-.full-width {
-  width: 100%;
+input[type="radio"] + label {
+    padding-left: 5px;
 }
 
-.inline {
-    display: inline;
+dl dt + dd {
+    margin-bottom: 8px;
 }
 
-.inline-block {
-    display: inline-block;
-}
+ul.circle { list-style-type: circle }
+ul.square { list-style-type: square; }
+ul.upper-roman { list-style-type: upper-roman; }
+ul.lower-roman { list-style-type: lower-roman; }
+ul.upper-alpha { list-style-type: upper-alpha; }
+ul.lower-alpha { list-style-type: lower-alpha; }
 
-.text-bold {
-    font-weight: bold;
-}
 
-.text-bolder {
-    font-weight: bolder;
-}
+.strip-bottom { margin-bottom: 0px; }
+.strip-top { margin-top: 0px; }
 
+.full-width { width: 100%; }
+
+.inline { display: inline; }
+
+.inline-block { display: inline-block; }
+
+.text-bold { font-weight: bold; }
+.text-bolder { font-weight: bolder; }
+.text-underline { text-decoration: underline; }
 .text-normal {
     font-weight: normal;
     text-decoration: none;
-}
-
-.text-underline {
-    text-decoration: underline;
 }
 
 /** 
@@ -61,6 +66,7 @@ button:focus, select:focus {
 **/
 .absolute-container {
     position: relative;
+    height: 100%;
 }
 .absolute-center {
     position: absolute;
@@ -90,17 +96,31 @@ button:focus, select:focus {
 /**
  * Inline radio button list
 **/
-div.radio-group {
-    text-align: center;
-    margin-bottom: 7px;
+fieldset.radio-group > legend {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0px;
+    line-height: 20px;
+    margin-bottom: 5px;
+    text-align: left;
+    border: none;
 }
-div.radio-group input {
-    margin-left: 15px;
-    margin-right: 5px;
+
+fieldset.radio-group > ul {
+    list-style: none;
+    margin-left: 0px;
+    display: inline;
 }
-div.radio-group div {
+
+fieldset.radio-group > ul > li {
     display: inline-block;
+    padding: 0px 10px 0px 10px;
 }
+
+fieldset.radio-group > ul > li > label {
+    float: right;
+}
+
 
 ul.pager li.previous {
     margin-right: 10px;
@@ -179,6 +199,31 @@ div.table-container table div.table-inputs {
     margin: 10px 0px 10px 0px;
 }
 
-div#map-container {
-    height: 400px;
+div.map-small {
+    height: 200px;
+}
+
+div.map {
+    height: 350px;
+}
+
+div.map-large {
+    height: 500px;
+}
+
+div.map-bordered {
+    border: 3px double #000;
+}
+
+/* Fix for Google Maps Controls */
+.gmnoprint img {
+    max-width: none;
+}
+
+.btn.pull-right {
+    vertical-align: text-bottom;
+}
+
+div.well .btn {
+    margin: 15px 0px 15px 0px;
 }

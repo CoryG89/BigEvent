@@ -10,12 +10,12 @@ var geocoder = require('../../geocoder');
 var config = require('../../../config');
 var log = debug.getLogger({ prefix: '[route.jobsite]-  ' });
 var jobsites = dbman.getCollection('jobsites');
-var zipsCollection = dbman.getCollection('zips');
+var zips = dbman.getCollection('zips');
 
 function addJobsite (req, res, callback) {
     var record = req.body;
     var query = { _id: '1z2i3p4s5'};
-    zipsCollection.findOne(query, function(err, zipDoc) {
+    zips.findOne(query, function(err, zipDoc) {
         if(err || !zipDoc){
             zipDoc = { zips: config.defaultAllowedZipCodes };
         }
@@ -43,9 +43,13 @@ function addJobsite (req, res, callback) {
                 record.formattedAddress = result.formatted_address;
 
                 delete record.emailConf;
-
                 record.evaluated = false;
                 record.claimed = false;
+                
+                if (config.needJobsiteApprovalBeforeEvaluation)
+                    record.status = 'requested';
+                else
+                    record.status = 'active';
 
                 jobsites.insert(record, options, function (err, records) {
                     if (err) {

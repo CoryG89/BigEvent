@@ -20,8 +20,8 @@
         <% } %> >
         <% row.rowData.forEach(function (e, i) { %>
           <td>
-            <% if (typeof table.linkField === 'number' && typeof table.linkPath === 'string' && i === table.linkField) { %>
-              <a href="<%= site.url + table.linkPath + '/' + row._id %>"><%= e %></a>
+            <% if (typeof table.linkField === 'object' && table.linkField.column === i) { %>
+              <a href="<%= site.url + table.linkField.path + '/' + row._id %>"><%= e %></a>
             <% } else { %>
               <%= e %>
             <% } %>
@@ -37,7 +37,9 @@
             <div class="table-inputs span6 text-center">
               <ul class="inline">
                 <li>
-                  <label for="pagesize-select" class="inline-block"><strong>Page Size &nbsp; <i class="fa fa-list-ul"></i></strong></label>
+                  <label for="pagesize-select" class="inline-block">
+                    <strong>Page Size &nbsp; <i class="fa fa-list-ul"></i></strong>
+                  </label>
                   <select id="pagesize-select" class="pagesize input-mini" title="Page Size">
                     <option value="5">5</option>
                     <option selected="selected" value="10">10</option>
@@ -48,7 +50,9 @@
                   </select>
                 </li>
                 <li>
-                  <label for="pagenum-select" class="inline-block"><strong>&nbsp; Go To &nbsp; <i class="fa fa-file-text"></i></strong></label>
+                  <label for="pagenum-select" class="inline-block">
+                    <strong>&nbsp; Go To &nbsp; <i class="fa fa-file-text"></i></strong>
+                  </label>
                   <select id="pagenum-select" class="gotoPage input-mini" title="Page Number"></select>
                 </li>
               </ul>

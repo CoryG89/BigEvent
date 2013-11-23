@@ -1,0 +1,69 @@
+<form id="volunteer-form" method="post">
+  <label for="email">Email</label>
+  <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
+  <div class="row-fluid">
+    <div class="span6">
+      <label for="first-name">First Name</label>
+      <input class="input-block-level" type="text" id="first-name" name="firstName" value="<%= user.role === 'volunteer' ? user.volunteer.firstName : '' %>" required />
+    </div>
+    <div class="span6">
+      <label for="last-name">Last Name</label>
+      <input class="input-block-level" type="text" id="first-name" name="lastName" value="<%= user.role === 'volunteer' ? user.volunteer.lastName : '' %>" required />   
+    </div>
+  </div>
+  <label for="address">Address</label>
+  <input class="input-block-level" type="text" id="address" name="address" value="<%= user.role === 'volunteer' ? user.volunteer.address : '' %>" required />
+  <div class="row-fluid">
+    <div class="span4">
+      <label for="city">City</label>
+      <input class="input-block-level" type="text" id="city" name="city" value="<%= user.role === 'volunteer' ? user.volunteer.city : '' %>" required />
+    </div>
+    <div class="span4">
+      <label for="state">State</label>
+      <select class="form-control bfh-states input-block-level" name="state" form="volunteer-form" data-country="US" data-state="<%= user.role === 'volunteer' ? user.volunteer.state : 'AL' %>" required></select>         
+    </div>
+    <div class="span4">
+      <label for="zip">Zip</label>
+      <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= user.role === 'volunteer' ? user.volunteer.zip : '' %>" required />
+    </div>
+  </div>
+  <label for="phone">Phone</label>
+  <input class="form-control bfh-phone input-block-level" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= user.role === 'volunteer' ? user.volunteer.phone : '' %>" required />
+  <fieldset class="radio-group text-center">
+    <legend>Gender</legend>
+    <ul>
+      <li><input type="radio" id="gender-male" name="gender" value="Male" <%= user.role === 'volunteer' && user.volunteer.gender === 'Male' ? 'checked' : '' %> required /><label for="gender-male">Male</label></li>
+      <li><input type="radio" id="gender-female" name="gender" value="Female" <%= user.role === 'volunteer' && user.volunteer.gender === 'Female' ? 'checked' : '' %> required /><label for="gender-female">Female</label></li>
+    </ul>
+  </fieldset>
+  <fieldset class="radio-group text-center">
+    <legend>Shirt Size</legend>
+    <ul>
+      <li><input type="radio" id="shirt-s" name="shirtSize" value="S" <%= user.role === 'volunteer' && user.volunteer.shirtSize === 'S' ? 'checked' : '' %> required /><label for="shirt-s">S</label></li>
+      <li><input type="radio" id="shirt-m" name="shirtSize" value="M" <%= user.role === 'volunteer' && user.volunteer.shirtSize === 'M' ? 'checked' : '' %> required /><label for="shirt-m">M</label></li>
+      <li><input type="radio" id="shirt-l" name="shirtSize" value="L" <%= user.role === 'volunteer' && user.volunteer.shirtSize === 'L' ? 'checked' : '' %> required /><label for="shirt-l">L</label></li>
+      <li><input type="radio" id="shirt-xl" name="shirtSize" value="XL" <%= user.role === 'volunteer' && user.volunteer.shirtSize === 'XL' ? 'checked' : '' %> required /><label for="shirt-xl">XL</label></li>
+      <li><input type="radio" id="shirt-xxl" name="shirtSize" value="XXL" <%= user.role === 'volunteer' && user.volunteer.shirtSize === 'XXL' ? 'checked' : '' %> required /><label for="shirt-xxl">XXL</label></li>
+    </ul>
+  </fieldset>  
+  <hr />
+  <% if (user.role === 'volunteer') { %>
+    <a href="#delete-account" id="delete-button" class="btn btn-danger" data-toggle="modal">Delete Account</a>
+    <div id="delete-account" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-account-label" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+        <h3 id="delete-account-label">Delete Account</h3>
+      </div>
+      <div class="modal-body">
+        <p><strong>Are you sure you want to delete your volunteer account?</strong> Your data will be deleted so this action cannot be undone, however, you may register again as a volunteer before the cut off date should you change your mind.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="<%= isStaff ? site.url + '/staff/volunteer/account/delete/' + user._id : site.url + 'volunteer/account/delete' %>" class="btn btn-danger">Confirm</a>
+      </div>
+    </div>
+  <% } else { %>
+    <input class="btn" type="reset" value="Clear" />
+  <% } %>
+  <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+</form>

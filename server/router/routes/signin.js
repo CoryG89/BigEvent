@@ -15,7 +15,7 @@ var wlClientId = auth.windowsLive.clientId;
 var wlClientSecret = auth.windowsLive.clientSecret;
 var wlScopes = ['wl.signin', 'wl.emails'].join(' ');
 
-var wlRedirect = config.site.url + 'signin/success';
+var wlRedirect = config.site.url + '/signin/success';
 
 var wlLoginHost = 'https://login.live.com';
 var wlAuthPath = 'oauth20_authorize.srf';

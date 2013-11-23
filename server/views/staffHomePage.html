@@ -1,8 +1,8 @@
-<% script(site.url + 'js/staffHomePage-controller.js') -%>
+<% script(site.url + '/js/staffHomePage-controller.js') -%>
 
 <div class="row">
   <div class="span3 hidden-phone">
-    <img src="/img/logo.jpg" />
+    <img src="<%= site.url %>/img/logo.jpg" />
   </div>
   <div class="offset1 span8">
     <div class="hero-unit">
@@ -43,7 +43,7 @@
         <% for(i=0; i<volunteerList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/volunteer/account/<%= volunteerList[i]._id %>">
+                    <a href="<%= site.url %>/staff/volunteer/account/<%= volunteerList[i]._id %>">
                         <%= volunteerList[i].volunteer.lastName + ", " + volunteerList[i].volunteer.firstName  %>
                     </a>
                 </td>
@@ -80,7 +80,7 @@
         <% for(i=0; i<jobSiteList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/jobsite/evaluation/<%= jobSiteList[i]._id %>">
+                    <a href="<%= site.url %>/staff/jobsite/<%= jobSiteList[i]._id %>">
                         <%= jobSiteList[i].lastName + ", " + jobSiteList[i].firstName  %>
                     </a>
                 </td>
@@ -112,16 +112,16 @@
         </tr>
     </thead>
     <tbody>
-        <% for(i=0; i<toolList.length; i++) { %>
+        <% for(i=0; i <toolList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/tool/review/<%= toolList[i]._id %>">
+                    <a href="<%= site.url %>/staff/tool/review/<%= toolList[i]._id %>">
                         <%= toolList[i].name %>
                     </a>
                 </td>
                 <td><%= toolList[i].inventory            %></td>
                 <td><%= (toolsNeeded[toolList[i].name]) ? toolsNeeded[toolList[i].name] : 0 %></td>
-                <% if(toolList[i].maxRequst === 'on') {  %>
+                <% if (toolList[i].maxRequest === 'on') {  %>
                     <td><%= toolList[i].maxRequestValue  %></td>
                 <% } else {                              %>
                     <td>None                             </td>
@@ -153,7 +153,7 @@
         <% for(i=0; i<committeeList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/committee/review/<%= committeeList[i]._id %>">
+                    <a href="<%= site.url %>/staff/committee/review/<%= committeeList[i]._id %>">
                         <%= committeeList[i].committee.lastName %> + ", " + <%= committeeList[i].committee.firstName %>
                     </a>
                 </td>
@@ -187,7 +187,7 @@
         <% for(i=0; i<leadershipList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/leadership/review/<%= leadershipList[i]._id %>">
+                    <a href="<%= site.url %>/staff/leadership/review/<%= leadershipList[i]._id %>">
                         <%= leadershipList[i].leadership.lastName %> + ", " + <%= leadershipList[i].leadership.firstName %>
                     </a>
                 </td>
@@ -221,7 +221,7 @@
         <% for(i=0; i<coordinatorList.length; i++) { %>
             <tr>
                 <td>
-                    <a href="<%= site.url %>staff/leadership/review/<%= coordinatorList[i]._id %>">
+                    <a href="<%= site.url %>/staff/leadership/review/<%= coordinatorList[i]._id %>">
                         <%= coordinatorList[i].coordinator.lastName %> + ", " + <%= coordinatorList[i].coordinator.firstName %>
                     </a>
                 </td>

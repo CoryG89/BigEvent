@@ -17,7 +17,7 @@ var jobsiteHeaders = [
 ];
 
 var toolHeaders = [
-    'Name', 'Quantity', 'Max Request Limit'
+    'Name', 'Quantity', 'Max Request Value'
 ];
 
 function getUserRow(role, doc) {
@@ -37,7 +37,7 @@ function getJobsiteRow(doc) {
 
 function getToolRow(doc) {
     return [
-        doc.name, doc.totalAvailable, doc.maxRequestValue
+        doc.name, doc.inventory, doc.maxRequestValue
     ];
 }
 
@@ -50,7 +50,7 @@ function getUserData(role, callback) {
             docs.forEach(function (e, i) {
                 data[i] = {
                     _id: e._id,
-                    data: getUserRow(role, e)
+                    rowData: getUserRow(role, e)
                 };
             });
             callback(null, data);
@@ -67,7 +67,7 @@ function getJobsiteData(callback) {
             docs.forEach(function (e, i) {
                 data[i] = {
                     _id: e._id,
-                    data: getJobsiteRow(e)
+                    rowData: getJobsiteRow(e)
                 };
             });
             callback(null, data);
@@ -84,7 +84,7 @@ function getToolData(callback) {
             docs.forEach(function (e, i) {
                 data[i] = {
                     _id: e._id,
-                    data: getToolRow(e)
+                    rowData: getToolRow(e)
                 };
             });
             callback(null, data);
@@ -107,12 +107,13 @@ function getTableData(callback) {
                 id: 'volunteer-table',
                 headers: userHeaders,
                 rows: rows,
-                linkField: 0,
-                linkPath: 'staff/volunteer/account'
+                linkField: {
+                    column: 0,
+                    path: '/staff/volunteer/account/'
+                }
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 
     getUserData('coordinator', function (err, data) {
@@ -127,8 +128,7 @@ function getTableData(callback) {
                 rows: data
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 
     getUserData('leadership', function (err, data) {
@@ -143,8 +143,7 @@ function getTableData(callback) {
                 rows: data
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 
     getUserData('committee', function (err, data) {
@@ -159,8 +158,7 @@ function getTableData(callback) {
                 rows: data
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 
     getJobsiteData(function (err, data) {
@@ -173,12 +171,13 @@ function getTableData(callback) {
                 id: 'jobsite-table',
                 headers: jobsiteHeaders,
                 rows: data,
-                linkField: 0,
-                linkPath: 'staff/jobsite/evaluation'
+                linkField: {
+                    column: 0,
+                    path: '/staff/jobsite'
+                }
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 
     getToolData(function (err, data) {
@@ -191,12 +190,13 @@ function getTableData(callback) {
                 id: 'tool-table',
                 headers: toolHeaders,
                 rows: data,
-                linkField: 0,
-                linkPath: 'staff/tool/review'
+                linkField: {
+                    column: 0,
+                    path: '/staff/tool/review'
+                }
             };
         }
-        if (++tasksCompleted === numTasks)
-            callback(tableData);
+        if (++tasksCompleted === numTasks) callback(tableData);
     });
 }
 

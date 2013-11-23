@@ -74,10 +74,7 @@ module.exports = {
                     to: doc.email,
                     subject: 'Volunteer Account Registration',
                     template: 'volunteer',
-                    locals: {
-                        user: doc,
-                        volunteer: doc.volunteer
-                    }
+                    locals: { user: doc }
                 });
                 _.merge(req.session.user, doc);
                 res.send(200, 'ok');
@@ -103,11 +100,9 @@ module.exports = {
 
     account: {
         get: function (req, res) {
-
             res.render('volunteer-account', {
                 title: 'Volunteer Control Panel',
-                user: req.session.user,
-                volunteer: req.session.user.volunteer
+                user: req.session.user
             });
         },
 
@@ -121,10 +116,7 @@ module.exports = {
                         to: doc.email,
                         subject: 'Volunteer Account Update',
                         template: 'volunteer-account',
-                        locals: {
-                            user: doc,
-                            volunteer: doc.volunteer
-                        }
+                        locals: { user: doc }
                     });
                     _.merge(req.session.user, doc);
                     res.send(200, 'ok');
@@ -151,17 +143,13 @@ module.exports = {
         delete: function (req, res) {
             var query = { _id: req.session.user._id };
             var cmd = {
-                $unset: {
-                    volunteer: ''
-                },
-                $set: {
-                    role: 'user'
-                }
+                $unset: { volunteer: '' },
+                $set: { role: 'user' }
             };
             var opt = { w: 1 };
 
-            users.update(query, cmd, opt, function (err, result) {
-                if (err || !result) {
+            users.update(query, cmd, opt, function (err) {
+                if (err) {
                     res.render('hero-unit', {
                         title: 'Volunteer Account Removal Failed',
                         header: 'Sorry!',
@@ -181,20 +169,24 @@ module.exports = {
         
         staff: {
             get: function (req, res) {
-                users.findOne({_id: req.params.id}, function(err, record) {
-                    if(err || !record) {
-                        log('STAFF.GET: Record not found for id %s', req.params.id);
+                var id = req.params.id;
+                var query = { _id: id };
+                users.findOne(query, function(err, doc) {
+                    if (err) {
+                        log('STAFF.GET: Error querying users collection');
+                        res.send(400);
+                    } else if (!doc) {
+                        log('STAFF.GET: Record not found for id %s', id);
                         res.render('hero-unit', {
                             title: 'Volunteer Not Found',
                             header: 'Volunteer Not Found',
-                            message: 'No volunteer with id ' + req.params.id + ' could be found in the database.'
+                            message: 'No volunteer with id ' + id + ' could be found in the database.'
                         });
                     } else {
                         log('STAFF.GET: Record found');
                         res.render('volunteer-account', {
                             title: 'Volunteer Account',
-                            user: record,
-                            volunteer: record.volunteer
+                            user: doc
                         });
                     }
                 });
@@ -210,10 +202,7 @@ module.exports = {
                             to: doc.email,
                             subject: 'Volunteer Account Update',
                             template: 'volunteer-account',
-                            locals: {
-                                user: doc,
-                                volunteer: doc.volunteer
-                            }
+                            locals: { user: doc }
                         });
                         res.send(200, 'staff');
                     }

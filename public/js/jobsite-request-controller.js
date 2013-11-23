@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var $form = $('form#jobsite-request-form');
+    var $form = $('form#jobsite-form');
     var $email = $form.children('input#email');
     var $emailConf = $form.children('input#email-conf');
     var $zip = $form.children('input#zip');
@@ -29,7 +29,7 @@
                 if(data === 'ok') {
                     window.location.replace('/jobsite/request/success');
                 } else {
-                    window.location.replace('/staff/jobsite/evaluation/' + data.id);
+                    window.location.replace('/staff/jobsite/' + data.id);
                 }
             }
         },

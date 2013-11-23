@@ -1,5 +1,5 @@
-<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
-<% script(site.url + 'js/tool-controller.js') -%>
+<% script(site.url + '/vendor/js/jquery.form.min.js') -%>
+<% script(site.url + '/js/tool-controller.js') -%>
 <div class="row">
   <div class="offset1 span5 hidden-phone">
     <div>
@@ -17,9 +17,7 @@
         <input class="input-block-level" type="text" id="name" name="name" required/>
         <label for="inventory">Number In Inventory</label>
         <input class="input-block-level" type="number" id="inventory" name="inventory" min="0" value="0" required />
-        <input class="input-block-level" type="checkbox" id="maxRequest" name="maxRequest"/> 
-        <label for="maxRequest">Set Maximum Request Amount</label>
-        <label for="maxRequestValue" id="maxRequestLabel">Maximum Request Amount</label>
+        <label><input type="checkbox" id="maxRequest" name="maxRequest"/>  Set Maximum Request Amount</label>
         <input class="input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" value="0" min="0"/>
         <hr />
         <input class="btn" type="reset" value="Clear" />

@@ -8,15 +8,15 @@
     <meta name="author" content="<%= site.author %>" />
 
     <!-- Include Twitter Bootstrap CSS, order important here -->
-    <link href="<%= site.url %>vendor/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<%= site.url %>/vendor/css/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css"> body {
       padding-top: 60px;
       padding-bottom: 40px;
     } </style>
-    <link href="<%= site.url %>vendor/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="<%= site.url %>/vendor/css/bootstrap-responsive.min.css" rel="stylesheet" />
     
     <!-- Include Font Awesome Icon CSS -->
-    <link href="<%= site.url %>vendor/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="<%= site.url %>/vendor/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- HTML5 shim must be in HEAD section, IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -26,13 +26,13 @@
     <%- stylesheets %>
 
     <!-- Include custom app-specific styles last to overide all others -->
-    <link href="<%= site.url %>css/styles.css" rel="stylesheet" />
+    <link href="<%= site.url %>/css/styles.css" rel="stylesheet" />
 
     <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="<%= site.url %>img/favicon.ico" />
-    <link rel="apple-touch-icon" href="<%= site.url %>img/apple-touch-icon.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="<%= site.url %>img/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="<%= site.url %>img/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="<%= site.url %>/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="<%= site.url %>/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= site.url %>/img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= site.url %>/img/apple-touch-icon-114x114.png">
 
   </head>
   <body>
@@ -45,19 +45,19 @@
           <div class="row">
             <div class="span4 text-center">
               <ul class="unstyled">
-                <li><a href="<%= site.url %>staff/clearDatabase">Clear Database</a></li>
+                <li><a href="<%= site.url %>/staff/clearDatabase">Clear Database</a></li>
                 <br />
-                <li><a href="<%= site.url %>staff/updateWaiver">Update Waiver</a></li>
+                <li><a href="<%= site.url %>/staff/updateWaiver">Update Waiver</a></li>
               </ul>
             </div>
             <div class="span4 text-center">
               <ul class="unstyled">
-                <li><a href="<%= site.url %>staff/updateZipCodes">Update Zip Codes</a></li>
+                <li><a href="<%= site.url %>/staff/updateZipCodes">Update Zip Codes</a></li>
               </ul>
             </div>
             <div class="span4 text-center">
               <ul class="unstyled">
-                <li><a href="<%= site.url %>staff/updateReports">Update Reports</a></li>
+                <li><a href="<%= site.url %>/staff/updateReports">Update Reports</a></li>
               </ul>
             </div>         
           </div>
@@ -71,12 +71,12 @@
 
     <!-- Google CDN jQuery, fallback if unavailable -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="<%= site.url %>vendor/js/jquery-1.9.1.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="<%= site.url %>/vendor/js/jquery-1.9.1.min.js"><\/script>')</script>
 
-    <script src="<%= site.url %>vendor/js/jquery.form.min.js"></script>
+    <script src="<%= site.url %>/vendor/js/jquery.form.min.js"></script>
 
     <!-- Include Bootstrap javascript after its jQuery dependency -->
-    <script src="<%= site.url %>vendor/js/bootstrap.min.js"></script>
+    <script src="<%= site.url %>/vendor/js/bootstrap.min.js"></script>
 
     <%- scripts %>
 

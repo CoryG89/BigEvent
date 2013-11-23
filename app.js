@@ -1,15 +1,16 @@
 'use strict';
 
-/** Import Express and EJS engine */
+/** Import NPM Modules */
+var util = require('util');
 var express = require('express');
 var engine = require('ejs-locals');
 
+/** Import local modules */
 var server = require('./server');
-var packageData = require('./package');
-var debug = require('./server/debug');
-
 var auth = require('./auth');
 var config = require('./config');
+var debug = require('./server/debug');
+var packageData = require('./package');
 
 /** Initialize Express app object */
 var app = express();
@@ -46,9 +47,14 @@ if (app.get('env') === 'development') {
     app.use(express.errorHandler());
 }
 
-/** Define global app-level locals, these locals will be available
-    in all of the views rendered by Express */
+/** Global app-level locals, these will be available in all views */
 app.locals(config);
+
+/** Add the location of our google maps API endpoint to our app-level locals */
+var gmapsFmt = 'https://maps.googleapis.com/maps/api/js?key=%s&sensor=false';
+app.locals({
+    googleMapsApi: util.format(gmapsFmt, config.googleMapsApiKey)
+});
 
 log('Express app, %s, has been properly configured', packageData.name);
 

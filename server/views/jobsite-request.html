@@ -1,10 +1,9 @@
-<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
-<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
-<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
-<% script(site.url + 'js/jobsite-request-controller.js') -%>
-
-<div class="row">
-  <div class="offset1 span5 hidden-phone">
+<% stylesheet(site.url + '/vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + '/vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + '/vendor/js/jquery.form.min.js') -%>
+<% script(site.url + '/js/jobsite-request-controller.js') -%>
+<div class="row-fluid">
+  <div class="span6 hidden-phone">
     <div>
       <h4>Big Event Jobs</h4>
       <hr />
@@ -21,37 +20,11 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
     </div>
   </div>
-  <div class="span5">
+  <div class="span6">
     <div class="well">
-      <form id="jobsite-request-form" method="post">
-        <label for="first_name">First Name</label>
-        <input class="input-block-level" type="text" id="first-name" name="firstName" required />
-        <label for="last_name">Last Name</label>
-        <input class="input-block-level" type="text" id="last-name" name="lastName" required />
-        <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" required />
-        <label for="email-conf">Confirm Email</label>
-        <input class="input-block-level" type="email" id="email-conf" name="emailConf" required />
-        <label for="address">Address</label>
-        <input class="input-block-level" type="text" id="address" name="address" required />
-        <label for="city">City</label>
-        <input class="input-block-level" type="text" id="city" name="city" required />
-        <label for"state">State</label>
-        <select class="input-block-level" form="jobsite-request-form" id="state" name="state" required readonly> 
-          <option value="AL" selected>Alabama</option>
-        </select>
-        <label for="zip">Zip Code</label>
-        <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
-        <label for="phone">Phone Number</label>
-        <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" required />
-        <label for="alt-phone">Alternate Phone Number</label>
-        <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" />
-        <label for="description">Description of Work Requested</label>
-        <textarea class="input-block-level" form="jobsite-request-form" id="description" name="description" required></textarea>
-        <hr />
-        <input class="btn" type="reset" value="Clear" />
-        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
-      </form>
+      <h4>Job Request Form</h4>
+      <hr />
+      <% include jobsite-form.html %>
     </div>
   </div>
 </div>

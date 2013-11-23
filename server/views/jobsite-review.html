@@ -1,0 +1,66 @@
+<% script(googleMapsApi) -%>
+<% script(site.url + '/vendor/js/jquery.form.min.js') -%>
+<% script(site.url + '/js/jobsite-review-controller.js') -%>
+<div class="row-fluid">
+  <div class="span6 well">
+    <a href="#edit" id="edit-btn" class="btn pull-right">Edit</a>
+    <a href="#cancel" id="cancel-btn" class="btn pull-right hidden">Cancel</a>
+    <h3>Job Data</h3>
+    <hr />
+    <div id="jobsite-review-data">
+      <dl>
+        <dt>Name</dt><dd><%= jobsite.firstName + ' ' + jobsite.lastName %></dd>
+        <dt>Email</dt><dd><%= jobsite.email %></dd>
+        <dt>Phone</dt><dd><%= jobsite.phone %></dd>
+        <% if (typeof jobsite.altPhone === 'string') { %>
+          <dt>Alt Phone</dt><dd><%= jobsite.altPhone %></dd>
+        <% } %>
+        <dt>Description</dt><dd><%= jobsite.description %></dd>
+        <br />
+        <dt>Address</dt><dd><%= jobsite.address %><br /><%= jobsite.city + ', ' + jobsite.state + ' ' + jobsite.zip %></dd>
+        <dt>Google Map Address</dt><dd><%= jobsite.formattedAddress %></dd>
+        <br />
+        <dt><strong>Current Status</strong></dt><dd><%=: jobsite.status | capitalize %></dd>
+      </dl>
+      <hr />
+      <a id="back-button" class="btn">Go Back</a>
+      <% if (jobsitesNeedApprovalBeforeEvaluation && jobsite.status === 'requested') { %>
+        <a href="#approve" class="btn btn-primary pull-right" data-toggle="modal">Approve Job</a>
+        <div id="approve" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="approve-jobsite-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+          <h3 id="delete-jobsite-label">Confirm Job Approval</h3>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to approve this jobsite? If approved the jobsite will be included in those to be evaluated for the event by Big Event staff members.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <a href="<%= site.url + reqdata.path + '/approve' %>" class="btn btn-success">Confirm</a>
+        </div>
+      </div>
+      <% } else if (jobsite.status === 'active' && !jobsite.claimed) { %>
+        <a href="#claim" class="btn btn-primary pull-right" data-toggle="modal">Claim</a>
+        <div id="claim" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="claim-jobsite-label" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="claim-jobsite-label">Claim Jobsite</h3>
+          </div>
+          <div class="modal-body">
+            <p>Do you want to claim this jobsite for an evaluation? If you claim it, other staff members will not be able to claim it to do an evaluation. Only claim this jobsite if you have an evaluation planned.</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="<%= site.url + reqdata.path + '/claim' %>" class="btn btn-success">Confirm</a>
+          </div>
+        </div>
+      <% } else if (jobsite.status === 'active' && jobsite.claimed && jobsite.claimedBy === user._id) { %>
+        <a href="/evaluation" class="btn btn-primary pull-right">Evaluation</a>
+      <% } %>
+    </div>
+    <% include jobsite-form.html %>
+  </div>
+  <div class="span6">
+    <div id="map-container" data-addr="<%= jobsite.formattedAddress %>" data-lat=<%= jobsite.location.lat %> data-lng=<%= jobsite.location.lng %> class="map-large map-bordered"></div>
+  </div>
+</div>

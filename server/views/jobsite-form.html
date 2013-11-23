@@ -1,0 +1,78 @@
+<% var exists = typeof jobsite === 'object' %>
+<form id="jobsite-form" class="<%= exists ? 'hidden' : '' %>" method="post">
+  <div class="row-fluid">
+    <div class="span6">
+      <label for="first_name">First Name</label>
+      <input class="input-block-level" type="text" id="first-name" name="firstName" value="<%= exists ? jobsite.firstName : '' %>" required />
+    </div>
+    <div class="span6">
+      <label for="last_name">Last Name</label>
+      <input class="input-block-level" type="text" id="last-name" name="lastName" value="<%= exists ? jobsite.lastName : '' %>" required />
+    </div>
+  </div>
+  <% if (isStaff) { %>
+    <label for="email">Email</label>
+    <input class="input-block-level" type="email" id="email" name="email" value="<%= exists ? jobsite.email : '' %>" required />
+  <% } else { %>
+    <div class="row-fluid">
+      <div class="span6">
+        <label for="email">Email</label>
+        <input class="input-block-level" type="email" id="email" name="email" required />
+      </div>
+      <div class="span6">
+        <label for="email">Confirm Email</label>
+        <input class="input-block-level" type="email" id="email-conf" name="emailConf" required />
+      </div>
+    </div>
+  <% } %>
+  <label for="address">Street Address</label>
+  <input class="input-block-level" type="text" id="address" name="address" value="<%= exists ? jobsite.address : '' %>" required />
+  <div class="row-fluid">
+    <div class="span4">
+      <label for="city">City</label>
+      <input class="input-block-level" type="text" id="city" name="city" value="<%= exists ? jobsite.city : '' %>" required />
+    </div>
+    <div class="span4">
+      <label for"state">State</label>
+      <select class="input-block-level" form="jobsite-form" id="state" name="state" required readonly> 
+        <option value="AL" selected>Alabama</option>
+      </select>
+    </div>
+    <div class="span4">
+      <label for="zip">Zip Code</label>
+      <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= exists ? jobsite.zip : '' %>" required />
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <label for="phone">Phone</label>
+      <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" value="<%= exists ? jobsite.phone : '' %>" required />
+    </div>
+    <div class="span6">
+      <label for="alt-phone">Alternate Phone</label>
+      <input class="input-block-level bfh-phone" type="tel" id="alt-phone" name="altPhone" data-format="ddd-ddd-dddd" value="<%= (exists && jobsite.altPhone) ? jobsite.altPhone : '' %>" />
+    </div>
+  </div>
+  <label for="description">Description of Work Requested</label>
+  <textarea class="input-block-level" form="jobsite-form" id="description" name="description" required><%= exists ? jobsite.description : '' %></textarea>
+  <hr />
+  <% if (exists) { %>
+    <a href="#delete" class="btn btn-danger" data-toggle="modal">Delete</a>
+    <div id="delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-jobsite-label" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+        <h3 id="delete-jobsite-label">Claim Jobsite</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to permanently delete this job site? This action cannot be undone and a job site request will have to be resubmitted if needed.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <a href="<%= site.url + reqdata.path + '/delete' %>" class="btn btn-danger">Confirm</a>
+      </div>
+    </div>
+  <% } else { %>
+    <input class="btn" type="reset" value="Clear" />
+  <% } %>
+  <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+</form>

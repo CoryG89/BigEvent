@@ -60,13 +60,15 @@ module.exports = {
         app.get('/staff/jobsite/request/success', routes.jobsiteRequest.success);
         app.get('/staff/jobsite/request/failure', routes.jobsiteRequest.failure);
 
-        app.get('/staff/jobsite/evaluation/:id', routes.jobsiteEvaluation.get);
-        app.post('/staff/jobsite/evaluation/:id', routes.jobsiteEvaluation.post);
         app.get('/staff/jobsite/evaluation-listing', routes.jobsiteEvaluation.listing);
-        app.get('/staff/jobsite/evaluation/success', routes.jobsiteEvaluation.success);
-        app.get('/staff/jobsite/evaluation/failure', routes.jobsiteEvaluation.failure);
-        app.post('/staff/jobsite/evaluation/delete/:id', routes.jobsiteEvaluation.delete);
-	
+
+        app.get('/staff/jobsite/:id', routes.jobsite.get);
+        app.post('/staff/jobsite/:id', routes.jobsite.post);
+        app.get('/staff/jobsite/:id/delete', routes.jobsite.delete);
+        app.get('/staff/jobsite/:id/approve', routes.jobsite.approve);
+        app.get('/staff/jobsite/:id/claim', routes.jobsite.approve);
+        app.get('/staff/jobsite/:id/evaluation', routes.jobsiteEvaluation.get);
+
         app.get('/staff/tool', routes.tool.get);
         app.post('/staff/tool', routes.tool.post);
         app.get('/staff/tool/success', routes.tool.success);

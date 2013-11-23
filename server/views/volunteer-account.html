@@ -1,17 +1,17 @@
-<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
-<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
-<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
-<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
-<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
-<% script(site.url + 'js/volunteer-account-controller.js') -%>
-<div class="row">
-  <div class="offset1 span5 hidden-phone">
+<% stylesheet(site.url + '/vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + '/vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + '/vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + '/vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
+<% script(site.url + '/vendor/js/jquery.form.min.js') -%>
+<% script(site.url + '/js/volunteer-account-controller.js') -%>
+<div class="row-fluid">
+  <div class="span6 hidden-phone">
     <div>
-      <h4>Thank You <%= volunteer.firstName %>!</h4>
+      <h4>Thank You <%= user.volunteer.firstName %>!</h4>
       <hr />
       <p>We would like to thank you for volunteering with us to serve your Auburn community. Every year, on the same day, thousands of students make a difference all over the Auburn community. We couldn't do it without the selfless Auburn students such as yourself who are willing to work with others to make Big Event a success.</p>
       <p>As a volunteer you will have the opportunity to serve your community with thousands of other students on the same single day in the spring. You will be assigned a single jobsite at which to work with other students on the day of the event.</p>
-      <p>You will receive email notifications prior to the event with more information such as your jobsite assignment. Again, thank you so much <%= volunteer.firstName %>!</p>
+      <p>You will receive email notifications prior to the event with more information such as your jobsite assignment. Again, thank you so much <%= user.volunteer.firstName %>!</p>
     </div>
     <div>
       <h4>Your Account</h4>
@@ -26,100 +26,25 @@
       <p>In order to join an existing team of volunteers you will need to get an invite link from a member of that team. Start looking for other students to join your team now!.</p>
     </div>
   </div>
-  <div class="span5">
+  <div class="span6">
     <div class="well">
-      <form id="volunteer-account-form" method="post">
-        <a id="edit-button" class="pull-right btn btn-small">Edit <span class="icon-edit"></span></a>
-        <a id="cancel-button" class="pull-right btn btn-small hidden">Cancel <span class="icon-remove"></span></a>
-        <h4>Volunteer Account</h4>
-        <hr />
-        <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
-        <label for="first-name">First Name</label>
-        <input class="input-block-level account-input" type="text" id="first-name" name="firstName" value="<%= volunteer.firstName %>" required disabled />
-        <label for="last-name">Last Name</label>
-        <input class="input-block-level account-input" type="text" id="last-name" name="lastName" value="<%= volunteer.lastName %>" required disabled />
-        <label for="gender-m">Gender</label>
-        <div class="radio-group">
-          <div>
-            <% if (volunteer.gender === 'Male') { %>
-              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" checked required disabled />Male
-            <% } else { %>
-              <input class="account-input" type="radio" id="gender-m" name="gender" value="Male" required disabled />Male
-            <% } %>
-          </div>
-          <div>
-            <% if (volunteer.gender === 'Female') { %>
-              <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" checked required disabled />Female
-            <% } else { %>
-              <input class="account-input" type="radio" id="gender-f" name="gender" value="Female" required disabled />Female
-            <% } %>
-          </div>
-        </div>
-        <label for="address">Address</label>
-        <input class="input-block-level account-input" type="text" id="address" name="address" value="<%= volunteer.address %>" required disabled />
-        <label for="city">City</label>
-        <input class="input-block-level account-input" type="text" id="city" name="city" value="<%= volunteer.city %>" required disabled />
-        <label for="state">State</label>
-        <select class="form-control bfh-states input-block-level account-input" name="state" form="volunteer-account-form" data-country="US" data-state="<%= volunteer.state %>" required disabled></select>
-        <label for="zip">Zip</label>
-        <input class="input-block-level account-input" type="text" id="zip" name="zip" pattern="\d{5}" value="<%= volunteer.zip %>" required disabled />
-        <label for="phone">Phone</label>
-        <input class="form-control bfh-phone input-block-level account-input" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= volunteer.phone %>" required disabled />
-        <label>Shirt Size</label>
-        <div class="radio-group">
-          <div>
-            <% if (volunteer.shirtSize === 'S') { %>
-              <input class="account-input" type="radio" name="shirtSize" value="S" checked required disabled />S
-            <% } else { %>
-              <input class="account-input" type="radio" name="shirtSize" value="S" required disabled />S
-            <% } %>
-          </div>
-          <div>
-            <% if (volunteer.shirtSize === 'M') { %>
-              <input class="account-input" type="radio" name="shirtSize" value="M" checked required disabled />M
-            <% } else { %>
-              <input class="account-input" type="radio" name="shirtSize" value="M" required disabled />M
-            <% } %>
-          </div>
-          <div>
-            <% if (volunteer.shirtSize === 'L') { %>
-              <input class="account-input" type="radio" name="shirtSize" value="L" checked required disabled />L
-            <% } else { %>
-              <input class="account-input" type="radio" name="shirtSize" value="L" required disabled />L
-            <% } %>
-          </div>
-          <div>
-            <% if (volunteer.shirtSize === 'XL') { %>
-              <input class="account-input" type="radio" name="shirtSize" value="XL" checked required disabled />XL
-            <% } else { %>
-              <input class="account-input" type="radio" name="shirtSize" value="XL" required disabled />XL
-            <% } %>
-          </div>
-          <div>
-            <% if (volunteer.shirtSize === 'XXL') { %>
-              <input class="account-input" type="radio" name="shirtSize" value="XXL" checked required disabled />XXL
-            <% } else { %>
-              <input class="account-input" type="radio" name="shirtSize" value="XXL" required disabled />XXL
-            <% } %>
-          </div>
-        </div>
-        <hr />
-        <a href="#delete-account" id="delete-button" class="btn btn-danger disabled" data-toggle="modal">Delete Account</a>
-        <input class="account-input btn btn-primary pull-right" type="submit" value="Submit" disabled />
-      </form>
-      <div id="delete-account" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-account-label" aria-hidden="true">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-          <h3 id="delete-account-label">Delete Account</h3>
-        </div>
-        <div class="modal-body">
-          <p><strong>Are you sure you want to delete your volunteer account?</strong> Your data will be deleted so this action cannot be undone, however, you may register again as a volunteer before the cut off date should you change your mind.</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <a href="<%= isStaff ? site.url + '/staff/volunteer/account/delete/' + user._id : site.url + 'volunteer/account/delete' %>" class="btn btn-danger">Confirm</a>
-        </div>
+      <a href="#edit" id="edit-button" class="btn pull-right">Edit</a>
+      <a href="#cancel" id="cancel-button" class="btn pull-right hidden">Cancel</a>
+      <h3>Volunteer Data</h3>
+      <hr />
+      <div id="volunteer-review-list">
+        <dl>
+          <dt>Email</dt><dd><%= user.email %></dd>
+          <dt>Name</dt><dd><%= user.volunteer.firstName + ' ' + user.volunteer.lastName %></dd>
+          <dt>Address</dt><dd><%= user.volunteer.address %><br /><%= user.volunteer.city + ', ' + user.volunteer.state + ' ' + user.volunteer.zip %></dd>
+          <dt>Phone</dt><dd><%= user.volunteer.phone %></dd>
+          <dt>Gender</dt><dd><%= user.volunteer.gender %></dd>
+          <dt>Shirt Size</dt><dd><%= user.volunteer.shirtSize %></dd>
+          <hr />
+        </dl>
+      </div>
+      <div id="volunteer-form-container" class="hidden">
+        <% include volunteer-form.html %>
       </div>
     </div>
   </div>

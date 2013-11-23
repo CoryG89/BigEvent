@@ -1,27 +1,30 @@
 (function () {
     'use strict';
 
-    var $form = $('form#volunteer-account-form');
-    var $editButton = $form.find('a#edit-button');
-    var $cancelButton = $form.find('a#cancel-button');
-    var $deleteButton = $form.find('a#delete-button');
-    var $accountInputs = $form.find('.account-input');
+    var $editButton = $('a[href="#edit"]');
+    var $cancelButton = $('a[href="#cancel"]');
+    var $reviewList = $('div#volunteer-review-list');
+    var $volunteerFormContainer = $('div#volunteer-form-container');
+    var $volunteerForm = $('form#volunteer-form');
 
     $editButton.on('click', function () {
         $editButton.addClass('hidden');
+        $reviewList.addClass('hidden');
+
         $cancelButton.removeClass('hidden');
-        $deleteButton.removeClass('disabled');
-        $accountInputs.prop('disabled', false);
+        $volunteerFormContainer.removeClass('hidden');
     });
 
     $cancelButton.on('click', function () {
         $cancelButton.addClass('hidden');
+        $volunteerFormContainer.addClass('hidden');
+
+        $reviewList.removeClass('hidden');
         $editButton.removeClass('hidden');
-        $deleteButton.addClass('disabled');
-        $accountInputs.prop('disabled', true);
     });
 
-    $form.ajaxForm({
+
+    $volunteerForm.ajaxForm({
         beforeSubmit: function () {
 
         },
