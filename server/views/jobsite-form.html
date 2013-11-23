@@ -10,21 +10,16 @@
       <input class="input-block-level" type="text" id="last-name" name="lastName" value="<%= exists ? jobsite.lastName : '' %>" required />
     </div>
   </div>
-  <% if (isStaff) { %>
-    <label for="email">Email</label>
-    <input class="input-block-level" type="email" id="email" name="email" value="<%= exists ? jobsite.email : '' %>" required />
-  <% } else { %>
-    <div class="row-fluid">
-      <div class="span6">
-        <label for="email">Email</label>
-        <input class="input-block-level" type="email" id="email" name="email" required />
-      </div>
-      <div class="span6">
-        <label for="email">Confirm Email</label>
-        <input class="input-block-level" type="email" id="email-conf" name="emailConf" required />
-      </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <label for="email">Email</label>
+      <input class="input-block-level" type="email" id="email" name="email" value="<%= exists ? jobsite.email : '' %>" required />
     </div>
-  <% } %>
+    <div class="span6">
+      <label for="email">Confirm Email</label>
+      <input class="input-block-level" type="email" id="email-conf" name="emailConf" value="<%= exists ? jobsite.email : '' %>" required />
+    </div>
+  </div>
   <label for="address">Street Address</label>
   <input class="input-block-level" type="text" id="address" name="address" value="<%= exists ? jobsite.address : '' %>" required />
   <div class="row-fluid">
@@ -49,7 +44,7 @@
       <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" value="<%= exists ? jobsite.phone : '' %>" required />
     </div>
     <div class="span6">
-      <label for="alt-phone">Alternate Phone</label>
+      <label for="alt-phone">Alt. Phone</label>
       <input class="input-block-level bfh-phone" type="tel" id="alt-phone" name="altPhone" data-format="ddd-ddd-dddd" value="<%= (exists && jobsite.altPhone) ? jobsite.altPhone : '' %>" />
     </div>
   </div>

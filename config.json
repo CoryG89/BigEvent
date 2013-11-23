@@ -28,6 +28,7 @@
   "jobsiteEvaluationClaimsPerEvaluator": 3,
 
   "jobsitesNeedApprovalBeforeEvaluation": true,
+  
   "emailPropertyOwnerOnJobsiteApproval": true,
 
   "maxTeamSize": 10,

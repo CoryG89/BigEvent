@@ -1,7 +1,6 @@
 'use strict';
 
 var util = require('util');
-var path = require('path');
 var nodemailer = require('nodemailer');
 
 var renderer = require('./renderer');
@@ -27,7 +26,7 @@ module.exports = {
                 callback(null, msg);
             });
         }
-        opt.template = util.format('%s.md', path.join(templatesPath, opt.template));
+        opt.template = util.format('%s/%s.md', templatesPath, opt.template);
         renderer.render(opt.template, opt.locals, function (error, html) {
             if (error) {
                 log('Error rendering template -- %s', error, callback);
