@@ -5,6 +5,7 @@
     "description": "Web application for the Auburn University SGA student volunteer program Big Event",
     "url": "http://bigevent.com/"
   },
+  "googleMapsApi": "https://maps.googleapis.com/maps/api/js?key=AIzaSyBQN_lpRyIuUK7fD9gXr453HrztcpsenqY&sensor=false",
   "defaultAllowedZipCodes": ["36832", "36830", "36849"],
   "maxTeamSize": 10,
   "_layoutFile": "default"

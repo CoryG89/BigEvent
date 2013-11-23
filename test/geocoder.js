@@ -17,7 +17,7 @@ describe('geocoder', function () {
     });
 
     it('should be able to make requests', function (done) {
-        geocoder.send(' ', function (res, err) {
+        geocoder.send(' ', function (err, res) {
             should.not.exist(err);
             should.exist(res);
             res.should.be.an('object');
@@ -26,7 +26,7 @@ describe('geocoder', function () {
     });
 
     it('should get the coordinates of Auburn University', function (done) {
-        geocoder.send('Auburn University', function (res, err) {
+        geocoder.send('Auburn University', function (err, res) {
             var expectedLatitude = 32.59;
             var expectedLongitude = -85.50;
             var expectedAddress = 'Auburn University, 107 samford hall, Auburn, AL 36849, USA';

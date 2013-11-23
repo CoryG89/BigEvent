@@ -13,8 +13,12 @@
     </thead>
     <tbody>
       <% table.rows.forEach(function (row) { %>
-        <tr>
-        <% row.data.forEach(function (e, i) { %>
+        <tr data-id="<%= row._id %>" <% if (typeof row.dataAttributes !== 'undefined') { %>
+            <% row.dataAttributes.forEach(function (dataAttr) { %>
+              <%= 'data-' + dataAttr.name + '=' + dataAttr.value %>
+            <% }); %>
+        <% } %> >
+        <% row.rowData.forEach(function (e, i) { %>
           <td>
             <% if (typeof table.linkField === 'number' && typeof table.linkPath === 'string' && i === table.linkField) { %>
               <a href="<%= site.url + table.linkPath + '/' + row._id %>"><%= e %></a>

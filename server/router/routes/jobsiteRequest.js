@@ -28,7 +28,7 @@ function addJobsite (req, res, callback) {
             log('POST: saving job site request data');
             // insert record
             var options = { w: 1 };
-            
+
             var query = util.format('%s %s, %s %s',
                 record.address, record.city, record.state, record.zip);
 
@@ -37,10 +37,15 @@ function addJobsite (req, res, callback) {
                     res.send('Error', 400);
                     return;
                 }
-                
+
                 var result = response.results[0];
                 record.location = result.geometry.location;
                 record.formattedAddress = result.formatted_address;
+
+                delete record.emailConf;
+
+                record.evaluated = false;
+                record.claimed = false;
 
                 jobsites.insert(record, options, function (err, records) {
                     if (err) {

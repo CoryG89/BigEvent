@@ -1,3 +1,5 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
 <% script(site.url + 'vendor/js/jquery.form.min.js') -%>
 <% script(site.url + 'js/jobsite-request-controller.js') -%>
 
@@ -23,13 +25,13 @@
     <div class="well">
       <form id="jobsite-request-form" method="post">
         <label for="first_name">First Name</label>
-        <input class="input-block-level" type="text" id="first_name" name="firstName" required />
+        <input class="input-block-level" type="text" id="first-name" name="firstName" required />
         <label for="last_name">Last Name</label>
-        <input class="input-block-level" type="text" id="last_name" name="lastName" required />
+        <input class="input-block-level" type="text" id="last-name" name="lastName" required />
         <label for="email">Email</label>
         <input class="input-block-level" type="email" id="email" name="email" required />
         <label for="email-conf">Confirm Email</label>
-        <input class="input-block-level" type="email" id="email-conf" name="email-conf" required />
+        <input class="input-block-level" type="email" id="email-conf" name="emailConf" required />
         <label for="address">Address</label>
         <input class="input-block-level" type="text" id="address" name="address" required />
         <label for="city">City</label>
@@ -41,9 +43,9 @@
         <label for="zip">Zip Code</label>
         <input class="input-block-level" type="text" id="zip" name="zip" pattern="\d{5}" required />
         <label for="phone">Phone Number</label>
-        <input class="input-block-level" type="tel" id="phone" name="phone" required />
+        <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" required />
         <label for="alt-phone">Alternate Phone Number</label>
-        <input class="input-block-level" type="tel" id="alt-phone" name="altPhone" />
+        <input class="input-block-level bfh-phone" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" />
         <label for="description">Description of Work Requested</label>
         <textarea class="input-block-level" form="jobsite-request-form" id="description" name="description" required></textarea>
         <hr />

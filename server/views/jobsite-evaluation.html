@@ -2,7 +2,7 @@
 <% script(site.url + 'js/job-eval-controller.js') -%>
 
 <div class="row">
-  <div class="offset1 span5 hidden-phone">
+  <div class="offset3 span6 well">
     <h3>Job Site Request Data</h4>
     <hr />
     <ul>
@@ -20,16 +20,6 @@
       <li><strong>Alternate Phone Number:</strong> <%= jobRequest.altPhone %></li>
       <li><strong>Description:</strong> <%= jobRequest.description %></li>
     </ul>
-  </div>
-  <div class="span5">
-    <div class="well">
-      <form id="job-eval-form" method="post">
-        <label for="description">Description of Work Requested</label>
-        <textarea class="input-block-level" form="request-form" id="description" name="description" required></textarea>
-        <hr />
-        <a id="delete-button" class="btn">Delete</a>
-        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
-      </form>
-    </div>
+    <hr />
   </div>
 </div>

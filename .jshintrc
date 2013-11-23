@@ -90,6 +90,9 @@
         "before": true,
         "beforeEach": true,
         "after": true,
-        "afterEach": true
+        "afterEach": true,
+
+        // Google Maps API
+        "google": true
     }
 }
