@@ -1,0 +1,18 @@
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/update-waiver-controller.js') -%>
+
+<div class="row">
+<div class="offset4 span4">
+    <div class="well">
+        <h2>Update Waiver</h2>
+        <form id="update-waiver-form" method="post">
+            <label for="file">Waiver File</label>
+            <input class="input-block-level" type='file' name="file" id="file"/>
+            <p>Plese upload a .txt file with the new contents of the waiver.</p>
+            <hr />
+            <input class="btn" type="reset" value="Clear" />
+            <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+</div>

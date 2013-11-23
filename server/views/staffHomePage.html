@@ -106,11 +106,9 @@
     <thead>
         <tr>
             <th id="name">            Name                       </th>
-            <th id="totalAvailable">  Total Available            </th>
-            <th id="numberInUse">     Number in Use              </th>
-            <th id="numberRemaining"> Number Remaining           </th>
+            <th id="inventory">       Number In Inventory        </th>
+            <th id="numberNeeded">    Number Needed              </th>
             <th id="maxRequestValue"> Max Number To be Requested </th>
-            <th id="numberRequested"> Number Requested           </th>
         </tr>
     </thead>
     <tbody>
@@ -121,11 +119,13 @@
                         <%= toolList[i].name %>
                     </a>
                 </td>
-                <td><%= toolList[i].totalAvailable  %></td>
-                <td><%= toolList[i].numberInUse     %></td>
-                <td><%= toolList[i].numberRemaining %></td>
-                <td><%= toolList[i].maxRequestValue %></td>
-                <td><%= toolList[i].numberRequested %></td>
+                <td><%= toolList[i].inventory            %></td>
+                <td><%= (toolsNeeded[toolList[i].name]) ? toolsNeeded[toolList[i].name] : 0 %></td>
+                <% if(toolList[i].maxRequst === 'on') {  %>
+                    <td><%= toolList[i].maxRequestValue  %></td>
+                <% } else {                              %>
+                    <td>None                             </td>
+                <% }                                     %>
             </tr>
         <% } %>
     </tbody>
