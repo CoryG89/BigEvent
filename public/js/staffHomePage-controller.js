@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     //get needed info
+    var statusTypes = ['Approved', 'Declined', 'Finished Interview', 'Scheduled for Interview'];
 
     var pageNumber = {
         volunteer: 1,
@@ -58,7 +59,7 @@
         var type = tableId.split('-')[0];
         var key;
 
-        if (cell.id !== 'email' && type === 'volunteer' || type === 'coordinator' || type === 'committee' || type === 'leadership')
+        if (cell.id !== 'email' && cell.id !== 'status' && type === 'volunteer' || type === 'coordinator' || type === 'committee' || type === 'leadership')
             key = type + '.' + cell.id;
         else
             key = cell.id;
@@ -291,6 +292,10 @@
             {
                 cell.innerHTML = record.email;
             }
+            else if (header === 'status')
+            {
+                cell.innerHTML = statusTypes[record.status];
+            }
             else
             {
                 cell.innerHTML = '<a href="' + route + record._id + '">' + record[type][header] + '</a>';
@@ -308,6 +313,10 @@
                 else if (header === 'email')
                 {
                     cell.innerHTML = record.email;
+                }
+                else if(header === 'status')
+                {
+                    cell.innerHTML = statusTypes[record.status];
                 }
                 else
                 {
