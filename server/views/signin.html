@@ -5,7 +5,10 @@
     <p>Auburn <em>student</em> accounts are also valid Microsoft Accounts. Students can sign-in with their full Auburn email address (e.g. <code>user0001@tigermail.auburn.edu</code>) and password.</p>
     <p>Auburn <em>residents</em> or <em>property owners</em> who are interested in <a href="<%= site.url %>jobsite/request"><strong>submitting a job request</strong></a> for volunteer work on the day of the event <strong>do not</strong> need to sign in to do so.</p>
     <hr />
-    <a href="<%= site.url %>signin/authenticate" class="btn btn-primary pull-right">Sign In <i class="icon-user icon-white"></i></a>
-    <button onclick="window.history.back()" class="btn pull-right">Go Back</button>
+    <div class="text-right">
+      <button onclick="window.history.back()" class="btn">Go Back</button>
+      &nbsp;&nbsp;
+      <a href="<%= site.url %>signin/authenticate" class="btn btn-primary">Sign In <i class="icon-user icon-white"></i></a>
+    </div>
   </div>
 </div>

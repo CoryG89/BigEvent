@@ -34,14 +34,19 @@ function addJobsite (req, res, callback) {
             var query = util.format('%s %s, %s %s',
                 record.address, record.city, record.state, record.zip);
 
-            geocoder.send(query, function (response) {
+            geocoder.send(query, function (err, response) {
+                if (err) {
+                    res.send('Error', 400);
+                    return;
+                }
+                
                 var result = response.results[0];
                 record.location = result.geometry.location;
                 record.formattedAddress = result.formatted_address;
 
                 jobsites.insert(record, options, function (err, records) {
                     if (err) {
-                        log('POST: Error inserting record:\n\n%s\n\n', err);
+                        log('Error inserting record:\n\n%s\n\n', err);
                         res.send('Error', 400);
                     } else {
                         if (typeof callback === 'function') callback(records[0]);

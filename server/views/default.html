@@ -18,15 +18,15 @@
     <!-- Include Font Awesome Icon CSS -->
     <link href="<%= site.url %>vendor/css/font-awesome.min.css" rel="stylesheet" />
 
-    <!-- Include custom app-specific styles last to overide all others -->
-    <link href="<%= site.url %>css/styles.css" rel="stylesheet" />
-
     <!-- HTML5 shim must be in HEAD section, IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <%- stylesheets %>
+
+    <!-- Include custom app-specific styles last to overide all others -->
+    <link href="<%= site.url %>css/styles.css" rel="stylesheet" />
 
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="<%= site.url %>img/favicon.ico" />

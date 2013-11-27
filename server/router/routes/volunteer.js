@@ -17,7 +17,12 @@ function updateUserDocument(req, res, id, callback) {
     var geoQuery = util.format('%s %s, %s %s',
         data.address, data.city, data.state, data.zip);
 
-    geocoder.send(geoQuery, function (response) {
+    geocoder.send(geoQuery, function (err, response) {
+        if (err) {
+            callback(err);
+            return;
+        }
+
         var result = response.results[0];
         data.team = uuid.v4();
         data.location = result.geometry.location;
@@ -34,11 +39,11 @@ function updateUserDocument(req, res, id, callback) {
 
         users.findAndModify(query, null, cmd, opt, function (err, updated) {
             if (err || !updated) {
-                log('POST: Error updating user document:\n\n%s\n\n', err);
+                log('Error updating user document:\n\n%s\n\n', err);
                 callback(err);
             } else {
-                log('POST: Successfully updated user document');
-                log('POST: Updating user session');
+                log('Successfully updated user document');
+                log('Updating user session');
                 callback(null, updated);
             }
         });
