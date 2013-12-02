@@ -166,7 +166,29 @@ module.exports = {
         },
 
         delete: function (req, res){
-            res.send(200);
+            var id = req.params.id;
+            var query = { _id: new ObjectId(id)};
+            log('DELETE: Attempting to remove tool.');
+            tools.remove(query, function(err, numberRemoved){
+                if(err)
+                {
+                    log('DELETE: Unable to remove tool with id: %s', id);
+                    res.render('hero-unit', {
+                        title: 'Could Not Delete Tool',
+                        header: 'Sorry!',
+                        message: 'There was a problem deleting the tool. Please try again later.'
+                    });
+                }
+                else
+                {
+                    log('DELETE: Operation complete. Removed %s entries. Redirecting to the staff home page...', numberRemoved);
+                    res.render('hero-unit', {
+                        title: 'Success',
+                        header: 'Tool Deleted!',
+                        message: 'The tool was successfully deleted.'
+                    });
+                }
+            });
         },
 
         success: function (req, res) {
@@ -181,7 +203,15 @@ module.exports = {
             res.render('hero-unit', {
                 title: 'Could Not Update Tool',
                 header: 'Sorry!',
-                message: 'There was a problem Updating the tool. Please try again later.'
+                message: 'There was a problem updating the tool. Please try again later.'
+            });
+        },
+
+        unableToDelete: function (req, res){
+            res.render('hero-unit', {
+                title: 'Could Not Delete Tool',
+                header: 'Sorry!',
+                message: 'There was a problem deleting the tool. Please try again later.'
             });
         }
     }

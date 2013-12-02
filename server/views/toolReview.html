@@ -33,9 +33,22 @@
         <label for="maxRequestValue" id="maxRequestLabel">Maximum Request Amount</label>
         <input class="tool-review-input input-block-level" type="number" id="maxRequestValue" name="maxRequestValue" value="<%= record.maxRequestValue %>" min="0" disabled/>
         <hr />
-        <a id="delete-button" class="btn">Delete</a>
+        <a href="#delete-account" id="delete-button" class="btn btn-danger disabled" data-toggle="modal">Delete</a>
         <input class="tool-review-input btn btn-primary pull-right" type="submit" value="Submit" disabled/>
       </form>
+      <div id="delete-account" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-tool-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+          <h3 id="delete-tool-label">Delete Tool</h3>
+        </div>
+        <div class="modal-body">
+          <p><strong>Are you sure you want to delete this tool?</strong> This tool will be deleted, and this action cannot be undone. The tool can be added back at a later time using the tool form</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <a href="/staff/tool/review/delete/<%= record._id %>">Confirm</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
