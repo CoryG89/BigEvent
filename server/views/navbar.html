@@ -41,6 +41,10 @@
             <li class="<%= reqdata.path === '/jobsite/request' ? 'active' : '' %>">
               <a href="<%= site.url %>jobsite/request"><i class="icon-map-marker icon-white"></i> Job Requests</a>
             </li>
+            <li class="divider-vertical <%= reqdata.path === '/staffRegistration' ? 'active' : '' %>"></li>
+            <li class="<%= reqdata.path === '/staffRegistration' ? 'active' : '' %>">
+              <a href="<%= site.url %>staffRegistration"><i class="icon-user icon-white"></i> Staff Registration</a>
+            </li>
             <% if (!user) { %>
               <li class="divider-vertical <%= reqdata.path === '/staffHomePage' ? 'active' : '' %>"></li>
               <li class="<%= reqdata.path === '/staffHomePage' ? 'active' : '' %>">
@@ -58,9 +62,9 @@
           </li>
           <li class="divider-vertical"></li>
           <% if (user) { %>
-            <li><a href="<%= site.url %>signout"><i class="icon-user icon-white"></i> Sign Out</a></li>
+            <li><a href="<%= site.url %>signout"><i class="icon-off icon-white"></i> Sign Out</a></li>
           <% } else { %>
-            <li><a href="<%= site.url %>signin"><i class="icon-user icon-white"></i> Sign In</a></li>
+            <li><a href="<%= site.url %>signin"><i class="icon-off icon-white"></i> Sign In</a></li>
           <% } %>
           <li class="divider-vertical"></li>
         </ul>

@@ -221,7 +221,28 @@ module.exports = {
             },
 
             delete: function (req, res) {
-                res.send(200);
+                var query = { _id: req.params.id };
+                var cmd = {
+                    $unset: {
+                        volunteer: ''
+                    },
+                    $set: {
+                        role: 'user'
+                    }
+                };
+                var opt = { w: 1 };
+
+                users.update(query, cmd, opt, function (err, result) {
+                    if (err || !result) {
+                        res.render('hero-unit', {
+                            title: 'Volunteer Account Removal Failed',
+                            header: 'Sorry!',
+                            message: 'There was a problem removing the account data at this time. Please try again later.'
+                        });
+                    } else {
+                        res.redirect('/staff/staffHomePage');
+                    }
+                });
             },
         }
     }

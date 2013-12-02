@@ -10,6 +10,7 @@ var jobSites = dbman.getCollection('jobsites');
 
 //set vars to control paginations.
 var itemsPerPage = 10;
+var statusTypes = ['Approved', 'Declined', 'Finished Interview', 'Scheduled for Interview'];
 
 function getLists(error, callback) {
     //get tools
@@ -174,6 +175,7 @@ module.exports = {
                     toolsNeeded: toolsNeeded,
                     coordinatorList: pcDocs,
                     ppt: (coordinatorNumPages === 0) ? 1 : coordinatorNumPages,
+                    statusTypes: statusTypes,
                     error: error
                 });
             });
@@ -182,6 +184,7 @@ module.exports = {
 
     updateTable: function (req, res) {
         var type = req.query.type;
+        log('type: %s', type);
         var page = parseInt(req.query.p, 10);
         log('pageNumber: %s', page);
 
@@ -198,9 +201,9 @@ module.exports = {
         } else if(type === 'volunteer') {
             collection = users;
             query = { role: 'volunteer' };
-        } else if(type === 'commiteee') {
+        } else if(type === 'committee') {
             collection = users;
-            query = { role: 'commitee' };
+            query = { role: 'committee' };
         } else if(type === 'leadership') {
             collection = users;
             query = { role: 'leadership' };
@@ -224,6 +227,7 @@ module.exports = {
                     res.send(400, 'No Entries');
                 }
                 else {
+                    log('Found %s docs', docs.length);
                     res.send(200, docs);
                 }
             });
@@ -281,9 +285,9 @@ module.exports = {
         } else if(type === 'volunteer') {
             collection = users;
             query = { role: 'volunteer' };
-        } else if(type === 'commiteee') {
+        } else if(type === 'committee') {
             collection = users;
-            query = { role: 'commitee' };
+            query = { role: 'committee' };
         } else if(type === 'leadership') {
             collection = users;
             query = { role: 'leadership' };
