@@ -15,7 +15,16 @@ var zips = dbman.getCollection('zips');
 var needApproval = config.jobsitesNeedApprovalBeforeEvaluation;
 
 function addJobsite (req, res, callback) {
-    var record = req.body;
+    var data = req.body;
+
+    if (data.email !== data.emailConf) {
+        log('Email does not match email confirmation');
+        res.send('Error', 400);
+        return;
+    } else {
+        delete data.emailConf;
+    }
+
     var query = { _id: '1z2i3p4s5'};
     zips.findOne(query, function(err, zipDoc) {
         if(err || !zipDoc){
@@ -23,16 +32,16 @@ function addJobsite (req, res, callback) {
         }
         // verify the zip code
         var zipArray = zipDoc.zips;
-        if (zipArray.indexOf(record.zip) === -1) {
+        if (zipArray.indexOf(data.zip) === -1) {
             var zipString = zipArray.join(', ');
             res.send('Currently accepted zip codes are: ' + zipString, 400);
         } else {
             log('POST: saving job site request data');
-            // insert record
+            // insert data
             var options = { w: 1 };
 
             var query = util.format('%s %s, %s %s',
-                record.address, record.city, record.state, record.zip);
+                data.address, data.city, data.state, data.zip);
 
             geocoder.send(query, function (err, response) {
                 if (err) {
@@ -41,22 +50,16 @@ function addJobsite (req, res, callback) {
                 }
 
                 var result = response.results[0];
-                record.location = result.geometry.location;
-                record.formattedAddress = result.formatted_address;
-
-                delete record.emailConf;
+                data.location = result.geometry.location;
+                data.formattedAddress = result.formatted_address;
+                data.status = needApproval ? 'preliminary' : 'active';
                 
-                record.evaluated = false;
-                record.claimed = false;
-                
-                record.status = needApproval ? 'requested' : 'active';
-                
-                jobsites.insert(record, options, function (err, records) {
+                jobsites.insert(data, options, function (err, docs) {
                     if (err) {
                         log('Error inserting record:\n\n%s\n\n', err);
                         res.send('Error', 400);
                     } else {
-                        if (typeof callback === 'function') callback(records[0]);
+                        if (typeof callback === 'function') callback(docs[0]);
                     }
                 });
             });

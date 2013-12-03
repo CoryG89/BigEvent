@@ -12,7 +12,7 @@
         <dt>Name</dt><dd><%= jobsite.firstName + ' ' + jobsite.lastName %></dd>
         <dt>Email</dt><dd><%= jobsite.email %></dd>
         <dt>Phone</dt><dd><%= jobsite.phone %></dd>
-        <% if (typeof jobsite.altPhone === 'string') { %>
+        <% if (typeof jobsite.altPhone === 'string' && jobsite.altPhone !== '') { %>
           <dt>Alt Phone</dt><dd><%= jobsite.altPhone %></dd>
         <% } %>
         <dt>Description</dt><dd><%= jobsite.description %></dd>
@@ -24,38 +24,58 @@
       </dl>
       <hr />
       <a id="back-button" class="btn">Go Back</a>
-      <% if (jobsitesNeedApprovalBeforeEvaluation && jobsite.status === 'requested') { %>
+      <% if (jobsitesNeedApprovalBeforeEvaluation && jobsite.status === 'preliminary') { %>
         <a href="#approve" class="btn btn-primary pull-right" data-toggle="modal">Approve Job</a>
         <div id="approve" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="approve-jobsite-label" aria-hidden="true">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-          <h3 id="delete-jobsite-label">Confirm Job Approval</h3>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="approve-jobsite-label">Confirm Job Approval</h3>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to approve this jobsite? If approved the jobsite will be included in those to be evaluated for the event by Big Event staff members.</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <a href="<%= site.url + reqdata.path + '/approve' %>" class="btn btn-success">Confirm</a>
+          </div>
         </div>
-        <div class="modal-body">
-          <p>Are you sure you want to approve this jobsite? If approved the jobsite will be included in those to be evaluated for the event by Big Event staff members.</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <a href="<%= site.url + reqdata.path + '/approve' %>" class="btn btn-success">Confirm</a>
-        </div>
-      </div>
-      <% } else if (jobsite.status === 'active' && !jobsite.claimed) { %>
+      <% } else if (jobsite.status === 'active') { %>
         <a href="#claim" class="btn btn-primary pull-right" data-toggle="modal">Claim</a>
         <div id="claim" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="claim-jobsite-label" aria-hidden="true">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-            <h3 id="claim-jobsite-label">Claim Jobsite</h3>
+            <h3 id="claim-jobsite-label">Claim Job</h3>
           </div>
           <div class="modal-body">
-            <p>Do you want to claim this jobsite for an evaluation? If you claim it, other staff members will not be able to claim it to do an evaluation. Only claim this jobsite if you have an evaluation planned.</p>
+            <p>Are you sure you want to claim this jobsite for an evaluation? If claimed, other staff members will not be able to select this jobsite for evaluation. Only claim this jobsite if you have an evaluation planned.</p>
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             <a href="<%= site.url + reqdata.path + '/claim' %>" class="btn btn-success">Confirm</a>
           </div>
         </div>
-      <% } else if (jobsite.status === 'active' && jobsite.claimed && jobsite.claimedBy === user._id) { %>
-        <a href="/evaluation" class="btn btn-primary pull-right">Evaluation</a>
+      <% } else if (jobsite.status === 'claimed' && jobsite.claimedBy === user._id) { %>
+        <ul class="inline unstyled pull-right">
+          <li>
+            <a href="#unclaim" class="btn btn-warning pull-right" data-toggle="modal">Unclaim</a>
+            <div id="unclaim" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="unclaim-jobsite-label" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                <h3 id="unclaim-jobsite-label">Unclaim Job</h3>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to remove your claim on this jobsite for an evaluation? If claimed, other staff members will not be able to select this jobsite for evaluation. Only remove your claim on this jobsite if you do not have an evaluation planned.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <a href="<%= site.url + reqdata.path + '/unclaim' %>" class="btn btn-warning">Confirm</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="<%= site.url + reqdata.path + '/evaluation' %>" class="btn btn-primary pull-right">Evaluation</a>
+          </li>
+        </ul>
       <% } %>
     </div>
     <% include jobsite-form.html %>

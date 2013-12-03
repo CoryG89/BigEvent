@@ -22,14 +22,12 @@
 
   "emailNotifications": {
     "enabled": true,
-    "fromLabel": "Big Event <bigeventdemo@gmail.com>" 
+    "fromLabel": "Big Event <bigeventdemo@gmail.com>",
+    "onJobsiteApproval": true
   },
 
-  "jobsiteEvaluationClaimsPerEvaluator": 3,
-
+  "jobsiteClaimsPerEvaluator": 3,
   "jobsitesNeedApprovalBeforeEvaluation": true,
-  
-  "emailPropertyOwnerOnJobsiteApproval": true,
 
   "maxTeamSize": 10,
 

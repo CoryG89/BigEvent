@@ -2,11 +2,11 @@
 <form id="jobsite-form" class="<%= exists ? 'hidden' : '' %>" method="post">
   <div class="row-fluid">
     <div class="span6">
-      <label for="first_name">First Name</label>
+      <label for="first-name">First Name</label>
       <input class="input-block-level" type="text" id="first-name" name="firstName" value="<%= exists ? jobsite.firstName : '' %>" required />
     </div>
     <div class="span6">
-      <label for="last_name">Last Name</label>
+      <label for="last-name">Last Name</label>
       <input class="input-block-level" type="text" id="last-name" name="lastName" value="<%= exists ? jobsite.lastName : '' %>" required />
     </div>
   </div>
@@ -16,7 +16,7 @@
       <input class="input-block-level" type="email" id="email" name="email" value="<%= exists ? jobsite.email : '' %>" required />
     </div>
     <div class="span6">
-      <label for="email">Confirm Email</label>
+      <label for="email-conf">Confirm Email</label>
       <input class="input-block-level" type="email" id="email-conf" name="emailConf" value="<%= exists ? jobsite.email : '' %>" required />
     </div>
   </div>
@@ -56,7 +56,7 @@
     <div id="delete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-jobsite-label" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-        <h3 id="delete-jobsite-label">Claim Jobsite</h3>
+        <h3 id="delete-jobsite-label">Delete Jobsite</h3>
       </div>
       <div class="modal-body">
         <p>Are you sure you want to permanently delete this job site? This action cannot be undone and a job site request will have to be resubmitted if needed.</p>

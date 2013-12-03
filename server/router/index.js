@@ -66,7 +66,8 @@ module.exports = {
         app.post('/staff/jobsite/:id', routes.jobsite.post);
         app.get('/staff/jobsite/:id/delete', routes.jobsite.delete);
         app.get('/staff/jobsite/:id/approve', routes.jobsite.approve);
-        app.get('/staff/jobsite/:id/claim', routes.jobsite.approve);
+        app.get('/staff/jobsite/:id/claim', routes.jobsite.claim);
+        app.get('/staff/jobsite/:id/unclaim', routes.jobsite.unclaim);
         app.get('/staff/jobsite/:id/evaluation', routes.jobsiteEvaluation.get);
 
         app.get('/staff/tool', routes.tool.get);

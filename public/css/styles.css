@@ -12,7 +12,11 @@ label {
 }
 
 h1 + hr, h2 + hr, h3 + hr, h4 + hr, h5 + hr, h6 + hr {
-  margin: 0px 0px 10px;
+  margin: 8px 0px 8px;
+}
+
+.well h1, .well h2, .well h3, .well h4, .well h5, .well h6 {
+    margin: 0px;
 }
 
 button:focus, select:focus {
@@ -87,10 +91,6 @@ ul.lower-alpha { list-style-type: lower-alpha; }
     margin: auto;
     left: 0;
     right: 0;
-}
-
-.btn.pull-right + .btn.pull-right {
-    margin-right: 10px;
 }
 
 /**
@@ -212,18 +212,10 @@ div.map-large {
 }
 
 div.map-bordered {
-    border: 3px double #000;
+    border: 4px double #333;
 }
 
 /* Fix for Google Maps Controls */
 .gmnoprint img {
     max-width: none;
-}
-
-.btn.pull-right {
-    vertical-align: text-bottom;
-}
-
-div.well .btn {
-    margin: 15px 0px 15px 0px;
 }

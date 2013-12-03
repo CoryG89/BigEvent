@@ -15,7 +15,7 @@
       <% table.rows.forEach(function (row) { %>
         <tr data-id="<%= row._id %>" <% if (typeof row.dataAttributes !== 'undefined') { %>
             <% row.dataAttributes.forEach(function (dataAttr) { %>
-              <%= 'data-' + dataAttr.name + '=' + dataAttr.value %>
+              data-<%= dataAttr.name %>="<%= dataAttr.value %>"
             <% }); %>
         <% } %> >
         <% row.rowData.forEach(function (e, i) { %>

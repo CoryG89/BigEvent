@@ -16,21 +16,20 @@ function jobsiteDocToRow(doc) {
     return {
         _id: doc._id,
         dataAttributes: [
+            { name: 'addr', value: doc.formattedAddress },
             { name: 'lat', value: doc.location.lat },
             { name: 'lng', value: doc.location.lng }
         ],
         rowData: [
-            doc.lastName + ', ' + doc.firstName, doc.email,
-            doc.phone, doc.altPhone, doc.formattedAddress, doc.description
+            doc.lastName + ', ' + doc.firstName, doc.email, doc.phone,
+            doc.altPhone, doc.formattedAddress, doc.description
         ]
     };
 }
 
 function getEvalListingRows(callback) {
-    jobsites.find({
-        claimed: false,
-        evaluated: false
-    }).toArray(function (err, docs) {
+    var query = { status: 'active' };
+    jobsites.find(query).toArray(function (err, docs) {
         if (err) callback(err);
         else callback(null, docs.map(jobsiteDocToRow));
     });
@@ -39,28 +38,17 @@ function getEvalListingRows(callback) {
 module.exports = {
     get: function (req, res) {
         var id = req.params.id;
-        jobsites.findOne({_id: new ObjectId(id)}, function(err, record){
-            if(err){
-                log('JOBSITE.EVALUATION.GET: Error getting jobsite: %s', err);
-                res.render('hero-unit', {
-                    title: 'Error',
-                    header: 'Sorry!',
-                    message: 'There was a problem retrieving the jobsite from the database. Please try again later.'
-                });
-            }
-            else if(!record){
-                log('JOBSITE.EVALUATION.GET: Jobsite not found', err);
-                res.render('hero-unit', {
-                    title: 'Error',
-                    header: 'Sorry!',
-                    message: 'Jobsite not found in the database. Please try again later.'
-                });
-            }
-            else{
-                log('JOBSITE.EVALUATION.GET: Jobsite Found.');
+        jobsites.findOne({_id: new ObjectId(id)}, function(err, doc) {
+            if (err) {
+                log('Error querying josbites collection:\n\n%s\n\n', err);
+                res.send(400);
+            } else if (!doc) {
+                log('Jobsite document with id \'%s\' not found', id);
+                res.send(400);
+            } else {
                 res.render('jobsite-evaluation', {
                     title: 'Job Site Evaluation',
-                    jobRequest: record
+                    jobsite: doc
                 });
             }
         });

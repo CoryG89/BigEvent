@@ -65,8 +65,13 @@ module.exports = {
     },
 
     post: function (req, res) {
-        var userId = req.session.user._id;
-        updateUserDocument(req, res, userId, function (err, doc) {
+        var user = req.session.user;
+        if (user.role !== 'user') {
+            log('User \'%s\' already assigned role: %s', user._id, user.role);
+            res.send(400);
+            return;
+        }
+        updateUserDocument(req, res, user._id, function (err, doc) {
             if (err) {
                 res.send(400);
             } else {
@@ -161,7 +166,7 @@ module.exports = {
                         header: 'Volunteer Account Removed',
                         message: 'Your volunteer account data was successfully deleted and you are no longer registered to volunteer on the day of the event. Thank you for your interest in Big Event and in serving your Auburn community. You can register again '
                     });
-                    req.session.role = 'user';
+                    req.session.user.role = 'user';
                     delete req.session.user.volunteer;
                 }
             });

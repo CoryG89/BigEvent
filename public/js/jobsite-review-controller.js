@@ -30,13 +30,12 @@
 
     $reviewForm.ajaxForm({
         success: function () {
-            alert('Successfully updated job site request data.');
             window.location.reload();
         },
 
         error: function () {
             alert('Could not update job site request data.');
-
+            window.location.reload();
         }
     });
 

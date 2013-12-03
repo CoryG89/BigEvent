@@ -21,74 +21,53 @@ var toolHeaders = [
 ];
 
 function getUserRow(role, doc) {
-    return [
-        doc[role].lastName + ', ' + doc[role].firstName, doc.email,
-        doc[role].phone, doc[role].gender, doc[role].shirtSize,
-        doc[role].formattedAddress
-    ];
+    return {
+        _id: doc._id,
+        rowData: [
+            doc[role].lastName + ', ' + doc[role].firstName, doc.email,
+            doc[role].phone, doc[role].gender, doc[role].shirtSize,
+            doc[role].formattedAddress
+        ]
+    };
 }
 
 function getJobsiteRow(doc) {
-    return [
-        doc.lastName + ', ' + doc.firstName, doc.email, doc.phone,
-        doc.altPhone, doc.formattedAddress
-    ];
+    return {
+        _id: doc._id,
+        rowData: [
+            doc.lastName + ', ' + doc.firstName, doc.email, doc.phone,
+            doc.altPhone, doc.formattedAddress
+        ]
+    };
 }
 
 function getToolRow(doc) {
-    return [
-        doc.name, doc.inventory, doc.maxRequestValue
-    ];
+    return {
+        _id: doc._id,
+        rowData: [
+            doc.name, doc.inventory, doc.maxRequestValue
+        ]
+    };
 }
 
 function getUserData(role, callback) {
-    var data = [];
     users.find({ role: role }).toArray(function (err, docs) {
-        if (err) {
-            callback(err);
-        } else {
-            docs.forEach(function (e, i) {
-                data[i] = {
-                    _id: e._id,
-                    rowData: getUserRow(role, e)
-                };
-            });
-            callback(null, data);
-        }
+        if (err) callback(err);
+        else callback(null, docs.map(getUserRow));
     });
 }
 
 function getJobsiteData(callback) {
-    var data = [];
     jobsites.find().toArray(function (err, docs) {
-        if (err) {
-            callback(err);
-        } else {
-            docs.forEach(function (e, i) {
-                data[i] = {
-                    _id: e._id,
-                    rowData: getJobsiteRow(e)
-                };
-            });
-            callback(null, data);
-        }
+        if (err) callback(err);
+        else callback(null, docs.map(getJobsiteRow));
     });
 }
 
 function getToolData(callback) {
-    var data = [];
     tools.find().toArray(function (err, docs) {
-        if (err) {
-            callback(err);
-        } else {
-            docs.forEach(function (e, i) {
-                data[i] = {
-                    _id: e._id,
-                    rowData: getToolRow(e)
-                };
-            });
-            callback(null, data);
-        }
+        if (err) callback(err);
+        else callback(null, docs.map(getToolRow));
     });
 }
 

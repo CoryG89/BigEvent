@@ -2,32 +2,25 @@
 <% script(site.url + '/js/job-eval-controller.js') -%>
 
 <div class="row">
-  <div class="offset3 span6 well">
-    <h3>Job Site Data</h3>
+  <div class="span6 well">
+    <h3>Job Data</h3>
     <hr />
-    <ul>
-      <li><strong>Name:</strong> <%= jobsite.firstName + ' ' + jobsite.lastName %></li>
-      <li><strong>Address:</strong>
-        <ul>
-          <li><strong>Steet:</strong> <%= jobsite.address %></li>
-          <li><strong>City:</strong> <%= jobsite.city %></li>
-          <li><strong>State:</strong> <%= jobsite.state %></li>
-          <li><strong>Zip:</strong> <%= jobsite.zip %></li>
-        </ul>
-      </li>
-      <li><strong>Formatted Address:</strong> <%= jobsite.formattedAddress %></li>
-      <li><strong>Phone Number:</strong> <%= jobsite.phone %></li>
-      <li><strong>Alternate Phone Number:</strong> <%= jobsite.altPhone %></li>
+    <dl>
+      <dt>Name</dt><dd><%= jobsite.firstName + ' ' + jobsite.lastName %></dd>
+      <dt>Email</dt><dd><%= jobsite.email %></dd>
+      <dt>Phone</dt><dd><%= jobsite.phone %></dd>
+      <% if (typeof jobsite.altPhone === 'string') { %>
+        <dt>Alt Phone</dt><dd><%= jobsite.altPhone %></dd>
+      <% } %>
+      <dt>Description</dt><dd><%= jobsite.description %></dd>
       <br />
-      <li><strong>Description:</strong> <%= jobsite.description %></li>
+      <dt>Address</dt><dd><%= jobsite.address %><br /><%= jobsite.city + ', ' + jobsite.state + ' ' + jobsite.zip %></dd>
+      <dt>Google Map Address</dt><dd><%= jobsite.formattedAddress %></dd>
       <br />
-      <li><strong>Status:</strong> <%= jobsite.evaluated ? 'Evaluated' : 'Unevaluated' %></li>
-    </ul>
+      <dt><strong>Current Status</strong></dt><dd><%=: jobsite.status | capitalize %></dd>
+    </dl>
     <hr />
-    <div class="text-right">
-      <button onclick="window.history.back()" class="btn">Go Back</button>
-      <a href="#claim-jobsite" data-toggle="modal" class="btn btn-primary">Claim</a>
-    </div>
+    <button onclick="window.history.back()" class="btn">Go Back</button>
   </div>
 </div>
 <div id="claim-jobsite" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="claim-jobsite-label" aria-hidden="true">
