@@ -45,6 +45,17 @@ module.exports = {
         app.get('/jobsite/request/success', routes.jobsiteRequest.success);
         app.get('/jobsite/request/failure', routes.jobsiteRequest.failure);
 
+        app.get('/staffRegistration', routes.staffRegistration.get);
+        app.get('/staffRegistration/success', routes.staffRegistration.success);
+        app.get('/staffRegistration/failure', routes.staffRegistration.failure);
+        app.get('/staffRegistration/review/success', routes.staffRegistration.review.success);
+        app.get('/staffRegistration/review/failure', routes.staffRegistration.review.failure);
+        app.get('/staffRegistration/review/delete/:type', routes.staffRegistration.review.delete);
+        app.get('/staffRegistration/review/:type', routes.staffRegistration.review.get);
+        app.post('/staffRegistration/review/:type', routes.staffRegistration.review.post);
+        app.get('/staffRegistration/:type', routes.staffRegistration.getForm);
+        app.post('/staffRegistration/:type', routes.staffRegistration.post);
+
         //staff side routes
         app.get('/staff/volunteer/success', routes.volunteer.success);
         app.get('/staff/volunteer/failure', routes.volunteer.failure);
@@ -77,13 +88,23 @@ module.exports = {
 
         app.get('/staff/tool/review/success', routes.tool.review.success);
         app.get('/staff/tool/review/failure', routes.tool.review.failure);
-        app.post('/staff/tool/review/delete/:id', routes.tool.review.delete);
+        app.get('/staff/tool/review/delete/:id', routes.tool.review.delete);
         app.get('/staff/tool/review/:id', routes.tool.review.get);
         app.post('/staff/tool/review/:id', routes.tool.review.post);
 
         app.get('/staff/staffHomePage', routes.staffHomePage.get);
         app.get('/staff/staffHomePage/updateTable', routes.staffHomePage.updateTable);
         app.get('/staff/staffHomePage/sort', routes.staffHomePage.sort);
+
+        app.get('/staff/coordinator/review/delete/:id', routes.staffRegistration.review.staff.delete);
+        app.get('/staff/committee/review/delete/:id', routes.staffRegistration.review.staff.delete);
+        app.get('/staff/leadership/review/delete/:id', routes.staffRegistration.review.staff.delete);
+        app.get('/staff/committee/review/:id', routes.staffRegistration.review.staff.get);
+        app.get('/staff/leadership/review/:id', routes.staffRegistration.review.staff.get);
+        app.get('/staff/coordinator/review/:id', routes.staffRegistration.review.staff.get);
+        app.post('/staff/committee/review/:id', routes.staffRegistration.review.staff.post);
+        app.post('/staff/leadership/review/:id', routes.staffRegistration.review.staff.post);
+        app.post('/staff/coordinator/review/:id', routes.staffRegistration.review.staff.post);
 
         app.get('/staff/toolReport', routes.toolReport.get);
         app.get('/staff/toolReport/failure', routes.toolReport.failure);

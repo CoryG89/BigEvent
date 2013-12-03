@@ -1,0 +1,61 @@
+<% stylesheet(site.url + 'vendor/css/bootstrap-formhelpers.css') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-phone.js') -%>
+<% script(site.url + 'vendor/js/bootstrap-formhelpers-states.en_US.js') -%>
+<% script(site.url + 'vendor/js/jquery.form.min.js') -%>
+<% script(site.url + 'js/staff-registration-review-controller.js') -%>
+<div class="row">
+  <div class="offset1 span5 hidden-phone">
+    <div>
+      <h4>Thank You <%= staffMember.firstName %>!</h4>
+      <hr />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>More Text</h4>
+      <hr />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+    <div>
+      <h4>Even More Text</h4>
+      <hr />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisi diam, sollicitudin sit amet feugiat at, suscipit a purus. Fusce vehicula blandit faucibus. Donec ultrices eros pellentesque dolor tempor tristique ut sed quam. Sed vitae varius leo. Nam nec blandit tellus. Curabitur cursus aliquam turpis sed hendrerit. Pellentesque vestibulum tortor at nibh interdum laoreet.</p>
+    </div>
+  </div>
+  <div class="span5">
+    <div class="well">
+      <form id="staff-registration-form" method="post">
+        <a id="edit-button" class="pull-right btn btn-small">Edit <span class="icon-edit"></span></a>
+        <a id="cancel-button" class="pull-right btn btn-small hidden">Cancel <span class="icon-remove"></span></a>
+        <h4><%= title %></h4>
+        <hr />
+        <label for="email">Email</label>
+        <input class="input-block-level" type="email" id="email" name="email" value="<%= user.email %>" required disabled />
+        <label for="first-name">First Name</label>
+        <input class="input-block-level changeable" type="text" id="first-name" name="firstName" value="<%= staffMember.firstName %>" required disabled/>
+        <label for="last-name">Last Name</label>
+        <input class="input-block-level changeable" type="text" id="last-name" name="lastName" value="<%= staffMember.lastName %>" required disabled/>
+        <label for="phone">Phone</label>
+        <input class="form-control bfh-phone input-block-level changeable" type="tel" id="phone" name="phone" data-format="ddd-ddd-dddd" data-number="<%= staffMember.phone %>" required disabled/>
+        <label for="status">Status</label>
+        <input class="input-block-level" type="text" id="status" name="status" value="<%= status %>" required disabled/>
+        <hr />
+        <a href="#delete-account" id="delete-button" class="btn btn-danger disabled" data-toggle="modal">Delete Account</a>
+        <input class="btn btn-primary pull-right" type="submit" value="Submit" />
+      </form>
+      <div id="delete-account" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-account-label" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+          <h3 id="delete-account-label">Delete Account</h3>
+        </div>
+        <div class="modal-body">
+          <p><strong>Are you sure you want to delete your staff account?</strong> Your data will be deleted so this action cannot be undone, however, you may register again as a for a staff position before the interviews begin should you change your mind.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <a href="<%= isStaff ? site.url + 'staff/' + type + '/review/delete/' + user._id : site.url + 'staffRegistration/review/delete/' + type %>" class="btn btn-danger">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

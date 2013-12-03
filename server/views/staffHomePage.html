@@ -145,8 +145,8 @@
         <tr>
             <th id="doubleName">        Name            </th>
             <th id="email">             Email           </th>
-            <th id="formattedAddress">  Address         </th>
             <th id="phone">             Phone Number    </th>
+            <th id="status">            Status          </th>
         </tr>
     </thead>
     <tbody>
@@ -158,8 +158,8 @@
                     </a>
                 </td>
                 <td><%= committeeList[i].email                       %></td>
-                <td><%= committeeList[i].committee.formattedAddress  %></td>
-                <td><%= committeeList[i].commiteee.phone             %></td>
+                <td><%= committeeList[i].committee.phone             %></td>
+                <td><%= statusTypes[committeeList[i].status]         %></td>
             </tr>
         <% } %>
     </tbody>
@@ -179,8 +179,8 @@
         <tr>
             <th id="doubleName">        Name            </th>
             <th id="email">             Email           </th>
-            <th id="formattedAddress">  Address         </th>
             <th id="phone">             Phone Number    </th>
+            <th id="status">            Status          </th>
         </tr>
     </thead>
     <tbody>
@@ -192,8 +192,8 @@
                     </a>
                 </td>
                 <td><%= leadershipList[i].email                         %></td>
-                <td><%= leadershipList[i].leadership.formattedAddress   %></td>
                 <td><%= leadershipList[i].leadership.phone              %></td>
+                <td><%= statusTypes[leadershipList[i].status]           %></td>
             </tr>
         <% } %>
     </tbody>
@@ -213,8 +213,8 @@
         <tr>
             <th id="doubleName">        Name            </th>
             <th id="email">             Email           </th>
-            <th id="formattedAddress">  Address         </th>
             <th id="phone">             Phone Number    </th>
+            <th id="status">            Status           </th>
         </tr>
     </thead>
     <tbody>
@@ -226,8 +226,8 @@
                     </a>
                 </td>
                 <td><%= coordinatorList[i].email                         %></td>
-                <td><%= coordinatorList[i].coordinator.formattedAddress  %></td>
                 <td><%= coordinatorList[i].coordinator.phone             %></td>
+                <td><%= statusTypes[coordinatorList[i].status]           %></td>
             </tr>
         <% } %>
     </tbody>
