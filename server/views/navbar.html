@@ -45,12 +45,6 @@
             <li class="<%= reqdata.path === '/staffRegistration' ? 'active' : '' %>">
               <a href="<%= site.url %>/staffRegistration"><i class="icon-user icon-white"></i> Staff Registration</a>
             </li>
-            <% if (!user) { %>
-              <li class="divider-vertical <%= reqdata.path === '/staffHomePage' ? 'active' : '' %>"></li>
-              <li class="<%= reqdata.path === '/staffHomePage' ? 'active' : '' %>">
-                  <a href="<%= site.url %>/staff/staffHomePage"><i class="fa fa-users fa-inverse"></i> Staff</a>
-              </li>
-            <% } %>
           <% } %>
           <li class="divider-vertical <%= reqdata.path === '/contact' ? 'active' : '' %>"></li>
           <li class="<%= reqdata.path === '/contact' ? 'active' : '' %>">

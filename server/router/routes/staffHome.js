@@ -20,15 +20,17 @@ var toolHeaders = [
     'Name', 'Quantity', 'Max Request Value'
 ];
 
-function getUserRow(role, doc) {
-    return {
-        _id: doc._id,
-        rowData: [
-            doc[role].lastName + ', ' + doc[role].firstName, doc.email,
-            doc[role].phone, doc[role].gender, doc[role].shirtSize,
-            doc[role].formattedAddress
-        ]
-    };
+function getUserRow(role) {
+    return function (doc) {
+        return {
+            _id: doc._id,
+            rowData: [
+                doc[role].lastName + ', ' + doc[role].firstName, doc.email,
+                doc[role].phone, doc[role].gender, doc[role].shirtSize,
+                doc[role].formattedAddress
+            ]
+        };
+    }
 }
 
 function getJobsiteRow(doc) {
@@ -53,7 +55,7 @@ function getToolRow(doc) {
 function getUserData(role, callback) {
     users.find({ role: role }).toArray(function (err, docs) {
         if (err) callback(err);
-        else callback(null, docs.map(getUserRow));
+        else callback(null, docs.map(getUserRow(role)));
     });
 }
 

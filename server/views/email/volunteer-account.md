@@ -6,7 +6,7 @@ please review the changes.
 Here are your volunteer details that we've received:
 
  - **Email:** <%= user.email %>
- - **First Name:** <%= user.user.volunteer.firstName %>
+ - **First Name:** <%= user.volunteer.firstName %>
  - **Last Name:** <%= user.volunteer.lastName %>
  - **Gender:** <%= user.volunteer.gender %>
  - **Address:** <%= user.volunteer.address %>

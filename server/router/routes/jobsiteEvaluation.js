@@ -87,13 +87,12 @@ module.exports = {
                 res.render('jobsite-eval-listing', {
                     title: 'Jobsite Evaluation Listing',
                     table: {
-                        title: 'Jobsite Evaluation Listing',
                         id: 'eval-listing-table',
                         headers: evalListingHeaders,
                         rows: rows,
                         linkField: {
                             column: 0,
-                            path: 'staff/jobsite/evaluation'
+                            path: '/staff/jobsite/evaluation'
                         }
                     }
                 });
