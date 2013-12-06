@@ -92,7 +92,7 @@ module.exports = {
                         rows: rows,
                         linkField: {
                             column: 0,
-                            path: '/staff/jobsite/evaluation'
+                            path: '/staff/jobsite'
                         }
                     }
                 });
